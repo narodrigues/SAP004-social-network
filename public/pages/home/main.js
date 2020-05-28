@@ -1,8 +1,8 @@
 // Aqui serão criados os eventos de Manipulação de DOM e templates
-import { greeting } from './data.js';
+import { greeting } from "./data.js";
 
 export const home = () => {
-  const container = document.createElement('div');
+  const container = document.createElement("div");
 
   container.innerHTML = `
     <aside class="aside">
@@ -23,9 +23,9 @@ export const home = () => {
     </main>
   `;
 
-  const printarMensagemNoConsole = container.querySelector('#btn-login');
+  const printarMensagemNoConsole = container.querySelector("#btn-login");
 
-  printarMensagemNoConsole.addEventListener('click', (event) => {
+  printarMensagemNoConsole.addEventListener("click", (event) => {
     event.preventDefault();
     console.log("oi")
   });
@@ -34,7 +34,7 @@ export const home = () => {
 };
 
 export const registro = () => {
-  const registrar = document.createElement('setion');
+  const registrar = document.createElement("section");
 
   registrar.innerHTML = `
     <form class="form-register">
