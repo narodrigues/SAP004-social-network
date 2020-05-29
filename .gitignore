@@ -4,5 +4,5 @@ coverage/
 node_modules/
 .yarn.lock
 package-lock.json
-public/configure-firebase.js
-public/firebase-debug.log
+public/.configure-firebase.js
+firebase-debug.log
