@@ -112,7 +112,6 @@ p, h1, h2 {
 @media only screen and (min-width: 768px) {
     .page-login {
         flex-direction: row;
-        justify-content: space-around;
     }
 
     .aside img {
@@ -127,6 +126,7 @@ p, h1, h2 {
     .page-login .form-login .form-input {
         margin-bottom: 30px;
         padding: 10px 20px;
+        max-width: 500px;
     }
 
     .page-login .register-info {
