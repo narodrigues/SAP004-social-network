@@ -28,22 +28,21 @@ export const inscribePage = () => {
       <label for="confirm-password-inscribe">Confirme sua senha:
         <input type="password" class="btn" id="confirm-password-inscribe">
       </label>
-      <button type="submit" class="btn" id="inscribe-btn">Registrar-se</button>
+      <input type="submit" class="btn" id="inscribe-btn">
     </form>
   `;
 
-  window.onload = () => { 
-  /*document.querySelector("#inscribe-btn").addEventListener("click", () => {
-    const firstName = document.querySelector("#inscribe-name").value;
-    const lastName = document.querySelector("#inscribe-last-name").value;
-    const email = document.querySelector("#inscribe-email").value;
-    const age = document.querySelector("#age-inscribe").value;
-    const password = document.querySelector("#password-inscribe").value;
-    const confirmPassword = document.querySelector("#confirm-password-inscribe").value;*/
-  
-    console.log(createUser(firstName, lastName, age, email, password, confirmPassword));
-  //})
+    inscribePage.querySelector("#inscribe-btn").addEventListener("click", (e) => {
+      e.preventDefault();
+      const firstName = document.querySelector("#inscribe-name").value;
+      const lastName = document.querySelector("#inscribe-last-name").value;
+      const email = document.querySelector("#inscribe-email").value;
+      const age = document.querySelector("#age-inscribe").value;
+      const password = document.querySelector("#password-inscribe").value;
+      const confirmPassword = document.querySelector("#confirm-password-inscribe").value;
+      
+      createUser(firstName, lastName, age, email, password, confirmPassword)
+    });
 
-}
   return inscribePage;
 }
