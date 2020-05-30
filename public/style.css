@@ -99,8 +99,9 @@ p, h1, h2 {
     width: 100%;
 }
 
-.page-inscribe .form-inscribe input {
+.page-inscribe .form-inscribe input{
     display: block;
+    margin-right: 0;
 }
 
 .page-inscribe .form-inscribe label {
