@@ -2,6 +2,7 @@
 
 export const inscribePage = () => {
   const inscribePage = document.createElement("section");
+  inscribePage.classList.add("page-inscribe")
   window.location.href = "#register"
   inscribePage.innerHTML = `
     <form class="form-inscribe">
@@ -12,7 +13,8 @@ export const inscribePage = () => {
         <input type="email" class="btn" id="inscribe-email">
       </label>
       <label for="inscribe-gender">Sexo: 
-        <input type="radio" class="btn" id="inscribe-gender">
+        <input type="radio" class="btn" id="inscribe-gender-female" title="Feminino">
+        <input type="radio" class="btn" id="inscribe-gender-male" title="Masculino">
       </label>
       <label for="age-inscribe">Idade:
         <input type="date" class="btn" id="age-inscribe">
