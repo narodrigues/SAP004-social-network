@@ -1,6 +1,6 @@
 // Aqui serão criados os eventos de Manipulação de DOM e templates
 // import { signIn } from "./data.js";
-// import { signInGoogle } from "./data.js";
+import { signInGoogle } from "./data.js";
 
 export const signIn = () => {
   const container = document.createElement("div");
@@ -22,19 +22,25 @@ export const signIn = () => {
         </form>
         <div class="register-info">
           <p>Entrar com:</p>
-          <a href="/#" style="margin-top: 10px"><i class="fab fa-google"></i></a>
+          <button type="button" id="login-google">Google</button>
           <p>Não tem uma conta? <a href="#register">Registre-se</a></p>
         </div>
         </section>
     </main>
   `;
 
-  // const printarMensagemNoConsole = container.querySelector("#btn-login");
-
-  // printarMensagemNoConsole.addEventListener("click", (event) => {
-  //   event.preventDefault();
-  //   window.location.href = ""
-  // });
+  container.querySelector("#login-google").addEventListener("click", () => {
+   signInGoogle().then((result) => {
+    const user = {
+      firstName: result.additionalUserInfo.profile.given_name,
+      lastName: result.additionalUserInfo.profile.family_name,
+    }
+    firebase.firestore().collection("users").add(user)
+     window.location = "#teste"
+   }).catch((error) => {
+     alert("login não realizado, tente novamente")
+   })
+  })
 
   return container;
 };
