@@ -10,14 +10,19 @@ export const inscribePage = () => {
         <input type="text" class="btn" id="inscribe-name">
       </label>
       <label for="inscribe-last-name">Sobrenome:
-      <input type="text" class="btn" id="inscribe-last-name">
-    </label>
+        <input type="text" class="btn" id="inscribe-last-name">
+      </label>
       <label for="inscribe-email">Email: 
         <input type="email" class="btn" id="inscribe-email">
       </label>
-      <label for="inscribe-gender">Sexo: 
-        <input type="radio" class="btn" id="inscribe-gender" title="Feminino">
-        <input type="radio" class="btn" id="inscribe-gender-male" title="Masculino">
+      <label id="gender">Sexo:</label>
+      <label for="inscribe-gender" class="input-gender"> 
+        <input type="radio" name="gender" class="btn" id="inscribe-gender" title="Feminino"> 
+        Feminino
+      </label>
+      <label for="inscribe-gender-male" class="input-gender">
+        <input type="radio" name="gender" class="btn" id="inscribe-gender-male" title="Masculino">
+        Masculino
       </label>
       <label for="age-inscribe">Idade:
         <input type="date" class="btn" id="age-inscribe">
@@ -32,17 +37,17 @@ export const inscribePage = () => {
     </form>
   `;
 
-    inscribePage.querySelector("#inscribe-btn").addEventListener("click", (e) => {
-      e.preventDefault();
-      const firstName = document.querySelector("#inscribe-name").value;
-      const lastName = document.querySelector("#inscribe-last-name").value;
-      const email = document.querySelector("#inscribe-email").value;
-      const age = document.querySelector("#age-inscribe").value;
-      const password = document.querySelector("#password-inscribe").value;
-      const confirmPassword = document.querySelector("#confirm-password-inscribe").value;
-      
-      createUser(firstName, lastName, age, email, password, confirmPassword)
-    });
+  inscribePage.querySelector("#inscribe-btn").addEventListener("click", (e) => {
+    e.preventDefault();
+    const firstName = document.querySelector("#inscribe-name").value;
+    const lastName = document.querySelector("#inscribe-last-name").value;
+    const email = document.querySelector("#inscribe-email").value;
+    const age = document.querySelector("#age-inscribe").value;
+    const password = document.querySelector("#password-inscribe").value;
+    const confirmPassword = document.querySelector("#confirm-password-inscribe").value;
+    
+    createUser(firstName, lastName, age, email, password, confirmPassword);
+  });
 
   return inscribePage;
 }
