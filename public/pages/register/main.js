@@ -45,8 +45,9 @@ export const inscribePage = () => {
     const age = document.querySelector("#age-inscribe").value;
     const password = document.querySelector("#password-inscribe").value;
     const confirmPassword = document.querySelector("#confirm-password-inscribe").value;
-    
+
     createUser(firstName, lastName, age, email, password, confirmPassword);
+
   });
 
   return inscribePage;

@@ -1,8 +1,6 @@
-// Aqui serão criados os eventos de Manipulação de DOM e templates
-// import { signIn } from "./data.js";
-import { signInGoogle } from "./data.js";
+import { signInGoogle, signIn } from "./data.js";
 
-export const signIn = () => {
+export const signInPage = () => {
   const container = document.createElement("div");
   container.classList.add("page-login")
   window.location.href = "#login"
@@ -15,32 +13,29 @@ export const signIn = () => {
     </aside>
     <main class="main">
       <section class="container">
-        <form action="#teste" id="form-login" class="form-login">
+        <form action="" id="form-login" class="form-login">
           <input type="email" id="email" class="form-input" placeholder="Email">
           <input type="password" id="password" class="form-input" placeholder="Password">
           <input type="submit" id="btn-login" class="btn" "Enviar>
         </form>
         <div class="register-info">
-          <p>Entrar com:</p>
-          <button type="button" id="login-google">Google</button>
+          <button id="login-google" class="btn-login-google"></button>
           <p>Não tem uma conta? <a href="#register">Registre-se</a></p>
         </div>
         </section>
     </main>
   `;
+  
+  container.querySelector("#btn-login").addEventListener("click", () => {
+    const emailInput = container.querySelector("#email").value;
+    const passwordInput = container.querySelector("#password").value;
+    signIn(emailInput, passwordInput);
+  });
 
   container.querySelector("#login-google").addEventListener("click", () => {
-   signInGoogle().then((result) => {
-    const user = {
-      firstName: result.additionalUserInfo.profile.given_name,
-      lastName: result.additionalUserInfo.profile.family_name,
-    }
-    firebase.firestore().collection("users").add(user)
-     window.location = "#teste"
-   }).catch((error) => {
-     alert("login não realizado, tente novamente")
-   })
+    signInGoogle();
   })
+
 
   return container;
 };

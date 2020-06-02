@@ -15,23 +15,23 @@ p, h1, h2 {
 
 .container {
     margin: 0 auto;
-    width: 100%;
     padding: 0 30px;
+    width: 100%;
 }
 
 .btn{
-    padding: 5px 15px;
     border: 1px solid transparent;
     border-radius: 50px;
     background: white;
     box-shadow: 0 0 0.5em #BFACAA;
     color: #a6341b;
     font-size: 20px;
+    padding: 5px 15px;
 }
 
 .aside img{
-    width: 300px;
     height: 300px;
+    width: 300px;
 }
 
 .aside h1{
@@ -40,34 +40,50 @@ p, h1, h2 {
 }
 
 .main {
-    width: 100%;
     margin: 0;
+    width: 100%;
 }
 
 .page-login {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     min-height: 100vh;
 }
 
 .page-login .form-login {
-    margin: 20px 0;
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    margin: 20px 0;
 }
 
 .page-login .form-login .form-input {
     border: 1px solid rgba(0, 0, 0, 0.253);
     box-shadow: 0 0 0.5em #BFACAA;
     border-radius: 50px;
-    margin-bottom: 20px;
-    padding: 8px 15px;
     color: black;
     font-size: 25px;
+    margin-bottom: 20px;
+    padding: 8px 15px;
     width: 100%;
+}
+
+.page-login .btn-login-google {
+    background: url('./assets/btn_google_signin_dark_normal_web.png') no-repeat center;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    display: block;
+    height: 46px;
+    margin: 0 auto;
+    transition: all 0.5s;
+    width: 191px;
+}
+
+.page-login .btn-login-google:hover {
+    background-image: url('./assets/btn_google_signin_dark_pressed_web.png');
 }
 
 .page-login .register-info {
@@ -81,21 +97,21 @@ p, h1, h2 {
 }
 
 .page-login .register-info a {
-    text-decoration: none;
     color: #a6341b;
+    text-decoration: none;
 }
 
 .page-inscribe {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: center;
     min-height: 100vh;
 }
 
 .page-inscribe .form-inscribe {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: 100%;
 }
 
@@ -105,9 +121,9 @@ p, h1, h2 {
 }
 
 .page-inscribe .form-inscribe label {
+    font-size: 20px; 
     margin: 10px 0;
     text-align: center;
-    font-size: 20px; 
 }
 
 .page-inscribe.input-gender {
@@ -121,8 +137,8 @@ p, h1, h2 {
     }
 
     .aside img {
-        width: 500px;
         height: 500px;
+        width: 500px;
     }
 
     .aside h1 {
@@ -131,8 +147,8 @@ p, h1, h2 {
 
     .page-login .form-login .form-input {
         margin-bottom: 30px;
-        padding: 10px 20px;
         max-width: 500px;
+        padding: 10px 20px;
     }
 
     .page-login .register-info {

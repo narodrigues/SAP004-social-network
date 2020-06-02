@@ -1,4 +1,4 @@
-import { signIn } from './pages/login/main.js';
+import { signInPage } from './pages/login/main.js';
 import { inscribePage } from './pages/register/main.js';
 import { teste } from './pages/home/main.js';
 
@@ -9,7 +9,7 @@ const init = () => {
     root.innerHTML = "";
     switch(window.location.hash){
       case "#login":
-        root.appendChild(signIn());
+        root.appendChild(signInPage());
         break;
       case "#register":
         root.appendChild(inscribePage());
@@ -18,14 +18,14 @@ const init = () => {
         root.appendChild(teste());
         break;
       default:
-        root.appendChild(signIn());
+        root.appendChild(signInPage());
         break;
     }
   });
 }
 
 window.addEventListener("load", () => {
-  root.appendChild(signIn());
+  root.appendChild(signInPage());
   init();
 });
 
