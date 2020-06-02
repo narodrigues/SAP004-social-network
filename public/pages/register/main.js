@@ -1,4 +1,4 @@
-import { createUser } from "./data.js";
+import { register } from "./data.js";
 
 export const inscribePage = () => {
   const inscribePage = document.createElement("section");
@@ -41,13 +41,11 @@ export const inscribePage = () => {
     e.preventDefault();
     const firstName = document.querySelector("#inscribe-name").value;
     const lastName = document.querySelector("#inscribe-last-name").value;
-    const email = document.querySelector("#inscribe-email").value;
+     const email = document.querySelector("#inscribe-email").value;
     const age = document.querySelector("#age-inscribe").value;
     const password = document.querySelector("#password-inscribe").value;
-    const confirmPassword = document.querySelector("#confirm-password-inscribe").value;
 
-    createUser(firstName, lastName, age, email, password, confirmPassword);
-
+    register(email, password, firstName, lastName, age);
   });
 
   return inscribePage;
