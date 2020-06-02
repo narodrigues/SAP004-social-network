@@ -1,4 +1,4 @@
-import { signInGoogle, signIn } from "./data.js";
+import { signInGoogle } from "./data.js";
 
 export const signInPage = () => {
   const container = document.createElement("div");
@@ -25,11 +25,12 @@ export const signInPage = () => {
         </section>
     </main>
   `;
-  
+
   container.querySelector("#btn-login").addEventListener("click", () => {
     const emailInput = container.querySelector("#email").value;
     const passwordInput = container.querySelector("#password").value;
     signIn(emailInput, passwordInput);
+    signiInGoogle()
   });
 
   container.querySelector("#login-google").addEventListener("click", () => {
