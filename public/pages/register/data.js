@@ -20,3 +20,24 @@ export const createUser = (firstName, lastName, age, email, password, confirmPas
     confirmPassword: confirmPassword
   });
 }
+
+export const emailValidation = (emailInput) => {
+	firebase
+	.firestore()
+	.collection("users")
+	.where("email", "==", emailInput)
+	.get()
+	.then((querySnapshot) => {
+		if(querySnapshot.docs.length){
+			querySnapshot.forEach((doc) => {
+				console.log(doc.data().email);
+				window.location = "#teste";
+		}); 
+		} else{
+			alert("usuario nao encontrado")
+		}
+	})
+	.catch((error) => {
+		console.log("Error getting documents: ", error);
+	});
+}
