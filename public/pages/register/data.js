@@ -1,25 +1,36 @@
-export const register = (email, password, firstName, lastName, age) => firebase
+export const register = (email, password, firstName, lastName, userAge) => firebase
   .auth()
   .createUserWithEmailAndPassword(email, password)
   .then(() => {
-		createUser(email, firstName, lastName, age);
+		createUser(email, firstName, lastName, userAge);
 		window.location = "#teste";
 	})
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    console.log("Login não realizado")
+		console.log("Login não realizado")
+		
+		if(errorCode === "auth/email-already-in-use"){
+			alert("E-mail já cadastrado");
+		} else if(errorCode === "auth/invalid-email"){
+			alert("E-mail inválido");
+		} else if(errorCode === "auth/weak-password"){
+			alert("A senha é muito fraca");
+		}
 });
 
-const createUser = (email, firstName, lastName, age) => {
+const createUser = (email, firstName, lastName, userAge) => {
 	const db = firebase.firestore();
 
 	db.collection("users").doc(email).set({
 		firstName: firstName,
 		lastName: lastName,
-		age: age,
+		age: userAge,
 	});
 }
+
+
+
 
 // export const emailValidation = (emailInput) => {
 // 	firebase
