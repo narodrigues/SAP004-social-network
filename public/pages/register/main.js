@@ -1,4 +1,4 @@
-import { createUser } from "./data.js";
+import { register } from "./data.js";
 
 export const inscribePage = () => {
   const inscribePage = document.createElement("section");
@@ -7,13 +7,13 @@ export const inscribePage = () => {
   inscribePage.innerHTML = `
     <form class="form-inscribe">
       <label for="inscribe-name">Nome:
-        <input type="text" class="btn" id="inscribe-name">
+        <input type="text" class="btn" requerid id="inscribe-name">
       </label>
       <label for="inscribe-last-name">Sobrenome:
-        <input type="text" class="btn" id="inscribe-last-name">
+        <input type="text" class="btn" required id="inscribe-last-name">
       </label>
       <label for="inscribe-email">Email: 
-        <input type="email" class="btn" id="inscribe-email">
+        <input type="email" class="btn" required id="inscribe-email">
       </label>
       <label id="gender">Sexo:</label>
       <label for="inscribe-gender" class="input-gender"> 
@@ -21,17 +21,17 @@ export const inscribePage = () => {
         Feminino
       </label>
       <label for="inscribe-gender-male" class="input-gender">
-        <input type="radio" name="gender" class="btn" id="inscribe-gender-male" title="Masculino">
+        <input type="radio" name="gender" required class="btn" id="inscribe-gender-male" title="Masculino">
         Masculino
       </label>
       <label for="age-inscribe">Idade:
-        <input type="date" class="btn" id="age-inscribe">
+        <input type="date" class="btn" required id="age-inscribe">
       </label>
       <label for="password-inscribe">Senha:
-        <input type="password" class="btn" id="password-inscribe">
+        <input type="password" class="btn" required id="password-inscribe">
       </label>
       <label for="confirm-password-inscribe">Confirme sua senha:
-        <input type="password" class="btn" id="confirm-password-inscribe">
+        <input type="password" class="btn" required id="confirm-password-inscribe">
       </label>
       <input type="submit" class="btn btn-send" id="inscribe-btn">
     </form>
@@ -46,7 +46,7 @@ export const inscribePage = () => {
     const password = document.querySelector("#password-inscribe").value;
     const confirmPassword = document.querySelector("#confirm-password-inscribe").value;
 
-    createUser(firstName, lastName, age, email, password, confirmPassword);
+    register(email, firstName, lastName, age);
 
   });
 
