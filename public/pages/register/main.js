@@ -41,13 +41,11 @@ export const inscribePage = () => {
     e.preventDefault();
     const firstName = document.querySelector("#inscribe-name").value;
     const lastName = document.querySelector("#inscribe-last-name").value;
-    const email = document.querySelector("#inscribe-email").value;
+     const email = document.querySelector("#inscribe-email").value;
     const age = document.querySelector("#age-inscribe").value;
     const password = document.querySelector("#password-inscribe").value;
-    const confirmPassword = document.querySelector("#confirm-password-inscribe").value;
 
-    register(email, firstName, lastName, age);
-
+    register(email, password, firstName, lastName, age);
   });
 
   return inscribePage;

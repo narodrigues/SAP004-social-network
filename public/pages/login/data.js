@@ -1,9 +1,10 @@
- export const signIn = (email, password) => firebase
-	.auth().signInWithEmailAndPassword(email, password)
-	.then(() => window.location = "#teste")
-	.catch(() => {
-		alert("Email ou senha inválidos.");
- });
+export const signIn = (email, password) => {
+	firebase.auth().signInWithEmailAndPassword(email, password)
+	.then(() => window.location = "#teste") 
+	.catch((error) => {
+		alert(error.code);
+	});
+}
 
 export const signInGoogle = () => {
 	const provider = new firebase.auth.GoogleAuthProvider();
@@ -19,25 +20,3 @@ export const signInGoogle = () => {
 		alert("login não realizado, tente novamente");
 	});
 }
-
-/*export const emailValidation = (emailInput, passwordInput) => {
-	firebase
-	.firestore()
-	.collection("users")
-	.where("email", "==", emailInput)
-	.where("password", "==", passwordInput)
-	.get()
-	.then((querySnapshot) => {
-		if(querySnapshot.docs.length){
-			querySnapshot.forEach((doc) => {
-				console.log(doc.data().email);
-				window.location = "#teste";
-		}); 
-		} else{
-			alert("usuario nao encontrado")
-		}
-	})
-	.catch((error) => {
-		console.log("Error getting documents: ", error);
-	});
-}*/

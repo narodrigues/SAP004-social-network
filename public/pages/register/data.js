@@ -1,9 +1,9 @@
-export const register = (email, password, firstName, lastName, age, confirmPassword) => firebase
+export const register = (email, password, firstName, lastName, age) => firebase
   .auth()
   .createUserWithEmailAndPassword(email, password)
   .then(() => {
-	window.location = "#teste"
-	createUser(email, password, firstName, lastName, age, confirmPassword)
+		createUser(email, firstName, lastName, age);
+		window.location = "#teste";
 	})
   .catch((error) => {
     const errorCode = error.code;
@@ -11,16 +11,15 @@ export const register = (email, password, firstName, lastName, age, confirmPassw
     console.log("Login não realizado")
 });
 
-const createUser = (email, password, firstName, lastName, age, confirmPassword) => {
+const createUser = (email, firstName, lastName, age) => {
 	const db = firebase.firestore();
-	db.collection("users").doc(firstName).set({
-	firstName: firstName,
-	lastName: lastName,
-	age: age,
-	email: email,
-});
-}
 
+	db.collection("users").doc(email).set({
+		firstName: firstName,
+		lastName: lastName,
+		age: age,
+	});
+}
 
 // export const emailValidation = (emailInput) => {
 // 	firebase
