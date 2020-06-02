@@ -33,7 +33,7 @@ export const inscribePage = () => {
       <label for="confirm-password-inscribe">Confirme sua senha:
         <input type="password" class="btn" id="confirm-password-inscribe">
       </label>
-      <input type="submit" class="btn" id="inscribe-btn">
+      <input type="submit" class="btn btn-send" id="inscribe-btn">
     </form>
   `;
 
