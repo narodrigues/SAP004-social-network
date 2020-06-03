@@ -41,6 +41,7 @@ export const inscribePage = () => {
     const userAge = document.querySelector("#age-inscribe").value;
     const password = document.querySelector("#password-inscribe").value;
     const confirmPassword = document.querySelector("#confirm-password-inscribe").value;
+    const re = /^[a-z À-ú]*$/i;
 
     const calcAge = (date) => { 
       const dataAtual = new Date();
@@ -50,7 +51,7 @@ export const inscribePage = () => {
       const month = splitDate[1];
       const year = splitDate[0];
       const age = currentDate - year;
-      const currentMonth = dataAtual.getMonth() + 1; 
+      const currentMonth = dataAtual.getMonth() + 1;
     
       if(currentMonth < month){
         age--; 
@@ -77,8 +78,10 @@ export const inscribePage = () => {
 
     if(firstName === "" || lastName === "" || userAge === "" || email === "" || password === ""){
       alert("Preencha o(os) campo(s) vazio(s)");
+    } else if(!re.exec(firstName) || !re.exec(lastName)){
+      alert("Digite apenas letras");
     } else if(password !== confirmPassword){
-      alert("a senha não confere")
+      alert("a senha não confere");
     } else if(calcAge(userAge) < "18"){
       alert("Site para maiores de 18 anos");
     } else {    
