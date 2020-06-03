@@ -41,16 +41,17 @@ export const inscribePage = () => {
     const userAge = document.querySelector("#age-inscribe").value;
     const password = document.querySelector("#password-inscribe").value;
     const confirmPassword = document.querySelector("#confirm-password-inscribe").value;
+    const re = /^[a-z À-ú]*$/i;
 
     const calcAge = (date) => { 
       const dataAtual = new Date();
       const currentDate = dataAtual.getFullYear();
-      const splitDate = date.split('-');
+      const splitDate = date.split('-'); 
       const day = splitDate[2];
       const month = splitDate[1];
       const year = splitDate[0];
-      const age = currentDate - year;
       const currentMonth = dataAtual.getMonth() + 1; 
+      let age = currentDate - year; 
     
       if(currentMonth < month){
         age--; 
@@ -60,25 +61,14 @@ export const inscribePage = () => {
         }
       }
       return age; 
-    } 
-
-    // const padrao = /[^a-zà-ú]/gi;
-
-    // const firstNameValidate = firstName.match(padrao);
-    // const lastNameValidate = lastName.match(padrao);
- 
-    // if( firstNameValidate || !firstName ){
-    //    console.log("Nome possui caracteres inválidos ou é vazio")
-    // }else if( lastNameValidate || !lastName ){
-    //    console.log("Sobrenome possui caracteres inválidos ou é vazio")
-    // }else{
-    //   console.log("sobrenome ok")
-    // }
+    }
 
     if(firstName === "" || lastName === "" || userAge === "" || email === "" || password === ""){
       alert("Preencha o(os) campo(s) vazio(s)");
+    } else if(!re.exec(firstName) || !re.exec(lastName)){
+      alert("Digite apenas letras");
     } else if(password !== confirmPassword){
-      alert("a senha não confere")
+      alert("a senha não confere");
     } else if(calcAge(userAge) < "18"){
       alert("Site para maiores de 18 anos");
     } else {    
