@@ -1,6 +1,6 @@
 import { signInPage } from './pages/login/main.js';
 import { inscribePage } from './pages/register/main.js';
-import { teste } from './pages/home/main.js';
+import { feed } from './pages/home/main.js';
 
 const root = document.querySelector('#root');
 
@@ -14,8 +14,8 @@ const init = () => {
       case "#register":
         root.appendChild(inscribePage());
         break;
-      case "#teste":
-        root.appendChild(teste());
+      case "#feed":
+        root.appendChild(feed());
         break;
       default:
         root.appendChild(signInPage());
