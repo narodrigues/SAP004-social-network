@@ -124,11 +124,6 @@ body {
     width: min-content;
 }
 
-.page-inscribe.input-gender {
-    display: inherit;
-    margin-right: 5px;
-}
-
 @media only screen and (min-width: 768px) {
     input.btn.btn-send {
         width: auto;
