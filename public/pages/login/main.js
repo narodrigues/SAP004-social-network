@@ -30,7 +30,7 @@ export const signInPage = () => {
     const emailInput = container.querySelector("#email").value;
     const passwordInput = container.querySelector("#password").value;
     signIn(emailInput, passwordInput);
-    signiInGoogle()
+    // signiInGoogle()
   });
 
   container.querySelector("#login-google").addEventListener("click", () => {

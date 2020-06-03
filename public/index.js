@@ -25,7 +25,7 @@ const init = () => {
 }
 
 window.addEventListener("load", () => {
-  root.appendChild(signInPage());
+  root.appendChild(feed());
   init();
 });
 

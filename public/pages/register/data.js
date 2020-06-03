@@ -1,6 +1,6 @@
 export const register = (email, password, firstName, lastName, userAge) => firebase
   .auth()
-  .createUserWithEmailAndPassword(email, password)
+	.createUserWithEmailAndPassword(email, password)
   .then(() => {
 		createUser(email, firstName, lastName, userAge);
 		window.location = "#teste";
@@ -22,14 +22,12 @@ export const register = (email, password, firstName, lastName, userAge) => fireb
 const createUser = (email, firstName, lastName, userAge) => {
 	const db = firebase.firestore();
 
-	db.collection("users").doc(email).set({
+	db.collection("users").add({
 		firstName: firstName,
 		lastName: lastName,
 		age: userAge,
 	});
 }
-
-
 
 
 // export const emailValidation = (emailInput) => {
