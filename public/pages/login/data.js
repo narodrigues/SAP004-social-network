@@ -1,6 +1,6 @@
 export const signIn = (email, password) => {
 	firebase.auth().signInWithEmailAndPassword(email, password)
-	.then(() => window.location = "#teste") 
+	.then(() => window.location = "#feed") 
 	.catch((error) => {
 		alert(error.code);
 	});
@@ -15,7 +15,7 @@ export const signInGoogle = () => {
 			email: result.user.email
 		}
 		firebase.firestore().collection("users").add(user);
-		window.location = "#teste";
+		window.location = "#feed";
 	}).catch(() => {
 		alert("login não realizado, tente novamente");
 	});
