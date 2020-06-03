@@ -124,8 +124,33 @@ body {
     width: min-content;
 }
 
-.page-home .post-field{
+.page-feed {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-feed .header {
+    background: orange;
+}
+
+.page-feed .feed-write-post {
+    border: 1px solid #b8b8b8;
+    border-radius: 5px;
+    margin: 20px;
+    padding: 20px;
+}
+
+.page-feed .post-field {
+    border: 1px solid #b8b8b8;
+    border-radius: 5px;
+    height: 100px;
+    padding: 10px;
     resize: none;
+    width: 100%;
+}
+
+.page-feed .post-field-options {
+    margin-top: 10px;
 }
 
 @media only screen and (min-width: 768px) {
