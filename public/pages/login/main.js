@@ -1,16 +1,16 @@
-import { signInGoogle } from "./data.js";
+import { signIn, signInGoogle } from "./data.js";
 
 export const signInPage = () => {
   const container = document.createElement("div");
   container.classList.add("page-login")
   window.location.href = "#login"
   container.innerHTML = `
-    <aside class="aside">
+    <section class="aside">
       <section class="container">
         <img src="./assets/logo.png" alt="logo home page">
         <h1>Catarse</h1>
       </section>
-    </aside>
+    </section>
     <main class="main">
       <section class="container">
         <form action="" id="form-login" class="form-login">
