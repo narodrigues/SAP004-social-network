@@ -1,7 +1,7 @@
 export const register = (email, password, firstName, lastName, userAge) => firebase
   	.auth()
 	.createUserWithEmailAndPassword(email, password)
-	.then(() => firebase.auth().currentUser.updateProfile({displayName: `${firstName} ${lastName}`}))
+  .then(() => firebase.auth().currentUser.updateProfile({displayName: `${firstName} ${lastName}`}))
 	.then(() => {
 		createUser(email, firstName, lastName, userAge);
 		window.location = "#teste";
