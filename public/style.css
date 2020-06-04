@@ -133,10 +133,29 @@ body {
     background: orange;
 }
 
+.page-feed .user-profile {
+    align-items: center;
+    background: #cccccc;
+    display: flex;
+    height: 100px;
+    justify-self: end;
+    margin: 0;
+    max-width: 400px;
+    width: 100%;
+}
+
+.page-feed .user-profile figure {
+    background: #ff710066;
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+}
+
 .page-feed .feed-write-post {
     border: 1px solid #b8b8b8;
     border-radius: 5px;
-    margin: 20px;
+    /* margin: 0 auto; */
+    max-width: 620px;
     padding: 20px;
 }
 
@@ -149,9 +168,35 @@ body {
     width: 100%;
 }
 
+.page-feed .feed-posts-container {
+    margin: 0 auto;
+    max-width: 620px;
+}
+
 .page-feed .post-field-options {
     margin-top: 10px;
 }
+
+.div-posts {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px 15px;
+    margin: 15px;
+}
+
+.div-posts .box{
+    margin-top: 10px;
+}
+
+.btn-icon {
+    border: none;
+    background: none;
+}
+
+.icon {  
+    font-size: 25px;
+}
+
 @media only screen and (min-width: 768px) {
     input.btn.btn-send {
         width: auto;
@@ -186,5 +231,23 @@ body {
 
     .container {
         max-width: 900px;
+    }
+
+    .page-feed .user-profile {
+        /* justify-content: start; */
+        margin: 0 20px;
+    }
+
+    .page-feed .main-feed {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        margin: 20px 5%;
+    }
+}
+
+@media only screen and (min-width: 1100px) {
+    .page-feed .main-feed {
+        grid-template-columns: 1fr 1fr;
+        margin: 20px 10%;
     }
 }
