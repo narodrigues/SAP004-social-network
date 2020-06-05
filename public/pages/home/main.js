@@ -3,10 +3,12 @@ import { posts } from "./data.js";
 export const feed = () => {
   const feedTemplate = document.createElement("div");
   feedTemplate.classList.add("page-feed");
+  feedTemplate.classList.add("pages");
   window.location.href = "#feed";
   feedTemplate.innerHTML = `
     <header class="header">
-    <nav class="nav-main">
+    <button class="btn-icon"><i class="fas fa-bars icon menu"></i></button>
+    <nav class="nav-main" style="display: none">
       <ul>
         <li>Perfil</li>
         <li>Sair</li>
@@ -19,16 +21,16 @@ export const feed = () => {
         <figure id="user-img"></figure>
         <span id="userName"></span>
       </section>
-      <div>
+      <div class="container">
         <section class="feed-write-post">
           <form class="form-feed">
             <textarea id="post-field" class="post-field" placeholder="O que deseja compartilhar?"></textarea>
             <div class="post-field-options">
-              <button id="share-post" class="btn">Postar</button>
               <select id="post-privacy">
-                <option value="private">Privado</option>
                 <option value="public">Público</option>
+                <option value="private">Privado</option>
               </select>
+              <button id="share-post" class="btn">Postar</button>
             </div>
           </form>
         </section>
