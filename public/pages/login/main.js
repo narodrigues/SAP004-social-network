@@ -3,6 +3,7 @@ import { signIn, signInGoogle } from "./data.js";
 export const signInPage = () => {
   const container = document.createElement("div");
   container.classList.add("page-login")
+  container.classList.add("pages")
   window.location.href = "#login"
   container.innerHTML = `
     <section class="aside">
