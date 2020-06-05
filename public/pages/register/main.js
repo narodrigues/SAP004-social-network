@@ -35,12 +35,12 @@ export const inscribePage = () => {
 
   inscribePage.querySelector("#inscribe-btn").addEventListener("click", (e) => {
     e.preventDefault();
-    const firstName = document.querySelector("#inscribe-name").value;
-    const lastName = document.querySelector("#inscribe-last-name").value;
-    const email = document.querySelector("#inscribe-email").value;
-    const userAge = document.querySelector("#age-inscribe").value;
-    const password = document.querySelector("#password-inscribe").value;
-    const confirmPassword = document.querySelector("#confirm-password-inscribe").value;
+    const firstName = inscribePage.querySelector("#inscribe-name").value;
+    const lastName = inscribePage.querySelector("#inscribe-last-name").value;
+    const email = inscribePage.querySelector("#inscribe-email").value;
+    const userAge = inscribePage.querySelector("#age-inscribe").value;
+    const password = inscribePage.querySelector("#password-inscribe").value;
+    const confirmPassword = inscribePage.querySelector("#confirm-password-inscribe").value;
     const re = /^[a-z À-ú]*$/i;
 
     const calcAge = (date) => { 

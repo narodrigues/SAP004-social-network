@@ -1,10 +1,10 @@
-export const register = (email, password, firstName, lastName, userAge) => firebase
-  	.auth()
+export const register = (email, password, firstName, lastName, userAge, userUid) => firebase
+  .auth()
 	.createUserWithEmailAndPassword(email, password)
   .then(() => firebase.auth().currentUser.updateProfile({displayName: `${firstName} ${lastName}`}))
 	.then(() => {
-		createUser(email, firstName, lastName, userAge);
-		window.location = "#teste";
+		createUser(email, firstName, lastName, userAge, userUid);
+		window.location = "#login";
 	})
   .catch((error) => {
     const errorCode = error.code;
@@ -20,13 +20,14 @@ export const register = (email, password, firstName, lastName, userAge) => fireb
 		}
 });
 
-const createUser = (email, firstName, lastName, userAge) => {
+const createUser = (email, firstName, lastName, userAge, userUid) => {
 	const db = firebase.firestore();
 
 	db.collection("users").add({
 		firstName: firstName,
 		lastName: lastName,
 		age: userAge,
+		userUid: firebase.auth().currentUser.uid
 	});
 }
 

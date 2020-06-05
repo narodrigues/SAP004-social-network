@@ -29,14 +29,13 @@ body {
     padding: 5px 15px;
 }
 
-.aside img{
-    height: 300px;
-    width: 300px;
+.aside {
+    text-align: center;
 }
 
-.aside h1{
-    font-size: 40px;
-    text-align: center;
+.aside img-logo {
+    height: 300px;
+    width: 300px;
 }
 
 .main {
@@ -132,9 +131,12 @@ body {
 }
 
 .page-feed .header {
-    background: #d95204;
+    background: rgb(248, 200, 111);
     color: white;
-    padding: 20px 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 15px 10px;
     width: 100%;
 }
 
@@ -240,7 +242,7 @@ body {
         flex-direction: row;
     }
 
-    .aside img {
+    .aside .img-logo {
         height: 500px;
         width: 500px;
     }
@@ -278,5 +280,9 @@ body {
     .page-feed .main-feed {
         grid-template-columns: 1fr 1fr;
         margin: 20px 10%;
+    }
+
+    .container {
+        padding: 0;
     }
 }
