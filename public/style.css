@@ -57,6 +57,12 @@ body {
     margin: 20px 0;
 }
 
+.aside .img-logo {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 390px;
+}
+
 .page-login .form-login .form-input {
     border: 1px solid rgba(0, 0, 0, 0.253);
     box-shadow: 0 0 0.5em #BFACAA;
@@ -144,6 +150,14 @@ body {
     font-size: 30px;
 }
 
+.page-feed .btn-icon .menu {
+    display: block;
+}
+
+.page-feed .nav-main {
+    display: none;
+}
+
 .page-feed .user-profile {
     align-items: center;
     background: #cccccc;
@@ -195,26 +209,27 @@ body {
     font-size: 16px;
 }
 
-.div-posts {
+.page-feed .div-posts {
     border: none;
     border-radius: 10px;
     box-shadow: 0 0 1em #b8b8b8bd;
     margin: 25px 0px;
 }
 
-.div-posts .box {
+.page-feed .div-posts .box {
     background: rgb(248, 194, 93);
     border-radius: 5px 5px 0 0;
     padding: 15px;
+    resize: none;
     width: 100%;
 }
 
-.div-posts .box:nth-child(2) {
+.page-feed .div-posts .box:nth-child(2) {
     background: white;
     color: black;
 }
 
-.div-posts .box:last-child {
+.page-feed .div-posts .box:last-child {
     border-radius: 0 0 5px 5px;
 }
 
@@ -243,8 +258,7 @@ body {
     }
 
     .aside .img-logo {
-        height: 500px;
-        width: 500px;
+        max-width: 500px;
     }
 
     .aside h1 {
@@ -273,6 +287,14 @@ body {
         display: grid;
         grid-template-columns: 1fr 1.5fr;
         margin: 20px 5%;
+    }
+
+    .page-feed .btn-icon .menu {
+        display: none;
+    }
+
+    .page-feed .nav-main {
+        display: block;
     }
 }
 
