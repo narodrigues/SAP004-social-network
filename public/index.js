@@ -5,27 +5,40 @@ import { feed } from './pages/home/main.js';
 const root = document.querySelector('#root');
 
 const init = () => {
-  window.addEventListener("hashchange", () => {
+  firebase.auth().onAuthStateChanged((user) => {
+    const currentHash = window.location.hash;
     root.innerHTML = "";
-    switch(window.location.hash){
-      case "#login":
-        root.appendChild(signInPage());
-        break;
-      case "#register":
-        root.appendChild(inscribePage());
-        break;
-      case "#feed":
-        root.appendChild(feed());
-        break;
-      default:
-        root.appendChild(signInPage());
-        break;
+    if (user) {
+      switch (currentHash) {
+        case '#login':
+          root.appendChild(signInPage());
+          break;
+        case '#register':
+          root.appendChild(inscribePage());
+          break;
+        case '#feed':
+          root.appendChild(feed());
+          break;
+        default:
+          root.appendChild(feed());
+      }
+    } else if (!user) {
+      switch (currentHash) {
+        case '#register':
+          root.innerHTML = inscribePage();
+          break;
+        default:
+          root.innerHTML = signInPage();
+      }
     }
   });
-}
+};
 
 window.addEventListener("load", () => {
-  root.appendChild(feed());
+  root.appendChild(signInPage());
   init();
 });
 
+window.addEventListener("hashchange", () => {
+  init()
+})

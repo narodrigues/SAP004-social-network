@@ -19,7 +19,7 @@ export const feed = () => {
     <main class="main-feed">
       <section class="user-profile">
         <figure id="user-img"></figure>
-        <span id="userName"></span>
+        <span id="userName">${firebase.auth().currentUser.displayName}</span>
       </section>
       <div class="container">
         <section class="feed-write-post">
@@ -39,18 +39,32 @@ export const feed = () => {
     </main>
   `
 
-  setTimeout(myTimer, 2000);
-  function myTimer(){
-    feedTemplate.querySelector("#userName").innerHTML = "";
-    feedTemplate.querySelector("#userName").innerHTML = firebase.auth().currentUser.displayName;
-    const clicks = feedTemplate.querySelectorAll(".like")
-    clicks.forEach(btnlike => {
+  // setTimeout(myTimer, 2000);
+  // function myTimer(){
+  //   feedTemplate.querySelector("#userName").innerHTML = "";
+  //   feedTemplate.querySelector("#userName").innerHTML = firebase.auth().currentUser.displayName;
+  //   const clicks = feedTemplate.querySelectorAll(".like")
+  //   clicks.forEach(btnlike => {
+  //     btnlike.addEventListener("click", (e) => {
+  //       e.preventDefault();
+  //       console.log("oie")});
+  //   });
+  // }
+
+
+  
+
+  const likePosts = () => {
+    console.log("oie")
+    const allLikes = feedTemplate.querySelectorAll(".like")
+    allLikes.forEach(btnlike => {
       btnlike.addEventListener("click", (e) => {
         e.preventDefault();
         console.log("oie")});
-    });
-  }
-  
+      })
+  } 
+  // likePosts()
+
   const loadPost = () => {
     firebase
     .firestore()
@@ -64,6 +78,7 @@ export const feed = () => {
       });
     });
     feedTemplate.querySelector("#posts-container").innerHTML = "";
+    likePosts()
   }  
   loadPost();
 
