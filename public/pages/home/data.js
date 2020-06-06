@@ -2,7 +2,7 @@
 
 // }
 
-export const posts = (text, username, likes, friendNomment, friendName, timestamp) => {
+export const posts = (text, username, likes, friendComment, friendName, timestamp) => {
 	const db = firebase.firestore();
 
 	db.collection("posts").add({
@@ -10,7 +10,7 @@ export const posts = (text, username, likes, friendNomment, friendName, timestam
 		username: username,
 		likes: likes,
 		comments: {
-			friendNomment: friendNomment,
+			friendNomment: friendComment,
 			friendName: friendName,
 			timestamp: timestamp
 		}

@@ -25,10 +25,10 @@ const init = () => {
     } else if (!user) {
       switch (currentHash) {
         case '#register':
-          root.innerHTML = inscribePage();
+          root.appendChild(inscribePage());
           break;
         default:
-          root.innerHTML = signInPage();
+          root.appendChild(signInPage());
       }
     }
   });
