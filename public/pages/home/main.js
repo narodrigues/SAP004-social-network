@@ -26,10 +26,16 @@ export const feed = () => {
           <form class="form-feed">
             <textarea id="post-field" class="post-field" placeholder="O que deseja compartilhar?"></textarea>
             <div class="post-field-options">
-              <select id="post-privacy">
-                <option value="public">Público</option>
-                <option value="private">Privado</option>
-              </select>
+              <div>
+                <label for="option-public"><i class="fas fa-unlock icon">
+                  <input type="radio" id="option-public" class="btn-icon" value="public">
+                  </i>
+                </label>
+                <label for="option-private"><i class="fas fa-lock icon">
+                  <input type="radio" id="option-private" class="btn-icon" value="private">
+                  </i>
+                </label>
+              </div>
               <button id="share-post" class="btn">Postar</button>
             </div>
           </form>
