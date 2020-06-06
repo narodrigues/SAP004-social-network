@@ -7,10 +7,8 @@ export const signInPage = () => {
   window.location.href = "#login"
   container.innerHTML = `
     <section class="aside">
-      <section class="container">
         <img src="./assets/logo.png" alt="logo home page" class="img-logo">
-        <img src="./assets/logo-login.png" alt="logo home page">
-      </section>
+        <img src="./assets/logo-login.png" class="img-logo" alt="logo home page">
     </section>
     <main class="main">
       <section class="container">
