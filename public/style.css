@@ -138,13 +138,17 @@ body {
 
 .page-feed .header {
     background: rgb(248, 200, 111);
-    color: white;
+    color: #a6341b;
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
     padding: 15px 10px;
     width: 100%;
 }
+
+.page-feed .header img{
+    margin: 0 auto;
+}
+
 
 .page-feed .header .menu {
     font-size: 30px;
@@ -160,13 +164,13 @@ body {
 
 .page-feed .user-profile {
     align-items: center;
-    background: #cccccc;
+    background: none;
     display: flex;
+    font-size: 18px;
     height: 100px;
     justify-self: end;
-    margin: 0;
-    max-width: 400px;
-    width: 100%;
+    margin: 15px auto;
+    max-width: 450px;
 }
 
 .page-feed .user-profile figure {
@@ -174,7 +178,7 @@ body {
     border-radius: 50%;
     height: 80px;
     width: 80px;
-    margin-left: 20px;
+    margin: 0 30px
 }
 
 .page-feed .feed-write-post {
@@ -187,6 +191,7 @@ body {
 .page-feed .post-field {
     border: 1px solid #b8b8b8;
     border-radius: 5px;
+    font-size: 15px;
     height: 100px;
     padding: 10px;
     resize: none;
@@ -279,10 +284,6 @@ body {
         max-width: 900px;
     }
 
-    .page-feed .user-profile {
-        margin: 0 20px;
-    }
-
     .page-feed .main-feed {
         display: grid;
         grid-template-columns: 1fr 1.5fr;
@@ -295,6 +296,17 @@ body {
 
     .page-feed .nav-main {
         display: block;
+    }
+
+    
+    .page-feed .nav-main ul {
+        display: flex;
+        font-size: 20px;
+        list-style: none;
+    }
+
+    .page-feed .nav-main ul li:nth-child(1) {
+        margin-right: 40px;
     }
 }
 

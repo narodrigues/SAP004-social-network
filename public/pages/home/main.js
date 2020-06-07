@@ -31,7 +31,7 @@ export const feed = () => {
                   <input type="radio" id="option-public" class="btn-icon" value="public">
                   </i>
                 </label>
-                <label for="option-private"><i class="fas fa-lock icon">
+                <label for="option-private" style="display: none;"><i class="fas fa-lock icon">
                   <input type="radio" id="option-private" class="btn-icon" value="private">
                   </i>
                 </label>
