@@ -290,6 +290,10 @@ body {
         margin: 20px 5%;
     }
 
+    .page-feed .div-posts .box:nth-child(2) {
+        font-size: 18px;
+    }
+
     .page-feed .btn-icon .menu {
         display: none;
     }
@@ -318,5 +322,9 @@ body {
 
     .container {
         padding: 0;
+    }
+
+    .main {
+        width: 50%;
     }
 }
