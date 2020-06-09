@@ -1,4 +1,4 @@
-import { posts } from "./data.js";
+import { signOut } from "./data.js";
 
 export const feed = () => {
   const feedTemplate = document.createElement("div");
@@ -76,16 +76,18 @@ export const feed = () => {
     .orderBy('timestamps', 'desc')
     .limit(5)
     .get()
-    .then(database => {
-      database.forEach(post => {
+    .then(posts => {
+      posts.forEach(post => {
         createPosts(post.data());
       });
+      editPost()
       addEventLikePost();
     })
   }
   loadPost();
 
   const createPosts = (post, prepend) => {
+    console.log(post)
     const postsContainer = feedTemplate.querySelector("#posts-container");
     let postsOnFeed = document.createElement("section");
     postsOnFeed.classList.add("div-posts");
@@ -93,13 +95,15 @@ export const feed = () => {
       <div class="posted-box-by box">
         <span class="name-user-published">Publicado por ${post.name} em ${post.timestamps}</span>
       </div>
-      <textarea class="content-post posted-box-text box" disabled>${post.post}</textarea>
+      <textarea class="posted-box-text box" id="content-post" disabled>${post.post}</textarea>
      `
 
     if(post.userUid === firebase.auth().currentUser.uid){
       postsOnFeed.innerHTML +=  `
         <div class="posted-box-options box">
-          <button class="btn-icon"><i class="fas fa-edit icon"></i></button>
+          <button class="btn-icon btn-edit"><i class="fas fa-edit icon"></i></button>
+          <button class="btn-icon d-none btn-save"><i class="fas fa-save icon"></i></button>
+          <button class="btn-icon"><i class="fas fa-trash-alt icon"></i></button>
         </div>
       `
     } else {
@@ -158,14 +162,26 @@ export const feed = () => {
     feedTemplate.querySelector("#post-field").value = "";
   });
 
-  feedTemplate.querySelector("#signOut").addEventListener("click", () => {
-    firebase
-    .auth()
-    .signOut()
-    .then(() => {
-      window.location.href = "#login";  
-    });
-  });
+  const editPost = () => {
+    const btnEdit = feedTemplate.querySelectorAll(".btn-edit");
+    const btnSave = feedTemplate.querySelectorAll(".btn-save");
+    const postText = feedTemplate.querySelector("#content-post");
+
+    function tentativa(el) {
+      console.log(el)
+      // for (let i = 0; i < btnSave.length; i++) {
+      //   btnSave[i].classList.toggle("d-block");
+      //   postText.disabled = false;
+      // }
+    };
+
+    btnEdit.forEach((btnEditPost) => {
+      btnEditPost.addEventListener("click", tentativa);
+    })
+  }
+
+  
+  feedTemplate.querySelector("#signOut").addEventListener("click", signOut);
 
   return feedTemplate;
 };

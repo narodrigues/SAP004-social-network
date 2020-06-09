@@ -12,6 +12,14 @@ body {
     margin: auto;
 }
 
+.d-none{
+    display: none;
+}
+
+.d-block {
+    display: inline-block;
+}
+
 .container {
     margin: auto;
     padding: 0 30px;

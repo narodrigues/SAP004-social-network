@@ -17,6 +17,12 @@ export const posts = (text, username, likes, friendComment, friendName, timestam
 	});
 }
 
+
+export const signOut = () => {
+	firebase.auth().signOut().then(() => {
+		window.location.href = "#login"
+	  })
+}
 //para colocar o nome da pessoa junto da foto
 // export const userId = firebase.auth().currentUser.uid;
 // firebase.firestore()
