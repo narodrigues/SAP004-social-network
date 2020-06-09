@@ -34,11 +34,8 @@ const init = () => {
   });
 };
 
-window.addEventListener("load", () => {
-  root.appendChild(signInPage());
-  init();
-});
+window.addEventListener("load", init);
 
 window.addEventListener("hashchange", () => {
   init()
-})
+}, false);

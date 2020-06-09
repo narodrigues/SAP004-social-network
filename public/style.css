@@ -246,6 +246,10 @@ body {
     border-radius: 0 0 5px 5px;
 }
 
+.page-feed .i-none {
+    display: none;
+}
+
 .btn-icon {
     border: none;
     background: none;
@@ -255,10 +259,6 @@ body {
 
 .icon {  
     font-size: 25px;
-}
-
-.i-none {
-    display: none;
 }
 
 @media only screen and (min-width: 768px) {
