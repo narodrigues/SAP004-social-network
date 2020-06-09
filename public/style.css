@@ -17,7 +17,7 @@ body {
 }
 
 .d-block {
-    display: inline-block;
+    display: block;
 }
 
 .container {
@@ -244,6 +244,10 @@ body {
 
 .page-feed .div-posts .box:last-child {
     border-radius: 0 0 5px 5px;
+}
+
+.page-feed .i-none {
+    display: none;
 }
 
 .btn-icon {

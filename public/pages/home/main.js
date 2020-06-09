@@ -1,4 +1,4 @@
-import { signOut } from "./data.js";
+import { signOut, posts, loadingPost, saveEditPost } from "./data.js";
 
 export const feed = () => {
   const feedTemplate = document.createElement("div");
@@ -68,119 +68,99 @@ export const feed = () => {
     menu.style.display = "none"
   }
 
-  const loadPost = () => {
+  loadingPost().then((arrayPosts) => {
     feedTemplate.querySelector("#posts-container").innerHTML = "";
-    firebase
-    .firestore()
-    .collection("posts")
-    .orderBy('timestamps', 'desc')
-    .limit(5)
-    .get()
-    .then(posts => {
-      posts.forEach(post => {
-        createPosts(post.data());
-      });
-      editPost()
-      addEventLikePost();
+    arrayPosts.forEach((post) => {
+      createPosts(post);
     })
-  }
-  loadPost();
+  })
 
   const createPosts = (post, prepend) => {
-    console.log(post)
+    const postsOnFeed = document.createElement("section");
+    const postsBox = document.createElement("div");
+    const postedBy = document.createElement("span");
+    const msgPost = document.createElement("textarea");
+    const buttonsWrap = document.createElement("div");
     const postsContainer = feedTemplate.querySelector("#posts-container");
-    let postsOnFeed = document.createElement("section");
+
+    postedBy.innerHTML = `Publicado por ${post.name} em ${post.timestamps}`;
+    msgPost.innerHTML = `${post.post}`;
+
     postsOnFeed.classList.add("div-posts");
-    postsOnFeed.innerHTML = `
-      <div class="posted-box-by box">
-        <span class="name-user-published">Publicado por ${post.name} em ${post.timestamps}</span>
-      </div>
-      <textarea class="posted-box-text box" id="content-post" disabled>${post.post}</textarea>
-     `
+    postsBox.classList.add("posted-box-by", "box");
+    postedBy.classList.add("name-user-published");
+    msgPost.classList.add("content-post", "posted-box-text", "box");
+    buttonsWrap.classList.add("posted-box-options", "box");
+
+    msgPost.setAttribute("disabled", "disabled");
+
+    postsOnFeed.append(postsBox, msgPost);
+    postsBox.append(postedBy);
 
     if(post.userUid === firebase.auth().currentUser.uid){
-      postsOnFeed.innerHTML +=  `
-        <div class="posted-box-options box">
-          <button class="btn-icon btn-edit"><i class="fas fa-edit icon"></i></button>
-          <button class="btn-icon d-none btn-save"><i class="fas fa-save icon"></i></button>
-          <button class="btn-icon"><i class="fas fa-trash-alt icon"></i></button>
-        </div>
-      `
+      const editBtn = document.createElement("button");
+      const saveBtn = document.createElement("button");
+      const deleteBtn = document.createElement("button");
+
+      editBtn.innerHTML = `<i class='fas fa-edit icon'></i>`;
+      saveBtn.innerHTML = `<i class='far fa-save icon'></i>`;
+      deleteBtn.innerHTML = `<i class='fas fa-trash-alt icon'></i>`;
+
+      editBtn.classList.add("btn-icon");
+      saveBtn.classList.add("i-none", "btn-icon");
+      deleteBtn.classList.add("btn-icon");
+
+      buttonsWrap.append(editBtn, saveBtn, deleteBtn);
+      postsOnFeed.append(buttonsWrap);
+
+      const editBtnFunctions = () => {
+        saveBtn.classList.toggle("i-none");
+        msgPost.removeAttribute("disabled");
+      }
+
+      const saveBtnOptions = () => {    
+        saveBtn.classList.toggle("i-none");
+        msgPost.setAttribute("disabled", "disabled");
+        // const textEdited = document.querySelector(".content-post")
+        console.log(msgPost.value);
+       saveEditPost(msgPost)
+      }
+
+      editBtn.addEventListener("click", editBtnFunctions);
+      saveBtn.addEventListener("click", saveBtnOptions);
+
     } else {
-      postsOnFeed.innerHTML +=  `
-        <div class="posted-box-options box">
-          <button class="btn-icon like" class="likes"><i class="fas fa-heart icon"></i></button>
-          <button class="btn-icon"><i class="fas fa-comments icon"></i></button>
-        </div>
-      `
+      const likeBtn = document.createElement("button");
+      const commentBtn = document.createElement("button");
+
+      likeBtn.innerHTML = `<i class='fas fa-heart icon'></i>`;
+      commentBtn.innerHTML = `<i class='fas fa-comments icon'></i>`;
+
+      likeBtn.classList.add("btn-icon", "like")
+      commentBtn.classList.add("btn-icon")
+      
+      buttonsWrap.append(likeBtn, commentBtn);
+      postsOnFeed.append(buttonsWrap);
     }
 
     if(!prepend){
-      postsContainer.appendChild(postsOnFeed)
+      postsContainer.appendChild(postsOnFeed);
     } else {
-      postsContainer.prepend(postsOnFeed)
-      removeEventLikePost();
-      addEventLikePost();
+      postsContainer.prepend(postsOnFeed);
     }
   }
 
-  const handleLike = (e) => {
-    e.preventDefault();
-    console.log("oi")
-  }
- 
-  const addEventLikePost = () => {
-    const allLikes = feedTemplate.querySelectorAll(".like")
-    allLikes.forEach((btnLike) => {
-      btnLike.addEventListener("click", handleLike, false);
-    })
-  }
-
-  const removeEventLikePost = () => {
-    const allLikes = feedTemplate.querySelectorAll(".like")
-    allLikes.forEach((btnLike) => {
-      btnLike.removeEventListener("click", handleLike, false);
-    })
-  }
-  
-  feedTemplate.querySelector("#share-post").addEventListener("click", () => {
-    
+  feedTemplate.querySelector("#share-post").addEventListener("click", (e) => {
+    e.preventDefault()
     const postText = feedTemplate.querySelector("#post-field").value;
-    const post = {
-      post: postText,
-      name: firebase.auth().currentUser.displayName, 
-      timestamps: firebase.firestore.Timestamp.fromDate(new Date()).toDate().toLocaleString('pt-BR'),
-      userUid: firebase.auth().currentUser.uid
-    }
-    firebase
-    .firestore()
-    .collection("posts")
-    .add(post)
-    .then(() => {
-      createPosts(post, true);
-    })
+    posts(postText)
+    .then((postText) => {
+      createPosts(postText, true)
+    });
+
     feedTemplate.querySelector("#post-field").value = "";
   });
 
-  const editPost = () => {
-    const btnEdit = feedTemplate.querySelectorAll(".btn-edit");
-    const btnSave = feedTemplate.querySelectorAll(".btn-save");
-    const postText = feedTemplate.querySelector("#content-post");
-
-    function tentativa(el) {
-      console.log(el)
-      // for (let i = 0; i < btnSave.length; i++) {
-      //   btnSave[i].classList.toggle("d-block");
-      //   postText.disabled = false;
-      // }
-    };
-
-    btnEdit.forEach((btnEditPost) => {
-      btnEditPost.addEventListener("click", tentativa);
-    })
-  }
-
-  
   feedTemplate.querySelector("#signOut").addEventListener("click", signOut);
 
   return feedTemplate;
