@@ -12,6 +12,14 @@ body {
     margin: auto;
 }
 
+.d-none {
+    display: none;
+}
+
+.d-block {
+    display: block;
+}
+
 .container {
     margin: auto;
     padding: 0 30px;
@@ -247,6 +255,10 @@ body {
 
 .icon {  
     font-size: 25px;
+}
+
+.i-none {
+    display: none;
 }
 
 @media only screen and (min-width: 768px) {

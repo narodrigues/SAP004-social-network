@@ -1,4 +1,4 @@
-import { posts } from "./data.js";
+import { signOut } from "./data.js";
 
 export const feed = () => {
   const feedTemplate = document.createElement("div");
@@ -97,11 +97,28 @@ export const feed = () => {
      `
 
     if(post.userUid === firebase.auth().currentUser.uid){
-      postsOnFeed.innerHTML +=  `
+      var editButton = document.createElement("button");
+      editButton.innerHTML = "<i class='fas fa-edit icon'></i>";
+      var saveButton = document.createElement("button");
+      saveButton.innerHTML = "<i class='far fa-save icon'></i>";
+      var trashButton = document.createElement("button");
+      trashButton.innerHTML = "<i class='fas fa-trash-alt icon'></i>";
+      var buttonsWrap = document.createElement("div");
+      buttonsWrap.classList.add("posted-box-options")
+      buttonsWrap.classList.add("box")
+      saveButton.classList.add("i-none")
+
+      editButton.addEventListener("click", function(){ saveButton.classList.toggle("i-none"); });
+      /*postsOnFeed.innerHTML +=  `
         <div class="posted-box-options box">
-          <button class="btn-icon"><i class="fas fa-edit icon"></i></button>
+          <button class="btn-icon edit"><i class="fas fa-edit icon"></i></button>
+          <button class="btn-icon"><i class="far fa-save icon"></i></button>
+          <button class="btn-icon"><i class="fas fa-trash-alt icon"></i></button>
         </div>
-      `
+      `*/
+
+      buttonsWrap.append(editButton, saveButton, trashButton);
+      postsOnFeed.append(buttonsWrap);
     } else {
       postsOnFeed.innerHTML +=  `
         <div class="posted-box-options box">
@@ -158,14 +175,7 @@ export const feed = () => {
     feedTemplate.querySelector("#post-field").value = "";
   });
 
-  feedTemplate.querySelector("#signOut").addEventListener("click", () => {
-    firebase
-    .auth()
-    .signOut()
-    .then(() => {
-      window.location.href = "#login";  
-    });
-  });
+  feedTemplate.querySelector("#signOut").addEventListener("click", signOut);
 
   return feedTemplate;
 };
