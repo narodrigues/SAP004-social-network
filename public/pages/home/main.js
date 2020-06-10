@@ -1,4 +1,4 @@
-import { signOut, posts, loadingPost, saveEditPost } from "./data.js";
+import { signOut, posts, loadingPost } from "./data.js";
 
 export const feed = () => {
   const feedTemplate = document.createElement("div");
@@ -107,7 +107,7 @@ export const feed = () => {
       deleteBtn.innerHTML = `<i class='fas fa-trash-alt icon'></i>`;
 
       editBtn.classList.add("btn-icon");
-      saveBtn.classList.add("i-none", "btn-icon");
+      saveBtn.classList.add("i-none", "btn-icon", "save");
       deleteBtn.classList.add("btn-icon");
 
       buttonsWrap.append(editBtn, saveBtn, deleteBtn);
@@ -121,9 +121,6 @@ export const feed = () => {
       const saveBtnOptions = () => {    
         saveBtn.classList.toggle("i-none");
         msgPost.setAttribute("disabled", "disabled");
-        // const textEdited = document.querySelector(".content-post")
-        console.log(msgPost.value);
-       saveEditPost(msgPost)
       }
 
       editBtn.addEventListener("click", editBtnFunctions);
@@ -149,6 +146,19 @@ export const feed = () => {
       postsContainer.prepend(postsOnFeed);
     }
   }
+
+  // const saveEditedPost = (event) => {
+  //   const id = event.currentTarget.dataset.id;
+  //   const textArea = document.querySelector(`textarea[id='${id}']`);
+  //   const saveButton = document.querySelector(`.save[data-id='${id}']`);
+  
+  //   firebase.firestore().collection('posts').doc(id).update({
+  //     post: textArea.value,
+  //   });
+  // };
+
+  // feedTemplate.querySelector(".save").addEventListener("click", saveEditedPost)
+
 
   feedTemplate.querySelector("#share-post").addEventListener("click", (e) => {
     e.preventDefault()

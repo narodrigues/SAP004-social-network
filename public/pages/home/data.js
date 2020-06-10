@@ -1,4 +1,3 @@
-
 export const posts = (text) => {
 	const posts = {
 		post: text,
@@ -11,6 +10,12 @@ export const posts = (text) => {
 		.firestore()
 		.collection("posts")
 		.add(posts)
+		.then(function(doc) {
+			// posts.add({postId: doc.id})
+			console.log(posts)
+			console.log("Document written with ID: ", doc.id);
+		})
+
 		.then(() => posts)
 }
 
@@ -25,17 +30,23 @@ export const loadingPost = () => {
 			const arrayWithPosts = [];
 			querySnapshot.forEach(doc => {
 				arrayWithPosts.push(doc.data());
+				console.log(doc)
 			});
 			return arrayWithPosts;
 		});
 }
 
-export const saveEditPost = (text) => {
-	// const idPost = text.target.dataset.class;
-	return firebase.firestore().collection('posts').doc(docRef.id).update({
-		post: text
-	});  
-}
+// export const saveEditPost = (text) => {
+// 	return firebase
+// 	.firestore()
+// 	.collection("posts")
+// 	.get()
+// 	.then(doc => {
+// 		console.log(doc.data())
+// 	});
+
+// // ;	return firebase.firestore().collection('posts').get().doc().update()
+// }
 
 export const signOut = () => {
 	firebase
