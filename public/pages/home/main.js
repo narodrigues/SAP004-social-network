@@ -27,12 +27,8 @@ export const feed = () => {
             <textarea id="post-field" class="post-field" placeholder="O que deseja compartilhar?"></textarea>
             <div class="post-field-options">
               <div>
-                <label for="option-public"><i class="fas fa-unlock icon">
-                  <input type="radio" id="option-public" class="btn-icon" value="public">
-                  </i>
-                </label>
-                <label for="option-private" style="display: none;"><i class="fas fa-lock icon">
-                  <input type="radio" id="option-private" class="btn-icon" value="private">
+                <label for="option-public"><i class="fas fa-unlock icon privacity-icon">
+                  <input type="checkbox" id="option-public" class="btn-icon d-none" value="public">
                   </i>
                 </label>
               </div>
@@ -46,6 +42,7 @@ export const feed = () => {
   `
   const menu = feedTemplate.querySelector(".nav-main");
   const mainToClose = feedTemplate.querySelector(".main-feed");
+  const btnConfigPrivacity = feedTemplate.querySelector("#option-public")
 
   feedTemplate.querySelector("#openMenu").addEventListener("click", () => {
     if(menu.style.display === "block") {
@@ -68,14 +65,21 @@ export const feed = () => {
     menu.style.display = "none"
   }
 
+  btnConfigPrivacity.addEventListener("click", () => {
+    feedTemplate.querySelector(".privacity-icon").classList.toggle("fa-lock")
+    feedTemplate.querySelector(".privacity-icon").classList.toggle("fa-unlock")
+  })
+
+
   loadingPost().then((arrayPosts) => {
     feedTemplate.querySelector("#posts-container").innerHTML = "";
-    arrayPosts.forEach((post) => {
-      createPosts(post);
+    arrayPosts.forEach((doc) => {
+      createPosts(doc);
     })
   })
 
-  const createPosts = (post, prepend) => {
+  const createPosts = (doc, prepend) => {
+    const post = doc.data();
     const postsOnFeed = document.createElement("section");
     const postsBox = document.createElement("div");
     const postedBy = document.createElement("span");
@@ -123,7 +127,7 @@ export const feed = () => {
         msgPost.setAttribute("disabled", "disabled");
         // const textEdited = document.querySelector(".content-post")
         console.log(msgPost.value);
-       saveEditPost(msgPost)
+       saveEditPost(msgPost.value, doc.id)
       }
 
       editBtn.addEventListener("click", editBtnFunctions);
