@@ -74,7 +74,7 @@ export const feed = () => {
   loadingPost().then((arrayPosts) => {
     feedTemplate.querySelector("#posts-container").innerHTML = "";
     arrayPosts.forEach((doc) => {
-      createPosts(doc);
+      createPosts(doc)
     })
   })
 
@@ -125,8 +125,6 @@ export const feed = () => {
       const saveBtnOptions = () => {    
         saveBtn.classList.toggle("i-none");
         msgPost.setAttribute("disabled", "disabled");
-        // const textEdited = document.querySelector(".content-post")
-        console.log(msgPost.value);
        saveEditPost(msgPost.value, doc.id)
       }
 
@@ -158,8 +156,8 @@ export const feed = () => {
     e.preventDefault()
     const postText = feedTemplate.querySelector("#post-field").value;
     posts(postText)
-    .then((postText) => {
-      createPosts(postText, true)
+    .then((doc) => {
+      createPosts(doc , true)
     });
 
     feedTemplate.querySelector("#post-field").value = "";
