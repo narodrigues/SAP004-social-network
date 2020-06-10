@@ -10,7 +10,7 @@ export const posts = (text) => {
     .firestore()
     .collection("posts")
     .add(posts)
-    .then(() => posts)
+    .then((docRef) => docRef.get().then((doc) => doc))
 }
 
 export const loadingPost = () => {
