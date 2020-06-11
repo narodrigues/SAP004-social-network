@@ -16,10 +16,13 @@ export const posts = (text, value) => {
       .then((doc) => doc))
 }
 
-export const loadingPost = () => {
+export const loadingPost = (doc) => {
   return firebase
     .firestore()
     .collection('posts')
+    // .where(doc, '==', 'private')
+    // .where(doc.privacy, '==', 'private')
+    // .where('userUid', '==',  'firebase.auth().currentUser.uid')
     .orderBy('timestamps', 'desc')
     .limit(5)
     .get()
