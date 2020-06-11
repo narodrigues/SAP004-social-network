@@ -72,12 +72,13 @@ export const feed = () => {
     menu.style.display = 'none';
   }
 
-  loadingPost().then((arrayPosts) => {
-    feedTemplate.querySelector('#posts-container').innerHTML = "";
-    arrayPosts.forEach((doc) => {
-      createPosts(doc)
+  loadingPost()
+    .then((arrayPosts) => {
+      feedTemplate.querySelector('#posts-container').innerHTML = "";
+      arrayPosts.forEach((doc) => {
+        createPosts(doc)
+      })
     })
-  })
 
   const createPosts = (doc, prepend) => {
     const post = doc.data();
@@ -107,27 +108,51 @@ export const feed = () => {
       const editBtn = document.createElement('button');
       const saveBtn = document.createElement('button');
       const deleteBtn = document.createElement('button');
+      const selectPrivacy = document.createElement('select');
+      const optionPublic = document.createElement('option');
+      const optionPrivate = document.createElement('option');
 
+      optionPrivate.innerHTML = `Privado`;
+      optionPublic.innerHTML = `Público`;
       editBtn.innerHTML = `<i class='fas fa-edit icon'></i>`;
       saveBtn.innerHTML = `<i class='far fa-save icon'></i>`;
       deleteBtn.innerHTML = `<i class='fas fa-trash-alt icon'></i>`;
 
       editBtn.classList.add('btn-icon');
       saveBtn.classList.add('i-none', 'btn-icon');
+      selectPrivacy.classList.add('i-none');
       deleteBtn.classList.add('btn-icon');
 
-      buttonsWrap.append(editBtn, saveBtn, deleteBtn);
+      selectPrivacy.id = 'select-privacy';
+
+      optionPublic.setAttribute('value', 'public');
+      optionPrivate.setAttribute('value', 'private');
+
+      buttonsWrap.append(editBtn, saveBtn, selectPrivacy, deleteBtn);
       postsOnFeed.append(buttonsWrap);
+      selectPrivacy.append(optionPublic, optionPrivate)
 
       const editBtnFunctions = () => {
         saveBtn.classList.remove('i-none');
+        selectPrivacy.classList.remove('i-none');
         msgPost.removeAttribute('disabled');
       }
 
       const saveBtnOptions = () => {
         saveBtn.classList.add('i-none');
+        selectPrivacy.classList.add('i-none');
         msgPost.setAttribute('disabled', 'disabled');
-        saveEditPost(msgPost.value, doc.id);
+
+        const optionPrivacy = feedTemplate.querySelector('#select-privacy')
+        const privacyValue = () => {
+          return feedTemplate.querySelector('#select-privacy').value;
+        } 
+  
+        optionPrivacy.addEventListener('change', privacyValue);
+
+        const changePostPrivacy = privacyValue();
+        
+        saveEditPost(msgPost.value, doc.id, changePostPrivacy);
       }
 
       const deletePostBtn = () => {
@@ -159,16 +184,17 @@ export const feed = () => {
     } else {
       postsContainer.prepend(postsOnFeed);
     }
-  }
+}
 
   feedTemplate.querySelector('#share-post').addEventListener('click', (e) => {
     e.preventDefault()
     const postText = feedTemplate.querySelector('#post-field').value;
     const privacyOptions = feedTemplate.querySelector('input[name="privacy"]:checked').value;
 
-    posts(postText, privacyOptions)
+    posts(  postText, privacyOptions)
       .then((doc) => {
         createPosts(doc, true)
+        loadingPost();
       });
 
     feedTemplate.querySelector('#post-field').value = '';
@@ -177,4 +203,4 @@ export const feed = () => {
   feedTemplate.querySelector('#signOut').addEventListener('click', signOut);
 
   return feedTemplate;
-};
+};  
