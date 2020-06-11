@@ -1,10 +1,10 @@
 import { signIn, signInGoogle } from "./data.js";
 
 export const signInPage = () => {
-  const container = document.createElement("div");
-  container.classList.add("page-login")
-  container.classList.add("pages")
-  window.location.href = "#login"
+  const container = document.createElement('div');
+  container.classList.add('page-login')
+  container.classList.add('pages')
+  window.location.href = '#login'
   container.innerHTML = `
     <section class="aside">
         <img src="./assets/logo.png" alt="logo home page" class="img-logo">
@@ -25,14 +25,13 @@ export const signInPage = () => {
     </main>
   `;
 
-  container.querySelector("#btn-login").addEventListener("click", () => {
-    const emailInput = container.querySelector("#email").value;
-    const passwordInput = container.querySelector("#password").value;
+  container.querySelector('#btn-login').addEventListener('click', () => {
+    const emailInput = container.querySelector('#email').value;
+    const passwordInput = container.querySelector('#password').value;
     signIn(emailInput, passwordInput);
-    // signiInGoogle()
   });
 
-  container.querySelector("#login-google").addEventListener("click", () => {
+  container.querySelector('#login-google').addEventListener('click', () => {
     signInGoogle();
   })
 

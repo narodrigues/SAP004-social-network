@@ -2,7 +2,7 @@ export const signIn = (email, password) => {
 	firebase
 	.auth()
 	.signInWithEmailAndPassword(email, password)
-	.then(() => window.location = "#feed") 
+	.then(() => window.location = '#feed')
 	.catch((error) => {
 		alert(error.code);
 	});
@@ -21,11 +21,11 @@ export const signInGoogle = () => {
 		}
 		firebase
 		.firestore()
-		.collection("users")
+		.collection('users')
 		.add(user);
-		window.location = "#feed";
+		window.location = '#feed';
 	})
 	.catch(() => {
-		alert("login não realizado, tente novamente");
+		alert('login não realizado, tente novamente');
 	});
 }
