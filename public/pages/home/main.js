@@ -14,7 +14,7 @@ export const feed = () => {
         <li id="signOut">Sair</li>
       </ul>
     </nav>
-    <img src="./assets/nome-logo-feed.png">
+    <img src="./assets/feed-logo.png">
   </header>
     <main class="main-feed">
       <section class="user-profile">
@@ -39,7 +39,7 @@ export const feed = () => {
                   </label>
                 </div>
               </form>
-              <button id="share-post" class="btn">Postar</button>
+              <button id="share-post" class="btn btn-send">Postar</button>
             </div>
           </form>
         </section>

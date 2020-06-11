@@ -8,7 +8,7 @@ export const signInPage = () => {
   container.innerHTML = `
     <section class="aside">
         <img src="./assets/logo.png" alt="logo home page" class="img-logo">
-        <img src="./assets/logo-login.png" class="img-logo" alt="logo home page">
+        <img src="./assets/login-logo.png" class="img-logo name-logo" alt="logo home page">
     </section>
     <main class="main">
       <section class="container">
