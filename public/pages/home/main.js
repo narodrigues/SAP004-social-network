@@ -14,7 +14,7 @@ export const feed = () => {
         <li id="signOut">Sair</li>
       </ul>
     </nav>
-    <img src="./assets/feed-logo.png">
+    <img src="./assets/nome-logo-feed.png">
   </header>
     <main class="main-feed">
       <section class="user-profile">
@@ -39,7 +39,7 @@ export const feed = () => {
                   </label>
                 </div>
               </form>
-              <button id="share-post" class="btn btn-send">Postar</button>
+              <button id="share-post" class="btn">Postar</button>
             </div>
           </form>
         </section>
@@ -72,25 +72,37 @@ export const feed = () => {
     menu.style.display = 'none';
   }
 
-  const teste = firebase.auth().currentUser.uid;
-  console.log(teste)
-  const teste2 = firebase.firestore().collection('posts').doc().get();
-  console.log(teste2)
 
-
-    loadingPost(doc.data().privacy).then((arrayPosts) => {
-      feedTemplate.querySelector('#posts-container').innerHTML = "";
-      arrayPosts.forEach((doc) => {
-        createPosts(doc)
-      })
+  loadingPost().then((arrayPosts) => {
+    feedTemplate.querySelector('#posts-container').innerHTML = "";
+    arrayPosts.forEach((doc) => {
+      createPosts(doc)
     })
-
-
+  })
 
   const createPosts = (doc, prepend) => {
     const post = doc.data();
-    const post2 = doc.data().privacy;
-    console.log(post2)
+    const postsOnFeed = document.createElement('section');
+    const postsBox = document.createElement('div');
+    const postedBy = document.createElement('span');
+    const msgPost = document.createElement('textarea');
+    const buttonsWrap = document.createElement('div');
+    const postsContainer = feedTemplate.querySelector('#posts-container');
+
+    postedBy.innerHTML = `Publicado por ${post.name} em ${post.timestamps}`;
+    msgPost.innerHTML = `${post.post}`;
+
+    postsOnFeed.classList.add('div-posts');
+    postsBox.classList.add('posted-box-by', 'box');
+    postedBy.classList.add('name-user-published');
+    msgPost.classList.add('content-post', 'posted-box-text', 'box');
+    buttonsWrap.classList.add('posted-box-options', 'box');
+
+    msgPost.setAttribute('disabled', 'disabled');
+    postsOnFeed.setAttribute('data-postid', doc.id);
+
+    postsOnFeed.append(postsBox, msgPost);
+    postsBox.append(postedBy);
 
     if (post.userUid === firebase.auth().currentUser.uid) {
       const editBtn = document.createElement('button');
