@@ -22,7 +22,6 @@ export const loadingPost = () => {
     .firestore()
     .collection('posts')
     .where('privacy', '==', 'public')
-    .where('userUid', '==', firebase.auth().currentUser.uid)
     .limit(5)
     .orderBy('timestamps', 'desc')
     .get()
@@ -35,13 +34,14 @@ export const loadingPost = () => {
     });
 }
 
-export const saveEditPost = (text, id) => {
+export const saveEditPost = (text, id, privacy) => {
   return firebase
     .firestore()
     .collection('posts')
     .doc(id)
     .update({
-      post: text
+      post: text,
+      privacy: privacy
     });
 }
 
