@@ -1,22 +1,25 @@
-export const posts = (text) => {
-  const posts = {
+export const posts = (text, value) => {
+  const Posts = {
     post: text,
     name: firebase.auth().currentUser.displayName,
     likes: 0,
     userUid: firebase.auth().currentUser.uid,
     timestamps: firebase.firestore.Timestamp.fromDate(new Date()).toDate().toLocaleString('pt-BR'),
+    privacy: value
   }
   return firebase
     .firestore()
-    .collection("posts")
-    .add(posts)
-    .then((docRef) => docRef.get().then((doc) => doc))
+    .collection('posts')
+    .add(Posts)
+    .then((docRef) => docRef
+      .get()
+      .then((doc) => doc))
 }
 
 export const loadingPost = () => {
   return firebase
     .firestore()
-    .collection("posts")
+    .collection('posts')
     .orderBy('timestamps', 'desc')
     .limit(5)
     .get()
@@ -30,10 +33,21 @@ export const loadingPost = () => {
 }
 
 export const saveEditPost = (text, id) => {
-  console.log(text, id)
-  return firebase.firestore().collection('posts').doc(id).update({
-    post: text
-  });
+  return firebase
+    .firestore()
+    .collection('posts')
+    .doc(id)
+    .update({
+      post: text
+    });
+}
+
+export const deletePost = (id) => {
+  return firebase
+    .firestore()
+    .collection('posts')
+    .doc(id)
+    .delete()
 }
 
 export const signOut = () => {
@@ -41,7 +55,6 @@ export const signOut = () => {
     .auth()
     .signOut()
     .then(() => {
-      window.location.href = "#login";
+      window.location.href = '#login';
     });
 }
-

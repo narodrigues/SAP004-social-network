@@ -7,7 +7,7 @@ const root = document.querySelector('#root');
 const init = () => {
   firebase.auth().onAuthStateChanged((user) => {
     const currentHash = window.location.hash;
-    root.innerHTML = "";
+    root.innerHTML = '';
     if (user) {
       switch (currentHash) {
         case '#login':
@@ -34,8 +34,8 @@ const init = () => {
   });
 };
 
-window.addEventListener("load", init);
+window.addEventListener('load', init);
 
-window.addEventListener("hashchange", () => {
+window.addEventListener('hashchange', () => {
   init()
 }, false);
