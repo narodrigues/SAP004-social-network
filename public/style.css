@@ -37,8 +37,16 @@ body {
 }
 
 .btn-send {
-    background: rgb(255, 204, 107);
+    background: #ffcc6b;
     color: #aa6324;
+    height: 45px;
+    transition: all 0.5s;
+    width: 100px!important;
+}
+
+.btn-send:hover {
+    background: #fa8210;
+    color: #ffffff;
 }
 
 .aside {
@@ -48,6 +56,10 @@ body {
 .aside img-logo {
     height: 300px;
     width: 300px;
+}
+
+.aside .img-logo.name-logo {
+    width: 45%;
 }
 
 .main {
@@ -158,6 +170,9 @@ body {
 
 .page-feed li {
     color: white;
+    font-variant: all-petite-caps;
+    font-weight: 700;
+    letter-spacing: 2px
 }
 
 .page-feed .header {
@@ -241,8 +256,8 @@ body {
 }
 
 .page-feed .post-field-options .btn {
-    background: rgb(255, 204, 107);
-    color: #aa6324;
+    /* background: rgb(255, 204, 107);
+    color: #aa6324; */
     font-size: 16px;
 }
 
@@ -366,7 +381,6 @@ body {
 
 @media only screen and (min-width: 1200px) {
     .page-feed .main-feed {
-        grid-template-columns: 1fr 1fr;
         margin: 20px 10%;
     }
 

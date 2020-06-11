@@ -27,8 +27,10 @@ export const inscribePage = () => {
       <label for="confirm-password-inscribe">Confirme sua senha:
         <input type="password" class="btn" required id="confirm-password-inscribe">
       </label>
-      <input type="submit" class="btn btn-send" id="inscribe-btn">
-      <input type="button" class="btn btn-send" id="return-btn" value="Voltar">
+      <div class="btn-inscribe-container">
+        <input type="submit" class="btn btn-send" id="inscribe-btn">
+        <input type="button" class="btn btn-send" id="return-btn" value="Voltar">
+      </div>
     </form>
   `;
 
