@@ -166,7 +166,7 @@ body {
 
 .page-feed.pages {
     /* background: #fffdf4; */
-    background: linear-gradient(rgba(255, 232, 223, 0.514), rgba(255, 232, 223, 0.514)), url("./assets/background4.jpg") bottom fixed;
+    background: linear-gradient(rgba(255, 232, 223, 0.514), rgba(255, 232, 223, 0.514)), url('./assets/butterfly-background.jpg') bottom fixed;
 	background-attachment: fixed;
 }
 

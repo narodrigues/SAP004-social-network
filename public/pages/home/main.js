@@ -112,8 +112,8 @@ export const feed = () => {
       const optionPublic = document.createElement('option');
       const optionPrivate = document.createElement('option');
 
-      optionPrivate.innerHTML = `Público`;
-      optionPublic.innerHTML = `Privado`;
+      optionPrivate.innerHTML = `Privado`;
+      optionPublic.innerHTML = `Público`;
       editBtn.innerHTML = `<i class='fas fa-edit icon'></i>`;
       saveBtn.innerHTML = `<i class='far fa-save icon'></i>`;
       deleteBtn.innerHTML = `<i class='fas fa-trash-alt icon'></i>`;
@@ -123,7 +123,7 @@ export const feed = () => {
       selectPrivacy.classList.add('i-none');
       deleteBtn.classList.add('btn-icon');
 
-      selectPrivacy.id.add('select-privacy');
+      selectPrivacy.id = 'select-privacy';
 
       optionPublic.setAttribute('value', 'public');
       optionPrivate.setAttribute('value', 'private');
@@ -142,19 +142,18 @@ export const feed = () => {
         saveBtn.classList.add('i-none');
         selectPrivacy.classList.add('i-none');
         msgPost.setAttribute('disabled', 'disabled');
-        saveEditPost(msgPost.value, doc.id);
+
+        const optionPrivacy = feedTemplate.querySelector('#select-privacy')
+        const privacyValue = () => {
+          return feedTemplate.querySelector('#select-privacy').value;
+        } 
+  
+        optionPrivacy.addEventListener('change', privacyValue);
+
+        const changePostPrivacy = privacyValue();
+        
+        saveEditPost(msgPost.value, doc.id, changePostPrivacy);
       }
-
-
-
-
-      // feedTemplate.getElementById("filter-value").addEventListener("change", filters);
-
-      // function filters( ){
-      //   let filterType = document.getElementById("filter-type").value       
-
-
-
 
       const deletePostBtn = () => {
         const dataId = doc.id;
