@@ -27,14 +27,18 @@ body {
 }
 
 .btn{
-    background: white;
-    border: 1px solid transparent;
+    border: none;
     border-radius: 50px;
-    box-shadow: 0 0 0.5em #BFACAA;
-    color: #a6341b;
+    box-shadow: 0 0 0.2em #e76d0080;
+    color: #e76d00;
     cursor: pointer;
     font-size: 20px;
-    padding: 5px 15px;
+    padding: 8px 15px;
+}
+
+.btn-send {
+    background: rgb(255, 204, 107);
+    color: #aa6324;
 }
 
 .aside {
@@ -54,7 +58,6 @@ body {
     align-items: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     min-height: 100vh;
 }
 
@@ -71,9 +74,13 @@ body {
     max-width: 390px;
 }
 
+.page-login.pages {
+    background: #fffdf4;
+}
+
 .page-login .form-login .form-input {
-    border: 1px solid rgba(0, 0, 0, 0.253);
-    box-shadow: 0 0 0.5em #BFACAA;
+    border: none;
+    box-shadow: 0 0 0.5em #e76d0080;
     border-radius: 50px;
     color: black;
     font-size: 25px;
@@ -109,12 +116,13 @@ body {
 }
 
 .page-login .register-info a {
-    color: #a6341b;
+    color: #e76d00;
     text-decoration: none;
 }
 
 .page-inscribe {
     align-items: center;
+    background: #fffdf4;
     display: flex;
     justify-content: center;
     min-height: 100vh;
@@ -144,9 +152,16 @@ body {
     padding: 5px 10px;
 }
 
+.page-feed.pages {
+    background: #fffdf4;
+}
+
+.page-feed li {
+    color: white;
+}
+
 .page-feed .header {
-    background: rgb(248, 200, 111);
-    color: #a6341b;
+    background: rgb(242, 142, 26);
     display: flex;
     align-items: center;
     padding: 15px 10px;
@@ -189,7 +204,12 @@ body {
     margin: 0 30px
 }
 
+.page-feed span#userName {
+    color: #976339;
+}
+
 .page-feed .feed-write-post {
+    background: white;
     border: 1px solid #b8b8b8;
     border-radius: 5px;
     max-width: 620px;
@@ -206,6 +226,10 @@ body {
     width: 100%;
 }
 
+.page-feed #form-privacy-options {
+    color: #ee7f17;
+}
+
 .page-feed .feed-posts-container {
     max-width: 620px;
 }
@@ -217,8 +241,8 @@ body {
 }
 
 .page-feed .post-field-options .btn {
-    background: rgb(248, 194, 93);
-    color: black;
+    background: rgb(255, 204, 107);
+    color: #aa6324;
     font-size: 16px;
 }
 
@@ -230,16 +254,29 @@ body {
 }
 
 .page-feed .div-posts .box {
-    background: rgb(248, 194, 93);
+    /* background: rgb(248, 194, 93); */
     border-radius: 5px 5px 0 0;
-    padding: 15px;
+    color: #976324;
+    /* padding: 15px; */
     resize: none;
     width: 100%;
+}
+
+.page-feed .posted-box-by.box {
+    background: rgb(255, 227, 155);
+    padding: 15px;
+    font-weight: 600;
 }
 
 .page-feed .div-posts .box:nth-child(2) {
     background: white;
     color: black;
+    padding: 15px;
+}
+
+.page-feed .posted-box-options.box {
+    border-top: solid 1px #0000001f;
+    padding: 10px;
 }
 
 .page-feed .div-posts .box:last-child {
@@ -253,6 +290,7 @@ body {
 .btn-icon {
     border: none;
     background: none;
+    color: #d9761a;
     cursor: pointer;
     margin-left: 5px;
 }
