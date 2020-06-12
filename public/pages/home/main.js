@@ -221,7 +221,7 @@ export const feed = () => {
       commentsPostBtn.addEventListener('click', addComment);
       
       const showOptionsComments = () => {
-        commentsContainer.classList.remove('i-none');
+        commentsOptions.classList.remove('i-none');
       }
         
       likeBtn.addEventListener('click', addLikes);
