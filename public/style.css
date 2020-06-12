@@ -44,7 +44,7 @@ body {
     width: 100px!important;
 }
 
-.btn-send:hover {
+.btn:hover {
     background: #fa8210;
     color: #ffffff;
 }
@@ -67,7 +67,6 @@ body {
 }
 
 .pages {
-    align-items: center;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -165,8 +164,7 @@ body {
 }
 
 .page-feed.pages {
-    /* background: #fffdf4; */
-    background: linear-gradient(rgba(255, 232, 223, 0.514), rgba(255, 232, 223, 0.514)), url('./assets/butterfly-background.jpg') bottom fixed;
+  background: linear-gradient(rgba(255, 232, 223, 0.514), rgba(255, 232, 223, 0.514)), url('./assets/butterfly-background.jpg') bottom fixed;
 	background-attachment: fixed;
 }
 
@@ -185,10 +183,13 @@ body {
     width: 100%;
 }
 
-.page-feed .header img{
+.page-feed .header img {
     margin: 0 auto;
 }
 
+.page-feed .header .btn-icon {
+  color: black;
+}
 
 .page-feed .header .menu {
     font-size: 30px;
@@ -223,21 +224,21 @@ body {
 
 .page-feed span#userName {
     color: #976339;
+    font-size: 20px;
 }
 
 .page-feed .feed-write-post {
     background: white;
     border: 1px solid #b8b8b8;
     border-radius: 5px;
-    max-width: 620px;
-    padding: 20px;
+    padding: 25px 20px 20px;
 }
 
 .page-feed .post-field {
     border: 1px solid #b8b8b8;
     border-radius: 5px;
-    font-size: 15px;
-    height: 100px;
+    font-size: 18px;
+    height: 120px;
     padding: 10px;
     resize: none;
     width: 100%;
@@ -247,10 +248,6 @@ body {
     color: #ee7f17;
 }
 
-.page-feed .feed-posts-container {
-    max-width: 620px;
-}
-
 .page-feed .post-field-options {
     display: flex;
     justify-content: space-between;
@@ -258,8 +255,6 @@ body {
 }
 
 .page-feed .post-field-options .btn {
-    /* background: rgb(255, 204, 107);
-    color: #aa6324; */
     font-size: 16px;
 }
 
@@ -271,12 +266,14 @@ body {
     margin: 25px 0px;
 }
 
+.page-feed .div-posts .posted-box-text {
+  font-size: 18px;
+}
+
 .page-feed .div-posts .box {
     background: white;
-    /* background: rgb(248, 194, 93); */
     border-radius: 5px 5px 0 0;
     color: #976324;
-    /* padding: 15px; */
     resize: none;
     width: 100%;
 }
@@ -290,18 +287,28 @@ body {
 .page-feed .div-posts .box:nth-child(2) {
     background: white;
     color: black;
-    padding: 15px;
+    padding: 20px 15px;
 }
 
 .page-feed .posted-box-options.box {
     border-top: solid 1px #0000001f;
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: 15px;
 }
 
 .page-feed .div-posts .box:last-child {
     border-radius: 0 0 5px 5px;
+}
+
+.page-feed .div-posts .div-edit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-feed .div-posts .div-edit .edit-icon {
+    margin-left: 20px;
 }
 
 .page-feed .i-none {
@@ -358,11 +365,11 @@ body {
     .page-feed .main-feed {
         display: grid;
         grid-template-columns: 1fr 1.5fr;
-        margin: 20px 5%;
-    }
+        padding: 20px;
 
-    .page-feed .div-posts .box:nth-child(2) {
-        font-size: 18px;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
     }
 
     .page-feed .btn-icon .menu {
@@ -386,15 +393,15 @@ body {
 }
 
 @media only screen and (min-width: 1200px) {
-    .page-feed .main-feed {
-        margin: 20px 10%;
-    }
-
     .container {
         padding: 0;
     }
 
     .main {
         width: 50%;
+    }
+
+    .user-profile {
+      min-width: 400px;
     }
 }

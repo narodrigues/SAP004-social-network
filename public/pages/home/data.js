@@ -16,6 +16,7 @@ export const posts = (text, value) => {
       .then((doc) => doc))
 }
 
+
 export const loadingPost = () => {
   return firebase
     .firestore()

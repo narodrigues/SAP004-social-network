@@ -14,7 +14,7 @@ export const feed = () => {
         <li id="signOut">Sair</li>
       </ul>
     </nav>
-    <img src="./assets/feed-logo.png">
+    <img src="./assets/nome-logo-feed.png">
   </header>
     <main class="main-feed">
       <section class="user-profile">
@@ -39,7 +39,7 @@ export const feed = () => {
                   </label>
                 </div>
               </form>
-              <button id="share-post" class="btn btn-send">Postar</button>
+              <button id="share-post" class="btn">Postar</button>
             </div>
           </form>
         </section>
@@ -87,6 +87,7 @@ export const feed = () => {
     const postedBy = document.createElement('span');
     const msgPost = document.createElement('textarea');
     const buttonsWrap = document.createElement('div');
+    const buttonsWrapEdit = document.createElement('div');
     const postsContainer = feedTemplate.querySelector('#posts-container');
 
     postedBy.innerHTML = `Publicado por ${post.name} em ${post.timestamps}`;
@@ -97,6 +98,7 @@ export const feed = () => {
     postedBy.classList.add('name-user-published');
     msgPost.classList.add('content-post', 'posted-box-text', 'box');
     buttonsWrap.classList.add('posted-box-options', 'box');
+    buttonsWrapEdit.classList.add('div-edit');
 
     msgPost.setAttribute('disabled', 'disabled');
     postsOnFeed.setAttribute('data-postid', doc.id);
@@ -119,8 +121,8 @@ export const feed = () => {
       deleteBtn.innerHTML = `<i class='fas fa-trash-alt icon'></i>`;
 
       editBtn.classList.add('btn-icon');
-      saveBtn.classList.add('i-none', 'btn-icon');
-      selectPrivacy.classList.add('i-none');
+      saveBtn.classList.add('i-none', 'btn-icon', 'edit-icon');
+      selectPrivacy.classList.add('i-none', 'edit-icon');
       deleteBtn.classList.add('btn-icon');
 
       selectPrivacy.id = 'select-privacy';
@@ -128,7 +130,8 @@ export const feed = () => {
       optionPublic.setAttribute('value', 'public');
       optionPrivate.setAttribute('value', 'private');
 
-      buttonsWrap.append(editBtn, saveBtn, selectPrivacy, deleteBtn);
+      buttonsWrap.append(buttonsWrapEdit, deleteBtn);
+      buttonsWrapEdit.append(editBtn, saveBtn, selectPrivacy)
       postsOnFeed.append(buttonsWrap);
       selectPrivacy.append(optionPublic, optionPrivate)
 
