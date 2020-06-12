@@ -194,7 +194,6 @@ export const feed = () => {
     posts(  postText, privacyOptions)
       .then((doc) => {
         createPosts(doc, true)
-        loadingPost();
       });
 
     feedTemplate.querySelector('#post-field').value = '';
