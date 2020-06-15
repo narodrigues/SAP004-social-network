@@ -5,17 +5,22 @@ export const posts = (text, value) => {
     likes: 0,
     userUid: firebase.auth().currentUser.uid,
     timestamps: firebase.firestore.Timestamp.fromDate(new Date()).toDate().toLocaleString('pt-BR'),
-    privacy: value
+    privacy: value,
+    commentsCount: 0,
+    // comments: [{
+    //   name: '',
+    //   date: '',
+    //   comment: ''
+    // }]
   }
   return firebase
     .firestore()
     .collection('posts')
     .add(Posts)
     .then((docRef) => docRef
-      .get()
-      .then((doc) => doc))
+    .get()
+    .then((doc) => doc))
 }
-
 
 export const loadingPost = () => {
   return firebase
@@ -42,7 +47,48 @@ export const saveEditPost = (text, id, privacy) => {
     .update({
       post: text,
       privacy: privacy
-    });
+    })
+}
+
+export const editLikes = (like, id) => {
+  return firebase
+    .firestore()
+    .collection('posts')
+    .doc(id)
+    .update({
+      "likes": like
+    })
+}
+
+// export const loadComments = (id) => {
+//   return firebase
+//     .firestore()
+//     .collection('posts')
+//     .orderBy('timestamps', 'desc')
+//     .doc(id)
+//     .get()
+//     .then(querySnapshot => {
+//       const arrayWithComments = [];
+//       querySnapshot.forEach(doc => {
+//         arrayWithComments.push(doc);
+//       });
+//       return arrayWithComments;
+//     });
+//}
+
+export const editComments = (comment, id) => {
+  return firebase
+    .firestore()
+    .collection('posts')
+    .doc(id)
+    .update({
+      commentCount: firebase.firestore.FieldValue.increment(1),
+      comments: firebase.firestore.FieldValue.arrayUnion({
+        name: firebase.auth().currentUser.displayName,
+        date: firebase.firestore.Timestamp.fromDate(new Date()).toDate().toLocaleString('pt-BR'),
+        comment: comment,
+      })
+    })
 }
 
 export const deletePost = (id) => {

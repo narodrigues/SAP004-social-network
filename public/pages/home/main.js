@@ -1,4 +1,4 @@
-import { signOut, posts, loadingPost, saveEditPost, deletePost } from "./data.js";
+import { signOut, posts, loadingPost, saveEditPost, deletePost, editLikes, editComments} from "./data.js";
 
 export const feed = () => {
   const feedTemplate = document.createElement('div');
@@ -73,12 +73,12 @@ export const feed = () => {
   }
 
   loadingPost()
-    .then((arrayPosts) => {
-      feedTemplate.querySelector('#posts-container').innerHTML = "";
-      arrayPosts.forEach((doc) => {
-        createPosts(doc)
-      })
+  .then((arrayPosts) => {
+    feedTemplate.querySelector('#posts-container').innerHTML = "";
+    arrayPosts.forEach((doc) => {
+      createPosts(doc)
     })
+  })
 
   const createPosts = (doc, prepend) => {
     const post = doc.data();
@@ -170,31 +170,79 @@ export const feed = () => {
 
     } else {
       const likeBtn = document.createElement('button');
+      const numberLikes = document.createElement('div');
       const commentBtn = document.createElement('button');
-
+      const commentsOptions = document.createElement('div');
+      const commentsText = document.createElement('textarea');
+      const commentsCancelBtn = document.createElement('button');
+      const commentsPostBtn = document.createElement('button');    
+      const commentsContainer = document.createElement('div');
+      
       likeBtn.innerHTML = `<i class='fas fa-heart icon'></i>`;
+      numberLikes.innerText = `${doc.data().likes}`;
       commentBtn.innerHTML = `<i class='fas fa-comments icon'></i>`;
+      commentsCancelBtn.innerHTML = `<i class="far fa-times-circle icon"></i>`
+      commentsPostBtn.innerHTML = `<i class="far fa-check-circle icon"></i>`
 
       likeBtn.classList.add('btn-icon', 'like');
+      numberLikes.classList.add('numberLikes');
       commentBtn.classList.add('btn-icon');
 
-      buttonsWrap.append(likeBtn, commentBtn);
-      postsOnFeed.append(buttonsWrap);
+      commentsOptions.classList.add('i-none');
+      commentsCancelBtn.classList.add('btn-icon');
+      commentsPostBtn.classList.add('btn-icon', 'sendPost'); 
+      
+      buttonsWrap.append(likeBtn, numberLikes, commentBtn);
+      postsOnFeed.append(buttonsWrap, commentsOptions, commentsContainer);
+      commentsOptions.append(commentsText, commentsPostBtn, commentsCancelBtn);
+
+      const addLikes = () => {
+        const likeId = doc.id;
+        let likes = (doc.data().likes) +1;
+        editLikes(likes, likeId);
+
+        numberLikes.setAttribute('data', 'number')
+        document.querySelector(`.numberLikes[data-number=${likeId}]`) + 1;
+        numberLikes.innerHTML = doc.data().likes =+ likes;
+      }
+
+      const addComment = () => {
+        const textComment = commentsText.value;
+        editComments(textComment, doc.id);
+      }
+
+      // const showComments = () => {
+      //   commentsContainer.innerHTML = `
+      //     <h1>${doc.comments.name} em ${doc.comments.date}</h1>
+      //     <p>${doc.comments.comment}</p>
+      //   `
+      // }
+
+      commentsPostBtn.addEventListener('click', addComment);
+      
+      const showOptionsComments = () => {
+        commentsOptions.classList.remove('i-none');
+      }
+        
+      likeBtn.addEventListener('click', addLikes);
+      commentBtn.addEventListener('click', showOptionsComments);
+      }
+
+
+      if (!prepend) {
+        postsContainer.appendChild(postsOnFeed);
+      } else {
+        postsContainer.prepend(postsOnFeed);
+      }
     }
 
-    if (!prepend) {
-      postsContainer.appendChild(postsOnFeed);
-    } else {
-      postsContainer.prepend(postsOnFeed);
-    }
-}
 
   feedTemplate.querySelector('#share-post').addEventListener('click', (e) => {
     e.preventDefault()
     const postText = feedTemplate.querySelector('#post-field').value;
     const privacyOptions = feedTemplate.querySelector('input[name="privacy"]:checked').value;
 
-    posts(  postText, privacyOptions)
+    posts(postText, privacyOptions)
       .then((doc) => {
         createPosts(doc, true)
       });
