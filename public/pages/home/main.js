@@ -76,11 +76,29 @@ export const feed = () => {
   .then((arrayPosts) => {
     feedTemplate.querySelector('#posts-container').innerHTML = "";
     arrayPosts.forEach((doc) => {
-      createPosts(doc)
+      createPosts(doc);
+      // createComments(doc);
     })
+    // .then((arrayPosts) => {
+    //   arrayPosts.forEach(())
+    //   console.log(array)
+    // })
+    // .then(())
   })
 
   const createPosts = (doc, prepend) => {
+
+    (function createComments(){
+      if(doc.data().comments){
+        for(let x = 0; x < doc.data().comments.length; x++){
+          console.log(doc.data().comments[x]);    
+        }
+        // console.log(doc.data().comments);
+      }
+    })()
+
+    
+
     const post = doc.data();
     const postsOnFeed = document.createElement('section');
     const postsBox = document.createElement('div');
@@ -227,6 +245,26 @@ export const feed = () => {
       likeBtn.addEventListener('click', addLikes);
       commentBtn.addEventListener('click', showOptionsComments);
       }
+
+
+   
+        // const createComments = () => {
+        //   // const comment = doc.data();
+        //   const commentsOnFeed = document.createElement('section');    
+        //   const commentsBox = document.createElement('div');
+        //   const commentedBy = document.createElement('span');
+        //   const msgComment = document.createElement('textarea');
+      
+        //   commentedBy.innerHTML = `Publicado por ${post.comments.name} em ${post.comments.timestamps}`;
+        //   msgComment.innerHTML = `${post.comments.post}`;
+
+        //   commentsOnFeed.append(commentsBox, msgComment);
+        //   commentsBox.append(commentedBy);
+      
+        //   // console.log(comment.comments)
+        // }
+        // createComments();
+      
 
 
       if (!prepend) {

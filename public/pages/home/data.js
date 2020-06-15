@@ -66,7 +66,7 @@ export const editLikes = (like, id) => {
 //     .collection('posts')
 //     .orderBy('timestamps', 'desc')
 //     .doc(id)
-//     .get()
+//     .collection('comments')
 //     .then(querySnapshot => {
 //       const arrayWithComments = [];
 //       querySnapshot.forEach(doc => {
@@ -74,7 +74,7 @@ export const editLikes = (like, id) => {
 //       });
 //       return arrayWithComments;
 //     });
-//}
+// }
 
 export const editComments = (comment, id) => {
   return firebase
