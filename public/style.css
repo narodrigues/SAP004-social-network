@@ -12,6 +12,11 @@ body {
     margin: auto;
 }
 
+textarea {
+    resize: none;
+    background: none;
+}
+
 .d-none{
     display: none;
 }
@@ -190,7 +195,7 @@ body {
 }
 
 .page-feed .header .btn-icon {
-  color: black;
+    color: black;
 }
 
 .page-feed .header .menu {
@@ -242,7 +247,6 @@ body {
     font-size: 18px;
     height: 120px;
     padding: 10px;
-    resize: none;
     width: 100%;
 }
 
@@ -276,13 +280,14 @@ body {
     background: white;
     border-radius: 5px 5px 0 0;
     color: #976324;
-    resize: none;
     width: 100%;
 }
 
 .page-feed .posted-box-by.box {
     background: rgb(255, 227, 155);
     padding: 15px;
+    font-size: 19px;
+    font-variant: all-petite-caps;
     font-weight: 600;
 }
 
@@ -294,6 +299,7 @@ body {
 
 .page-feed .posted-box-options.box {
     border-top: solid 1px #0000001f;
+    border-bottom: solid 1px #0000001f;
     display: flex;
     justify-content: space-between;
     padding: 15px;
@@ -315,6 +321,33 @@ body {
 
 .page-feed .i-none {
     display: none;
+}
+
+.page-feed .comments-container {
+    border: 2px solid #fbeacd;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin: 25px 15px;
+}
+
+.page-feed .post-comment { 
+  padding: 10px 0px;
+}
+
+.page-feed .commented-by {
+    background: #ffeacd;
+    border-radius: 7px 7px 0 0;
+    color: #976324;
+    font-size: 17px;
+    font-variant: all-petite-caps;
+    font-weight: 700;
+    padding: 3px 15px;
+}
+
+.page-feed .comments-container textarea {
+    font-size: 16px;
+    padding: 10px 15px;
 }
 
 .btn-icon {

@@ -1,9 +1,8 @@
-import { signOut, posts, loadingPost, saveEditPost, deletePost, editLikes, editComments} from "./data.js";
+import { signOut, posts, loadingPost, saveEditPost, deletePost, editLikes, editComments, deleteComment } from "./data.js";
 
 export const feed = () => {
   const feedTemplate = document.createElement('div');
-  feedTemplate.classList.add('page-feed');
-  feedTemplate.classList.add('pages');
+  feedTemplate.classList.add('page-feed', 'pages');
   window.location.href = '#feed';
   feedTemplate.innerHTML = `
     <header class="header">
@@ -14,7 +13,7 @@ export const feed = () => {
         <li id="signOut">Sair</li>
       </ul>
     </nav>
-    <img src="./assets/nome-logo-feed.png">
+    <img src="./assets/feed-logo.png">
   </header>
     <main class="main-feed">
       <section class="user-profile">
@@ -77,7 +76,6 @@ export const feed = () => {
     feedTemplate.querySelector('#posts-container').innerHTML = "";
     arrayPosts.forEach((doc) => {
       createPosts(doc);
-      // createComments(doc);
     })
     // .then((arrayPosts) => {
     //   arrayPosts.forEach(())
@@ -106,6 +104,7 @@ export const feed = () => {
     const msgPost = document.createElement('textarea');
     const buttonsWrap = document.createElement('div');
     const buttonsWrapEdit = document.createElement('div');
+    const postsComment = document.createElement('section');
     const postsContainer = feedTemplate.querySelector('#posts-container');
 
     postedBy.innerHTML = `Publicado por ${post.name} em ${post.timestamps}`;
@@ -117,11 +116,12 @@ export const feed = () => {
     msgPost.classList.add('content-post', 'posted-box-text', 'box');
     buttonsWrap.classList.add('posted-box-options', 'box');
     buttonsWrapEdit.classList.add('div-edit');
+    postsComment.classList.add('post-comment');
 
     msgPost.setAttribute('disabled', 'disabled');
     postsOnFeed.setAttribute('data-postid', doc.id);
 
-    postsOnFeed.append(postsBox, msgPost);
+    postsOnFeed.append(postsBox, msgPost, postsComment);
     postsBox.append(postedBy);
 
     if (post.userUid === firebase.auth().currentUser.uid) {
@@ -141,10 +141,11 @@ export const feed = () => {
       editBtn.classList.add('btn-icon');
       saveBtn.classList.add('i-none', 'btn-icon', 'edit-icon');
       selectPrivacy.classList.add('i-none', 'edit-icon');
-      deleteBtn.classList.add('btn-icon');
+      deleteBtn.classList.add('btn-icon', 'delete-post');
 
       selectPrivacy.id = 'select-privacy';
 
+      // deleteBtn.setAttribute('data-postid', doc.id)
       optionPublic.setAttribute('value', 'public');
       optionPrivate.setAttribute('value', 'private');
 
@@ -178,7 +179,7 @@ export const feed = () => {
 
       const deletePostBtn = () => {
         const dataId = doc.id;
-        feedTemplate.querySelector(`[data-postid=${dataId}]`).remove();
+        feedTemplate.querySelector(`[data-postid='${dataId}']`).remove();
         deletePost(dataId);
       }
 
@@ -194,7 +195,6 @@ export const feed = () => {
       const commentsText = document.createElement('textarea');
       const commentsCancelBtn = document.createElement('button');
       const commentsPostBtn = document.createElement('button');    
-      const commentsContainer = document.createElement('div');
       
       likeBtn.innerHTML = `<i class='fas fa-heart icon'></i>`;
       numberLikes.innerText = `${doc.data().likes}`;
@@ -211,7 +211,7 @@ export const feed = () => {
       commentsPostBtn.classList.add('btn-icon', 'sendPost'); 
       
       buttonsWrap.append(likeBtn, numberLikes, commentBtn);
-      postsOnFeed.append(buttonsWrap, commentsOptions, commentsContainer);
+      postsOnFeed.append(buttonsWrap, commentsOptions);
       commentsOptions.append(commentsText, commentsPostBtn, commentsCancelBtn);
 
       const addLikes = () => {
@@ -220,7 +220,7 @@ export const feed = () => {
         editLikes(likes, likeId);
 
         numberLikes.setAttribute('data', 'number')
-        document.querySelector(`.numberLikes[data-number=${likeId}]`) + 1;
+        document.querySelector(`.numberLikes`) + 1;
         numberLikes.innerHTML = doc.data().likes =+ likes;
       }
 
@@ -228,13 +228,6 @@ export const feed = () => {
         const textComment = commentsText.value;
         editComments(textComment, doc.id);
       }
-
-      // const showComments = () => {
-      //   commentsContainer.innerHTML = `
-      //     <h1>${doc.comments.name} em ${doc.comments.date}</h1>
-      //     <p>${doc.comments.comment}</p>
-      //   `
-      // }
 
       commentsPostBtn.addEventListener('click', addComment);
       
@@ -246,35 +239,89 @@ export const feed = () => {
       commentBtn.addEventListener('click', showOptionsComments);
       }
 
-
-   
-        // const createComments = () => {
-        //   // const comment = doc.data();
-        //   const commentsOnFeed = document.createElement('section');    
-        //   const commentsBox = document.createElement('div');
-        //   const commentedBy = document.createElement('span');
-        //   const msgComment = document.createElement('textarea');
-      
-        //   commentedBy.innerHTML = `Publicado por ${post.comments.name} em ${post.comments.timestamps}`;
-        //   msgComment.innerHTML = `${post.comments.post}`;
-
-        //   commentsOnFeed.append(commentsBox, msgComment);
-        //   commentsBox.append(commentedBy);
-      
-        //   // console.log(comment.comments)
-        // }
-        // createComments();
-      
-
-
       if (!prepend) {
         postsContainer.appendChild(postsOnFeed);
       } else {
         postsContainer.prepend(postsOnFeed);
       }
-    }
+    
+    (function loadComments(){
+      if(doc.data().comments){
+        for(let x = 0; x < doc.data().comments.length; x++){
+          const commentsContainer = document.createElement('div');
+          const commentedBy= document.createElement('span'); 
+          const commentTextarea= document.createElement('textarea');
 
+          commentedBy.innerHTML = `${doc.data().comments[x].name} em ${doc.data().comments[x].date}`;
+          commentTextarea.innerHTML = `${doc.data().comments[x].comment}`;
 
+          commentsContainer.classList.add('comments-container');
+          commentedBy.classList.add('commented-by');
+          commentTextarea.classList.add('extareaComments');
+
+          commentsContainer.setAttribute('data-commentid', doc.id);
+          commentTextarea.setAttribute('disabled', 'disabled');
+
+          commentsContainer.append(commentedBy, commentTextarea);
+
+          if(post.comments[x].userUid === firebase.auth().currentUser.uid){
+            // console.log(post.comments[x].userUid)
+            const btnCommentsContainer = document.createElement('div');
+            const editComment = document.createElement('button');
+            const saveEditedComment = document.createElement('button');
+            const deleteComment = document.createElement('button');
+
+            btnCommentsContainer.classList.add('btn-comments-container');
+            editComment.classList.add('btn-icon', 'edit-comment');
+            saveEditedComment.classList.add('btn-icon', 'i-none', 'save-edited-comment');
+            deleteComment.classList.add('btn-icon', 'delete-comment');
+
+            editComment.innerHTML = `<i class='fas fa-edit icon'></i>`;
+            saveEditedComment.innerHTML = `<i class='far fa-save icon'></i>`;
+            deleteComment.innerHTML = `<i class='fas fa-trash-alt icon'></i>`;
+
+            const editBtnFunctions = () => {
+              saveEditedComment.classList.remove('i-none');
+              commentTextarea.removeAttribute('disabled');
+            }
+      
+            const saveBtnOptions = () => {
+              saveEditedComment.classList.add('i-none');
+              commentTextarea.setAttribute('disabled', 'disabled');
+      
+              // saveEditPost(msgPost.value, doc.id, changePostPrivacy);
+            }
+      
+            const deleteCommenttBtn = () => {
+              const dataId = doc.id;
+              feedTemplate.querySelector(`[data-commentid='${dataId}']`).remove();
+              deleteComment(dataId);
+            }
+          
+            editComment.addEventListener('click', editBtnFunctions);
+            saveEditedComment.addEventListener('click', saveBtnOptions);
+            deleteComment.addEventListener('click', deleteCommenttBtn);
+
+            commentsContainer.append(btnCommentsContainer);
+            btnCommentsContainer.append(editComment, saveEditedComment, deleteComment);
+
+          }
+          postsComment.append(commentsContainer);
+          postsOnFeed.append(postsComment);
+
+        }
+      } 
+    })()
+
+      // const deleteCommentBtn = () => {
+      //   const dataId = doc.id;
+      //   feedTemplate.querySelector(`[data-postid='${dataId}']`).remove();
+      //   deletePost(dataId);
+      // }
+
+      // deleteBtn.addEventListener('click', deleteCommentBtn);
+  }
+    
   feedTemplate.querySelector('#share-post').addEventListener('click', (e) => {
     e.preventDefault()
     const postText = feedTemplate.querySelector('#post-field').value;
@@ -287,7 +334,7 @@ export const feed = () => {
 
     feedTemplate.querySelector('#post-field').value = '';
   });
-
+  
   feedTemplate.querySelector('#signOut').addEventListener('click', signOut);
 
   return feedTemplate;
