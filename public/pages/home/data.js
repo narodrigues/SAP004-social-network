@@ -34,26 +34,6 @@ export const loadingPost = () => {
     });
 }
 
-// export const showComments = () => {
-//   return firebase
-//     .firestore()
-//     .collection('posts')
-//     .where('privacy', '==', 'public')
-//     .limit(10)
-//     .orderBy('timestamps', 'desc')
-//     .collection('comments')
-//     .orderBy('timestamps', 'desc')
-//     .get()
-//     .then(
-//       querySnapshot => {
-//       const arrayWithPosts = [];
-//       querySnapshot.forEach(doc => {
-//         arrayWithPosts.push(doc);
-//       });
-//       return arrayWithPosts;
-//     });
-// }
-
 export const saveEditPost = (text, id, privacy) => {
   return firebase
     .firestore()
@@ -75,20 +55,37 @@ export const editLikes = (like, id) => {
     })
 }
 
-export const comments = (comment, id) => {
-  const Comments = {
-    name: firebase.auth().currentUser.displayName,
-    userUid: firebase.auth().currentUser.uid,
-    date: firebase.firestore.Timestamp.fromDate(new Date()).toDate().toLocaleString('pt-BR'),
-    comment: comment
-  }
+export const addComments = (id, comment) => {
   return firebase
     .firestore()
     .collection('posts')
     .doc(id)
-    .collection('comments')
-    .add(Comments)
-    .then((comments) => {comments})
+    .update({
+      commentCount: firebase.firestore.FieldValue.increment(1),
+      comments: firebase.firestore.FieldValue.arrayUnion({
+        name: firebase.auth().currentUser.displayName,
+        userUid: firebase.auth().currentUser.uid,
+        date: firebase.firestore.Timestamp.fromDate(new Date()).toDate().toLocaleString('pt-BR'),
+        comment: comment,
+        id: new Date().getTime()
+      })
+    })
+}
+
+export const saveEditComments = (text, id) => {
+  return firebase
+    .firestore()
+    .collection('posts')
+    .doc(id)
+    .update({
+      comments: firebase.firestore.FieldValue.arrayUnion({
+        name: firebase.auth().currentUser.displayName,
+        userUid: firebase.auth().currentUser.uid,
+        date: firebase.firestore.Timestamp.fromDate(new Date()).toDate().toLocaleString('pt-BR'),
+        comment: text,
+        id: new Date().getTime()
+      })
+    })
 }
 
 export const deletePost = (id) => {
@@ -99,14 +96,16 @@ export const deletePost = (id) => {
     .delete()
 }
 
-export const deleteComment = (id) => {
+export const deleteOnlyComment = (id, comments) => {
   return firebase
     .firestore()
     .collection('posts')
     .doc(id)
     .update({
-    // commentsCount: firebase.firestore.FieldValue.increment(-1),
-    // comments: firebase.firestore.FieldValue.delete()
+      commentsCount: firebase.firestore.FieldValue.increment(-1),
+      comments: firebase.firestore.FieldValue.arrayRemove({
+      ...comments
+    })
   })
 }
 
