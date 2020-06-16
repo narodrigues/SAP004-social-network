@@ -1,4 +1,4 @@
-import { signOut, posts, loadingPost, saveEditPost, deletePost, editLikes, editComments, deleteComment } from "./data.js";
+import { signOut, posts, loadingPost, saveEditPost, deletePost, editLikes, addComments, deleteOnlyComment, saveEditComments } from "./data.js";
 
 export const feed = () => {
   const feedTemplate = document.createElement('div');
@@ -209,7 +209,14 @@ export const feed = () => {
 
       const addComment = () => {
         const textComment = commentsText.value;
-        editComments(textComment, doc.id);
+        addComments(doc.id, textComment);
+        loadingPost()
+        .then((arrayPosts) => {
+          feedTemplate.querySelector('#posts-container').innerHTML = "";
+          arrayPosts.forEach((doc) => {
+            createPosts(doc);
+          })
+        })
       }
 
       commentsPostBtn.addEventListener('click', addComment);
@@ -228,7 +235,7 @@ export const feed = () => {
         postsContainer.prepend(postsOnFeed);
       }
     
-    (function loadComments(){
+    function loadComments(){
       if(doc.data().comments){
         for(let x = 0; x < doc.data().comments.length; x++){
           const commentsContainer = document.createElement('div');
@@ -242,13 +249,12 @@ export const feed = () => {
           commentedBy.classList.add('commented-by');
           commentTextarea.classList.add('extareaComments');
 
-          commentsContainer.setAttribute('data-commentid', doc.id);
+          commentsContainer.setAttribute('data-commentid', doc.data().comments[x].id);
           commentTextarea.setAttribute('disabled', 'disabled');
 
           commentsContainer.append(commentedBy, commentTextarea);
 
           if(post.comments[x].userUid === firebase.auth().currentUser.uid){
-            // console.log(post.comments[x].userUid)
             const btnCommentsContainer = document.createElement('div');
             const editComment = document.createElement('button');
             const saveEditedComment = document.createElement('button');
@@ -257,7 +263,7 @@ export const feed = () => {
             btnCommentsContainer.classList.add('btn-comments-container');
             editComment.classList.add('btn-icon', 'edit-comment');
             saveEditedComment.classList.add('btn-icon', 'i-none', 'save-edited-comment');
-            deleteComment.classList.add('btn-icon', 'delete-comment');
+            deleteComment.classList.add('btn-icon', 'delete');
 
             editComment.innerHTML = `<i class='fas fa-edit icon'></i>`;
             saveEditedComment.innerHTML = `<i class='far fa-save icon'></i>`;
@@ -266,19 +272,24 @@ export const feed = () => {
             const editBtnFunctions = () => {
               saveEditedComment.classList.remove('i-none');
               commentTextarea.removeAttribute('disabled');
+              commentTextarea.setAttribute('autofocus', 'autofocus');
             }
       
             const saveBtnOptions = () => {
               saveEditedComment.classList.add('i-none');
               commentTextarea.setAttribute('disabled', 'disabled');
-      
-              // saveEditPost(msgPost.value, doc.id, changePostPrivacy);
+
+              const newComment = commentTextarea.value;
+              const postId = doc.id;
+              saveEditComments(newComment, postId)
             }
-      
+            
             const deleteCommenttBtn = () => {
-              const dataId = doc.id;
-              feedTemplate.querySelector(`[data-commentid='${dataId}']`).remove();
-              deleteComment(dataId);
+              const postId = doc.id;
+              const comments = doc.data().comments[x];
+              const idComment = doc.data().comments[x].id;
+              feedTemplate.querySelector(`[data-commentid='${idComment}']`).remove();
+              deleteOnlyComment(postId, comments);
             }
           
             editComment.addEventListener('click', editBtnFunctions);
@@ -287,22 +298,14 @@ export const feed = () => {
 
             commentsContainer.append(btnCommentsContainer);
             btnCommentsContainer.append(editComment, saveEditedComment, deleteComment);
-
           }
-          postsComment.append(commentsContainer);
+          
           postsOnFeed.append(postsComment);
-
+          postsComment.prepend(commentsContainer)
         }
       } 
-    })()
-
-      // const deleteCommentBtn = () => {
-      //   const dataId = doc.id;
-      //   feedTemplate.querySelector(`[data-postid='${dataId}']`).remove();
-      //   deletePost(dataId);
-      // }
-
-      // deleteBtn.addEventListener('click', deleteCommentBtn);
+    }
+    loadComments();
   }
     
   feedTemplate.querySelector('#share-post').addEventListener('click', (e) => {
