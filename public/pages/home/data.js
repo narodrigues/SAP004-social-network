@@ -25,8 +25,7 @@ export const loadingPost = () => {
     .limit(10)
     .orderBy('timestamps', 'desc')
     .get()
-    .then(
-      querySnapshot => {
+    .then((querySnapshot) => {
       const arrayWithPosts = [];
       querySnapshot.forEach(doc => {
         arrayWithPosts.push(doc);
@@ -81,7 +80,7 @@ export const comments = (comment, id) => {
     name: firebase.auth().currentUser.displayName,
     userUid: firebase.auth().currentUser.uid,
     date: firebase.firestore.Timestamp.fromDate(new Date()).toDate().toLocaleString('pt-BR'),
-    comment: comment,
+    comment: comment
   }
   return firebase
     .firestore()
@@ -106,8 +105,8 @@ export const deleteComment = (id) => {
     .collection('posts')
     .doc(id)
     .update({
-    commentsCount: firebase.firestore.FieldValue.increment(-1),
-    comments: firebase.firestore.FieldValue.delete()
+    // commentsCount: firebase.firestore.FieldValue.increment(-1),
+    // comments: firebase.firestore.FieldValue.delete()
   })
 }
 

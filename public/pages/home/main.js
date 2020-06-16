@@ -1,4 +1,4 @@
-import { signOut, posts, loadingPost, saveEditPost, deletePost, editLikes, comments, deleteComment } from "./data.js";
+import { signOut, posts, loadingPost, saveEditPost, deletePost, editLikes, deleteComment } from "./data.js";
 
 export const feed = () => {
   const feedTemplate = document.createElement('div');
@@ -78,6 +78,7 @@ export const feed = () => {
       createPosts(doc);
     })
   })
+
 
   const createPosts = (doc, prepend) => {
     const post = doc.data();
@@ -209,7 +210,7 @@ export const feed = () => {
 
       const addComment = () => {
         const textComment = commentsText.value;
-        comments(textComment, doc.id);
+        // comments(textComment, doc.id);
       }
 
       commentsPostBtn.addEventListener('click', addComment);
@@ -229,7 +230,6 @@ export const feed = () => {
       }
     
     (function loadComments(){
-      console.log(doc.data().comments)
       if(doc.data().comments){
         for(let x = 0; x < doc.data().comments.length; x++){
           const commentsContainer = document.createElement('div');
