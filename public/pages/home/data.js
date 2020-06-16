@@ -76,20 +76,20 @@ export const editLikes = (like, id) => {
     })
 }
 
-export const editComments = (comment, id) => {
+export const comments = (comment, id) => {
+  const Comments = {
+    name: firebase.auth().currentUser.displayName,
+    userUid: firebase.auth().currentUser.uid,
+    date: firebase.firestore.Timestamp.fromDate(new Date()).toDate().toLocaleString('pt-BR'),
+    comment: comment,
+  }
   return firebase
     .firestore()
     .collection('posts')
     .doc(id)
-    .update({
-      commentCount: firebase.firestore.FieldValue.increment(1),
-      comments: firebase.firestore.FieldValue.arrayUnion({
-        name: firebase.auth().currentUser.displayName,
-        userUid: firebase.auth().currentUser.uid,
-        date: firebase.firestore.Timestamp.fromDate(new Date()).toDate().toLocaleString('pt-BR'),
-        comment: comment,
-      })
-    })
+    .collection('comments')
+    .add(Comments)
+    .then((comments) => {comments})
 }
 
 export const deletePost = (id) => {

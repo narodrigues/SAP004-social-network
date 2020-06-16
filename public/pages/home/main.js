@@ -1,4 +1,4 @@
-import { signOut, posts, loadingPost, saveEditPost, deletePost, editLikes, editComments, deleteComment } from "./data.js";
+import { signOut, posts, loadingPost, saveEditPost, deletePost, editLikes, comments, deleteComment } from "./data.js";
 
 export const feed = () => {
   const feedTemplate = document.createElement('div');
@@ -77,26 +77,9 @@ export const feed = () => {
     arrayPosts.forEach((doc) => {
       createPosts(doc);
     })
-    // .then((arrayPosts) => {
-    //   arrayPosts.forEach(())
-    //   console.log(array)
-    // })
-    // .then(())
   })
 
   const createPosts = (doc, prepend) => {
-
-    (function createComments(){
-      if(doc.data().comments){
-        for(let x = 0; x < doc.data().comments.length; x++){
-          console.log(doc.data().comments[x]);    
-        }
-        // console.log(doc.data().comments);
-      }
-    })()
-
-    
-
     const post = doc.data();
     const postsOnFeed = document.createElement('section');
     const postsBox = document.createElement('div');
@@ -226,7 +209,7 @@ export const feed = () => {
 
       const addComment = () => {
         const textComment = commentsText.value;
-        editComments(textComment, doc.id);
+        comments(textComment, doc.id);
       }
 
       commentsPostBtn.addEventListener('click', addComment);
@@ -246,6 +229,7 @@ export const feed = () => {
       }
     
     (function loadComments(){
+      console.log(doc.data().comments)
       if(doc.data().comments){
         for(let x = 0; x < doc.data().comments.length; x++){
           const commentsContainer = document.createElement('div');
