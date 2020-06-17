@@ -12,9 +12,9 @@ export const posts = (text, value) => {
     .firestore()
     .collection('posts')
     .add(Posts)
-    .then((docRef) => docRef)
+    .then((docRef) => docRef
     .get()
-    .then((doc) => doc)
+    .then((doc) => doc))
 }
 
 export const loadingPost = () => {
@@ -122,6 +122,8 @@ export const saveEditComments = (text, id, commentTarget) => {
           console.log(doc.data().comments.comment)
           return newComment
         }
+        return newComment
+
       })
       firebase
       .firestore()
