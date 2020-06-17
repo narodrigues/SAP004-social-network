@@ -142,6 +142,7 @@ export const feed = () => {
         saveBtn.classList.remove('i-none');
         selectPrivacy.classList.remove('i-none');
         msgPost.removeAttribute('disabled');
+        msgPost.focus();
       }
 
       const saveBtnOptions = () => {
@@ -191,6 +192,7 @@ export const feed = () => {
       commentBtn.classList.add('btn-icon');
 
       commentsOptions.classList.add('i-none');
+      commentsText.classList.add('textarea-post-comment');
       commentsCancelBtn.classList.add('btn-icon');
       commentsPostBtn.classList.add('btn-icon', 'sendPost'); 
       
@@ -224,6 +226,7 @@ export const feed = () => {
       
       const showOptionsComments = () => {
         commentsOptions.classList.remove('i-none');
+        commentsText.focus();
       }
         
       likeBtn.addEventListener('click', addLikes);
@@ -248,7 +251,7 @@ export const feed = () => {
 
           commentsContainer.classList.add('comments-container');
           commentedBy.classList.add('commented-by');
-          commentTextarea.classList.add('extareaComments');
+          commentTextarea.classList.add('textareaComments');
 
           commentsContainer.setAttribute('data-commentid', doc.data().comments[x].id);
           commentTextarea.setAttribute('disabled', 'disabled');
@@ -273,7 +276,8 @@ export const feed = () => {
             const editBtnFunctions = () => {
               saveEditedComment.classList.remove('i-none');
               commentTextarea.removeAttribute('disabled');
-              commentTextarea.setAttribute('autofocus', 'autofocus');
+              // commentTextarea.setAttribute('autofocus', 'autofocus');
+              commentTextarea.focus();
             }
       
             const saveBtnOptions = () => {
@@ -282,7 +286,7 @@ export const feed = () => {
 
               const newComment = commentTextarea.value;
               const postId = doc.id;
-              saveEditComments(newComment, postId)
+              saveEditComments(newComment, postId, doc.data().comments[x])
             }
             
             const deleteCommenttBtn = () => {

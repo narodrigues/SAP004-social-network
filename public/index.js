@@ -1,6 +1,7 @@
 import { signInPage } from './pages/login/main.js';
 import { inscribePage } from './pages/register/main.js';
-import { feed } from './pages/home/main.js';
+import { feed } from './pages/feed/main.js';
+import { userProfilePage } from './pages/profile/main.js';
 
 const root = document.querySelector('#root');
 
@@ -18,6 +19,9 @@ const init = () => {
           break;
         case '#feed':
           root.appendChild(feed());
+          break;
+        case '#profile':
+          root.appendChild(userProfilePage());
           break;
         default:
           root.appendChild(feed());

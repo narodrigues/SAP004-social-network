@@ -21,16 +21,16 @@ textarea:focus, input:focus, button:focus, select:focus {
     box-shadow: 0 0 0 0;
     border: 0 none;
     outline-color: #ccccccb4;
-  } 
-
-.d-block {
-    display: block;
-}
+} 
 
 .container {
     margin: auto;
     padding: 0 30px;
     width: 100%;
+}
+
+.i-none {
+    display: none;
 }
 
 .btn{
@@ -378,6 +378,39 @@ textarea:focus, input:focus, button:focus, select:focus {
     font-size: 25px;
 }
 
+.profile-infos {
+    display: inline-block;
+    height: 100%;
+}
+
+.div-infos {
+    border: 1px solid #b8b8b8bd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 20px 10px;
+    width: 100%;
+}
+
+.div-infos .info-profile-option {
+    display: flex;
+    justify-content: space-between;
+}
+
+.div-infos .info-user-div {
+    border: 1px solid #b8b8b8bd;
+    border-radius: 10px;
+    margin: 10px 0px;
+    padding: 10px 10px;
+}
+
+.div-infos .info-user-div span{
+    display: block;
+}
+
+.div-infos .info-user-div textarea{
+    border: 1px solid #b8b8b8bd;
+}
+
 @media only screen and (min-width: 768px) {
     input.btn.btn-send {
         width: auto;
@@ -440,6 +473,10 @@ textarea:focus, input:focus, button:focus, select:focus {
 
     .page-feed .nav-main ul li:nth-child(1) {
         margin-right: 40px;
+    }
+
+    .wrap-desk {
+        display: flex;
     }
 }
 

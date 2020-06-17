@@ -12,7 +12,7 @@ export const inscribePage = () => {
       <label for="inscribe-last-name">Sobrenome:
         <input type="text" class="btn" required id="inscribe-last-name">
       </label>
-      <label for="bio">Sua profissão:
+      <label for="bio">Status:
         <input type="text" class="btn" required id="bio">
       </label>
       <label for="age-inscribe">Idade:
