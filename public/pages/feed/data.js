@@ -72,39 +72,6 @@ export const addComments = (id, comment) => {
     })
 }
 
-// export const saveEditComments = (text, id, commentTarget) => {
-//   return firebase
-//     .firestore()
-//     .collection('posts')
-//     .doc(id)
-//     .get()
-//     .then((doc) => {
-//       const arrayComments = doc.data().comments.map((myComment) => {
-//         console.log(myComment)
-//         console.log(commentTarget)
-//         // console.log(myComment === commentTarget)
-//         // console.log(Object.values(myComment), Object.values(commentTarget))
-//         if(Object.keys(myComment) === Object.keys(commentTarget) && Object.values(myComment) === Object.values(commentTarget)){
-//           const newComment = {...commentTarget, comment: text}
-//           console.log(newComment)
-//           return newComment;
-//           myComment.comment = text;
-//           return myComment;
-//         } 
-//         return myComment
-//       })
-//       console.log(arrayComments);
-//       console.log(commentTarget)
-//       firebase
-//       .firestore()
-//       .collection('posts')
-//       .doc(id) 
-//       .update({
-//         comments: arrayComments
-//       })
-//     })
-// }
-
 export const saveEditComments = (text, id, commentTarget) => {
   return firebase
     .firestore()
@@ -119,11 +86,9 @@ export const saveEditComments = (text, id, commentTarget) => {
           console.log(myComment.id, commentTarget.id)
           console.log(newComment)
           console.log(myComment)
-          console.log(doc.data().comments.comment)
           return newComment
         }
-        return newComment
-
+        return myComment
       })
       firebase
       .firestore()
