@@ -102,30 +102,26 @@ export const userProfilePage = () => {
     })
   })
 
-  setTimeout(function(){
-  const menu = profilePage.querySelector('.nav-main');
-  const divToClose = profilePage.querySelector('.divToClose');
+  setTimeout(() => {
+    const menu = profilePage.querySelector('.nav-main');
+    const divToClose = profilePage.querySelector('.divToClose');
 
-  profilePage.querySelector('#openMenu').addEventListener('click', () => {
-    if (menu.style.display === 'block') {
-      menu.style.display = 'none';
-    } else {
-      menu.style.display = 'block';
-      divToClose.addEventListener('click', closeNav, true);
-    }
-  });
+    profilePage.querySelector('#openMenu').addEventListener('click', () => {
+      menu.classList.toggle('display-block');
+    });
 
-  window.addEventListener('resize', () => {
-    if (window.innerWidth >= 768) {
-      menu.style.display = 'block';
-    } else {
-      closeNav();
-    }
-  });
+    divToClose.addEventListener('click', () => {
+      menu.classList.remove('display-block');
+    });
 
-  const closeNav = () => {
-    menu.style.display = 'none';
-  }}, 1000)
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) {
+        menu.classList.add('display-block');
+      } else {
+        menu.classList.toggle('display-block');
+      }
+    });
+  }, 1000)
 
 
   return profilePage;

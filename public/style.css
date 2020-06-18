@@ -188,19 +188,11 @@ textarea:focus, input:focus, button:focus, select:focus {
     background-attachment: fixed;
 }
 
-.nav-main li {
-    position: relative;
+nav.display-block {
+    display: block;
 }
 
-.nav-main li {
-    background: #ffffff;
-    color: #f28e1a;
-    font-variant: all-petite-caps;
-    font-weight: 700;
-    letter-spacing: 2px;
-}
-
-nav.nav-main {
+.nav-main {
     background-color: #ffffff;
     display: none;
     position: absolute;
@@ -209,13 +201,15 @@ nav.nav-main {
     width: 100%;
 }
 
-nav.nav-main li {
+.nav-main li {
+    color: #f28e1a;
     display: block;
     font-size: 20px;
+    font-variant: all-petite-caps;
     font-weight: bold;
+    letter-spacing: 2px;
     padding: 20px;
-    text-decoration: none;
-    text-transform: uppercase;
+    position: relative;
     transition: all .5s;
 }
 
@@ -228,7 +222,6 @@ nav.nav-main li:hover {
     align-items: center;
     background: rgb(242, 142, 26);
     display: flex;
-    /* padding: 15px 10px; */
     height: 75px;
     width: 100%;
 }
@@ -248,10 +241,6 @@ nav.nav-main li:hover {
 
 .header-catarse .btn-icon .menu {
     display: block;
-}
-
-.header-catarse .nav-main {
-    display: none;
 }
 
 .page-feed .user-profile {
@@ -498,7 +487,7 @@ nav.nav-main li:hover {
         width: 100%;
     }
 
-    nav.nav-main {
+    .nav-main {
         background-color: inherit;
         top: auto;
         width: auto;
@@ -522,7 +511,7 @@ nav.nav-main li:hover {
     }
 
     .nav-main li {
-        background: inherit;
+        /* background: inherit; */
         color: #ffffff;
     }
 
