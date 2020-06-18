@@ -5,23 +5,31 @@ export const getUserInfos = () => {
   .where('userUid', '==', firebase.auth().currentUser.uid)
   .get()
   .then((querySnapshot) => {
-    const arrayWithPosts = [];
+    const usersInfo = [];
     querySnapshot.forEach(doc => {
-      arrayWithPosts.push(doc);
+      usersInfo.push(doc);
     });
-    return arrayWithPosts;
+    return usersInfo;
   });
 }
 
+export const editedPersonalInfos = (id, gender) => {
+  return firebase
+    .firestore()
+    .collection('users')
+    .doc(id)
+    .update({
+      gender: gender
+    })
+}
 
-export const editUserInfos = (id, bio, gender, relationship, about) => {
+export const editedAdditionalInfos = (id, bio, relationship, about) => {
   return firebase
     .firestore()
     .collection('users')
     .doc(id)
     .update({
       bio: bio,
-      gender: gender,
       relationship: relationship,
       about: about
     })
