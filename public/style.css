@@ -442,6 +442,29 @@ nav.nav-main li:hover {
     border: 1px solid #b8b8b8bd;
 }
 
+.profile-infos {
+    display: inline-block;
+    text-align: center;
+}
+
+.profile-infos.div-infos span::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: black;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.div-infos .info-user-div textarea{
+   border: none;
+}
+
+.wrap-desk {  
+   width: 100%;
+}
+
 @media only screen and (min-width: 768px) {
     input.btn.btn-send {
         width: auto;
@@ -535,6 +558,20 @@ nav.nav-main li:hover {
 
     .wrap-desk {
         display: flex;
+        justify-content: space-between;
+        max-width: 900px;
+        padding: 20px;
+    }
+
+    .user-info.container{
+      padding: 0 0 0 30px;
+      margin: 0 auto;
+    }
+
+    .profile-container.container {
+      margin: 0 auto;
+      padding: 0;
+      width: 50%;
     }
 }
 

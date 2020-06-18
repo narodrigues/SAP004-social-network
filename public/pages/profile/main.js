@@ -22,18 +22,20 @@ export const userProfilePage = () => {
       let infos = doc.data();
       profilePage.innerHTML += `
       <div class='divToClose'>
-        <aside class='profile-infos div-infos'>
-          <figure>
-            <img src='' alt='Foto de perfil'>
-          </figure>
-          <span>${firebase.auth().currentUser.displayName}</span>
-          <nav>
-            <ul>
-              <li><a href='#'>Perfil</a></li>
-              <li><a href='#'>Meus Posts</a></li>
-            </ul>
-          </nav>
-        </aside>
+        <div class='profile-container container'>
+          <aside class='profile-infos div-infos'>
+            <figure>
+              <img src='' alt='Foto de perfil'>
+            </figure>
+            <span>${firebase.auth().currentUser.displayName}</span>
+            <nav>
+              <ul>
+                <li><a href='#'>Perfil</a></li>
+                <li><a href='#'>Meus Posts</a></li>
+              </ul>
+            </nav>
+          </aside>
+        </div>
       
         <main id='main-user-posts'>
           <article id='user-posts-container'></article>
