@@ -79,7 +79,7 @@ export const saveEditComments = (text, id, commentTarget) => {
     .doc(id)
     .get()
     .then((doc) => {
-       const newComment1 = doc.data().comments.map((myComment) => {
+       const mapComment = doc.data().comments.map((myComment) => {
         if(myComment.id === commentTarget.id){
           const newComment = {...commentTarget, comment: text}
           console.log(text)
@@ -95,7 +95,7 @@ export const saveEditComments = (text, id, commentTarget) => {
       .collection('posts')
       .doc(id)
       .update({      
-        comments: newComment1
+        comments: mapComment
       })
     })
     }
