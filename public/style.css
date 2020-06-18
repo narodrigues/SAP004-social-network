@@ -28,11 +28,15 @@ li {
     list-style: none;
 }
 
-textarea:focus, input:focus, button:focus, select:focus {
+input:focus, button:focus, select:focus {
     box-shadow: 0 0 0 0;
     border: 0 none;
     outline-color: #ccccccb4;
 } 
+
+textarea:focus {
+    outline-color: #fcaf6a;
+}
 
 .container {
     margin: auto;
@@ -411,12 +415,14 @@ nav.nav-main li:hover {
 
 .profile-infos {
     display: inline-block;
-    height: 100%;
 }
 
 .div-infos {
-    border: 1px solid #b8b8b8bd;
+    background: rgba(255, 255, 255, 0.795);
+    /* border: none; */
+    /* border: 1px solid #b8b8b8bd; */
     border-radius: 10px;
+    box-shadow: 0 0 1em #e1b294bd;
     margin-bottom: 20px;
     padding: 20px 10px;
     width: 100%;
@@ -438,8 +444,10 @@ nav.nav-main li:hover {
     display: block;
 }
 
-.div-infos .info-user-div textarea{
+.div-infos .info-user-div textarea, select{
     border: 1px solid #b8b8b8bd;
+    background: none;
+    margin-top: 10px;
 }
 
 .profile-infos {
@@ -459,10 +467,16 @@ nav.nav-main li:hover {
 
 .div-infos .info-user-div textarea{
    border: none;
+   width: 100%;
 }
 
 .wrap-desk {  
    width: 100%;
+}
+
+.editable-field {
+    border: 2px solid #ffd1a6!important;
+    border-radius: 5px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -573,6 +587,10 @@ nav.nav-main li:hover {
       padding: 0;
       width: 50%;
     }
+
+    .div-infos .info-user-div textarea, select{
+      font-size: 16px;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
