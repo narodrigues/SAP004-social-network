@@ -422,7 +422,7 @@ nav.nav-main li:hover {
     /* border: none; */
     /* border: 1px solid #b8b8b8bd; */
     border-radius: 10px;
-    box-shadow: 0 0 1em #e1b294bd;
+    box-shadow: 0px 1px 20px 11px #e1b29499;
     margin-bottom: 20px;
     padding: 20px 10px;
     width: 100%;
@@ -548,7 +548,6 @@ nav.nav-main li:hover {
     }
 
     .nav-main li {
-        /* background: inherit; */
         color: #ffffff;
     }
 
