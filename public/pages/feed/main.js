@@ -51,25 +51,20 @@ export const feed = () => {
   const mainToClose = feedTemplate.querySelector('.main-feed');
 
   feedTemplate.querySelector('#openMenu').addEventListener('click', () => {
-    if (menu.style.display === 'block') {
-      menu.style.display = 'none';
-    } else {
-      menu.style.display = 'block';
-      mainToClose.addEventListener('click', closeNav, true);
-    }
+    menu.classList.toggle('display-block');
+  });
+
+  mainToClose.addEventListener('click', () => {
+    menu.classList.remove('display-block');
   });
 
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 768) {
-      menu.style.display = 'block';
+      menu.classList.add('display-block');
     } else {
-      closeNav();
+      menu.classList.toggle('display-block');
     }
   });
-
-  const closeNav = () => {
-    menu.style.display = 'none';
-  }
 
   loadingPost()
   .then((arrayPosts) => {

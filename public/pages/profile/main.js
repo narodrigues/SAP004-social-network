@@ -22,18 +22,20 @@ export const userProfilePage = () => {
       let infos = doc.data();
       profilePage.innerHTML += `
       <div class='divToClose'>
-        <aside class='profile-infos div-infos'>
-          <figure>
-            <img src='' alt='Foto de perfil'>
-          </figure>
-          <span>${firebase.auth().currentUser.displayName}</span>
-          <nav>
-            <ul>
-              <li><a href='#'>Perfil</a></li>
-              <li><a href='#'>Meus Posts</a></li>
-            </ul>
-          </nav>
-        </aside>
+        <div class='profile-container container'>
+          <aside class='profile-infos div-infos'>
+            <figure>
+              <img src='' alt='Foto de perfil'>
+            </figure>
+            <span>${firebase.auth().currentUser.displayName}</span>
+            <nav>
+              <ul>
+                <li><a href='#'>Perfil</a></li>
+                <li><a href='#'>Meus Posts</a></li>
+              </ul>
+            </nav>
+          </aside>
+        </div>
       
         <main id='main-user-posts'>
           <article id='user-posts-container'></article>
@@ -102,30 +104,26 @@ export const userProfilePage = () => {
     })
   })
 
-  setTimeout(function(){
-  const menu = profilePage.querySelector('.nav-main');
-  const divToClose = profilePage.querySelector('.divToClose');
+  setTimeout(() => {
+    const menu = profilePage.querySelector('.nav-main');
+    const divToClose = profilePage.querySelector('.divToClose');
 
-  profilePage.querySelector('#openMenu').addEventListener('click', () => {
-    if (menu.style.display === 'block') {
-      menu.style.display = 'none';
-    } else {
-      menu.style.display = 'block';
-      divToClose.addEventListener('click', closeNav, true);
-    }
-  });
+    profilePage.querySelector('#openMenu').addEventListener('click', () => {
+      menu.classList.toggle('display-block');
+    });
 
-  window.addEventListener('resize', () => {
-    if (window.innerWidth >= 768) {
-      menu.style.display = 'block';
-    } else {
-      closeNav();
-    }
-  });
+    divToClose.addEventListener('click', () => {
+      menu.classList.remove('display-block');
+    });
 
-  const closeNav = () => {
-    menu.style.display = 'none';
-  }}, 1000)
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) {
+        menu.classList.add('display-block');
+      } else {
+        menu.classList.toggle('display-block');
+      }
+    });
+  }, 1000)
 
 
   return profilePage;
