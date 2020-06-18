@@ -5,11 +5,11 @@ export const feed = () => {
   feedTemplate.classList.add('page-feed', 'pages');
   window.location.href = '#feed';
   feedTemplate.innerHTML = `
-    <header class="header">
+    <header class="header-catarse">
     <button class="btn-icon" id="openMenu"><i class="fas fa-bars icon menu"></i></button>
     <nav class="nav-main">
       <ul>
-        <li>Perfil</li>
+        <li id="profile"><a href="#profile">Perfil</a></li>
         <li id="signOut">Sair</li>
       </ul>
     </nav>
