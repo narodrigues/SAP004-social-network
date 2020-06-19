@@ -1,4 +1,4 @@
-import { loadedAllMyPosts, editPrivacyPost } from './data.js';
+import { loadedAllMyPosts, signOut } from './data.js';
 
 export const userProfilePageWithPosts = () => {
   const profilePagePosts = document.createElement('div');
@@ -137,6 +137,8 @@ export const userProfilePageWithPosts = () => {
         menu.classList.toggle('display-block');
       }
     });
+
+    profilePagePosts.querySelector('#signOut').addEventListener('click', signOut)
   }, 1000)
 
   return profilePagePosts;

@@ -23,3 +23,12 @@ export const editPrivacyPost = (id, privacy) => {
       privacy: privacy
     })
 }
+
+export const signOut = () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      window.location.href = '#login';
+    });
+}
