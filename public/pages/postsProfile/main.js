@@ -15,7 +15,7 @@ export const userProfilePageWithPosts = () => {
     </nav>
     <img src='./assets/feed-logo.png'>
   </header>
-  <div class='divToClose wrap-desk'>
+  <section class='divToClose wrap-desk'>
     <div class='profile-container container'>
       <aside class='profile-infos div-infos'>
         <figure>
@@ -30,8 +30,7 @@ export const userProfilePageWithPosts = () => {
         </nav>
       </aside>
     </div>
-  </div>
-  <section id='posts-container'>
+    <section class='container posts-page-container' id='posts-container'></section>
   </section>
   `
 
@@ -67,7 +66,7 @@ export const userProfilePageWithPosts = () => {
     const optionPrivacyPost = document.createElement('span');
     const comments = document.createElement('section');
 
-    post.classList.add('div-posts');
+    post.classList.add('div-posts', 'posts-profile-page');
     postedByBox.classList.add('posted-box-by', 'box');
     postedBy.classList.add('name-user-published');
     postText.classList.add('content-post', 'posted-box-text', 'box');
