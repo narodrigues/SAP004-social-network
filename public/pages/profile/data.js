@@ -34,3 +34,12 @@ export const editedAdditionalInfos = (id, bio, relationship, about) => {
       about: about
     })
 }
+
+export const signOut = () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      window.location.href = '#login';
+    });
+}

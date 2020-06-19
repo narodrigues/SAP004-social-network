@@ -1,4 +1,4 @@
-import { getUserInfos, editedPersonalInfos, editedAdditionalInfos } from "./data.js";
+import { getUserInfos, editedPersonalInfos, editedAdditionalInfos, signOut } from "./data.js";
 
 export const userProfilePage = () => {
   const profilePage = document.createElement('div');
@@ -201,7 +201,11 @@ export const userProfilePage = () => {
       editedAdditionalInfos(doc.id, status.value, statusRelationship.value, about.value)
     });
 
+    profilePage.querySelector('#signOut').addEventListener('click', signOut);
+
 }, 1000)
+
+
 
   })
 })
