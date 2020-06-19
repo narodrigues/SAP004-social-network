@@ -96,36 +96,36 @@ export const saveEditComments = (text, id, commentTarget) => {
       .doc(id)
       .update({      
         comments: mapComment
+    })
+  })
+}
+
+export const deletePost = (id) => {
+  return firebase
+    .firestore()
+    .collection('posts')
+    .doc(id)
+    .delete()
+}
+
+export const deleteOnlyComment = (id, comments) => {
+  return firebase
+    .firestore()
+    .collection('posts')
+    .doc(id)
+    .update({
+      commentsCount: firebase.firestore.FieldValue.increment(-1),
+      comments: firebase.firestore.FieldValue.arrayRemove({
+        ...comments
       })
     })
-    }
+}
 
-      export const deletePost = (id) => {
-        return firebase
-          .firestore()
-          .collection('posts')
-          .doc(id)
-          .delete()
-      }
-
-      export const deleteOnlyComment = (id, comments) => {
-        return firebase
-          .firestore()
-          .collection('posts')
-          .doc(id)
-          .update({
-            commentsCount: firebase.firestore.FieldValue.increment(-1),
-            comments: firebase.firestore.FieldValue.arrayRemove({
-              ...comments
-            })
-          })
-      }
-
-      export const signOut = () => {
-        firebase
-          .auth()
-          .signOut()
-          .then(() => {
-            window.location.href = '#login';
-          });
-      }
+export const signOut = () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      window.location.href = '#login';
+    });
+}

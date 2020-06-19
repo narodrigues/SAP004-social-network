@@ -1,4 +1,4 @@
-import { loadedAllMyPosts, editPrivacyPost, signOut } from './data.js';
+import { loadedAllMyPosts, signOut } from './data.js';
 
 export const userProfilePageWithPosts = () => {
   const profilePagePosts = document.createElement('div');
@@ -35,8 +35,7 @@ export const userProfilePageWithPosts = () => {
   </section>
   `
 
-
-  function commentComponent(comment) {
+  const commentComponent = (comment) => {
     const commentPostUser = document.createElement('div')
     const commentBy = document.createElement('div');
     const commentText = document.createElement('textarea');
@@ -44,7 +43,6 @@ export const userProfilePageWithPosts = () => {
     commentPostUser.classList.add('comments-container');
     commentBy.classList.add('commented-by');
     commentText.classList.add('textareaComments');
-    
     commentText.setAttribute('disabled', 'disabled');
 
     commentBy.innerHTML = `${comment.name} em ${comment.date}`;
@@ -54,41 +52,40 @@ export const userProfilePageWithPosts = () => {
     return commentPostUser;
   }
 
-
-  function postComponent(doc) {
+  const postComponent = (doc) => {
     const data = doc.data();
     const post = document.createElement('div');
     const postedByBox = document.createElement('div');
     const postedBy = document.createElement('span');
     const postText = document.createElement('textarea');
-    const optionPrivacyPost = document.createElement('select');
-    const optionDefault = document.createElement('option');
-    const optionPublic = document.createElement('option');
-    const optionPrivate = document.createElement('option');
+    const buttonsWrap = document.createElement('div');
+    const likes = document.createElement('div');
+    const likeBtn = document.createElement('button');
+    const numberLikesInMyPosts = document.createElement('span');
+    const optionPrivacyPost = document.createElement('span');
     const comments = document.createElement('section');
 
     post.classList.add('div-posts');
     postedByBox.classList.add('posted-box-by', 'box');
     postedBy.classList.add('name-user-published');
     postText.classList.add('content-post', 'posted-box-text', 'box');
-
-    optionDefault.innerHTML = `Mude a privacidade`
-    optionPrivate.innerHTML = `Privado`;
-    optionPublic.innerHTML = `Público`;
+    buttonsWrap.classList.add('posted-box-options', 'box');
+    likeBtn.classList.add('btn-icon', 'like');
+    numberLikesInMyPosts.classList.add('numberLikes');
 
     postText.setAttribute('disabled', 'disabled');
     post.setAttribute('data-postid', doc.id);
-    optionDefault.setAttribute('selected', 'selected')
-    optionDefault.setAttribute('value', '')
-    optionPublic.setAttribute('value', 'public');
-    optionPrivate.setAttribute('value', 'private');
-
-    post.append(postedByBox, postText, optionPrivacyPost)
-    optionPrivacyPost.append(optionDefault, optionPublic, optionPrivate)
-    postedByBox.append(postedBy)
 
     postedBy.innerHTML = `Publicado por ${data.name} em ${data.timestamps}`;
     postText.innerHTML = `${data.post}`;
+    likeBtn.innerHTML = `<i class='fas fa-heart icon'></i>`;
+    numberLikesInMyPosts.innerText = `${data.likes}`;
+    optionPrivacyPost.innerText = `${data.privacy}`
+
+    postedByBox.append(postedBy)
+    likes.append(likeBtn, numberLikesInMyPosts)
+    buttonsWrap.append(likes, optionPrivacyPost)
+    post.append(postedByBox, postText, buttonsWrap)
     
     if(data.comments) {
       data.comments.forEach(comment => {
@@ -109,9 +106,16 @@ export const userProfilePageWithPosts = () => {
     })
   })
 
-  profilePagePosts.querySelector('#signOut').addEventListener('click', signOut);
+  // FUNÇÃO COMENTADA PARA MUDAR A PRIVACIDADE DO POST 
+  // const optionPrivacy = document.querySelector('#option-privacy');
+  // const changePrivacy = () => {
+  //   editPrivacyPost(doc.id, optionPrivacy.value);
+  //   // return optionPrivacy.value;
+  //   console.log(optionPrivacy.value)
+  // } 
 
-
+  // optionPrivacy.addEventListener('change', changePrivacy);
+ 
   setTimeout(() => {
     const menu = profilePagePosts.querySelector('.nav-main');
     const divToClose = profilePagePosts.querySelector('.divToClose');
@@ -131,6 +135,8 @@ export const userProfilePageWithPosts = () => {
         menu.classList.toggle('display-block');
       }
     });
+
+    profilePagePosts.querySelector('#signOut').addEventListener('click', signOut)
   }, 1000)
 
   return profilePagePosts;

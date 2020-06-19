@@ -10,7 +10,7 @@ export const userProfilePage = () => {
     <nav class="nav-main">
       <ul>
         <li><a href="#feed">Feed</a></li>
-        <li id="signOut">Sair</li>
+        <li class='sign-out' id="signOut">Sair</li>
       </ul>
     </nav>
     <img src="./assets/feed-logo.png">
@@ -90,6 +90,12 @@ export const userProfilePage = () => {
               <div class='info-user-div'>
                 <span>Email:</span>
                 <textarea disabled>${firebase.auth().currentUser.email}</textarea>
+              </div>
+              <div class='info-user-div'>
+                <form method="post" enctype="multipart/form-data">
+                  <label for="myfile">Select a file:</label>
+                  <input type="file" id="myfile" name="myfile">
+                </form>
               </div>
           </section>
           <section class='additional-infos div-infos'>
@@ -201,8 +207,7 @@ export const userProfilePage = () => {
       editedAdditionalInfos(doc.id, status.value, statusRelationship.value, about.value)
     });
 
-    profilePage.querySelector('#signOut').addEventListener('click', signOut);
-
+    profilePage.querySelector('#signOut').addEventListener('click', signOut)
 }, 1000)
 
 

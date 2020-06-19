@@ -10,7 +10,7 @@ export const feed = () => {
     <nav class="nav-main">
       <ul>
         <li id="profile"><a href="#profile">Perfil</a></li>
-        <li id="signOut">Sair</li>
+        <li class='' id="signOut">Sair</li>
       </ul>
     </nav>
     <img src="./assets/feed-logo.png">
@@ -147,7 +147,7 @@ export const feed = () => {
 
         const optionPrivacy = feedTemplate.querySelector('#select-privacy')
         const privacyValue = () => {
-          return feedTemplate.querySelector('#select-privacy').value;
+          return optionPrivacy.value;
         } 
   
         optionPrivacy.addEventListener('change', privacyValue);
