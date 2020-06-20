@@ -13,13 +13,14 @@ export const getUserInfos = () => {
   });
 }
 
-export const editedPersonalInfos = (id, gender) => {
+export const editedPersonalInfos = (id, gender, img) => {
   return firebase
     .firestore()
     .collection('users')
     .doc(id)
     .update({
-      gender: gender
+      gender: gender,
+      img: img
     })
 }
 
@@ -33,6 +34,19 @@ export const editedAdditionalInfos = (id, bio, relationship, about) => {
       relationship: relationship,
       about: about
     })
+}
+
+export const getUserImg = (myFile) => {
+  let ref = firebase.storage().ref('imgs');
+  return ref
+  .child('imgs' + myFile.name)
+  .put(myFile)
+  .then(() => {
+    return ref
+    .child('imgs' + myFile.name)
+    .getDownloadURL()
+    .then( url => { return url });
+  });
 }
 
 export const signOut = () => {

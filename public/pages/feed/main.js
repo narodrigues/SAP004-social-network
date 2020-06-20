@@ -10,16 +10,20 @@ export const feed = () => {
     <nav class="nav-main">
       <ul>
         <li id="profile"><a href="#profile">Perfil</a></li>
-        <li class='' id="signOut">Sair</li>
+        <li class='sign-out' id="signOut">Sair</li>
       </ul>
     </nav>
     <img src="./assets/feed-logo.png">
   </header>
     <main class="main-feed">
       <section class="user-profile">
-        <figure id="user-img"></figure>
-        <span id="userName">${firebase.auth().currentUser.displayName}</span>
-        <span id="bio"></span>
+        <figure id="user-img">
+          <img src='${localStorage.getItem('photo')}' alt='Foto de perfil' class='feed-profile-picture'>
+        </figure>
+        <div class='profile-data'>
+          <span id="userName">${firebase.auth().currentUser.displayName}</span>
+          <span id="bio">${localStorage.getItem('bio')}</span>
+        </div>
       </section>
       <div class="container">
         <section class="feed-write-post">
