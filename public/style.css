@@ -424,8 +424,6 @@ nav li.sign-out {
 
 .div-infos {
 	background: rgba(255, 255, 255, 0.795);
-	/* border: none; */
-	/* border: 1px solid #b8b8b8bd; */
 	border-radius: 10px;
 	box-shadow: 19px 25px 21px 0px #e1b29499;
 	margin-bottom: 20px;
@@ -483,6 +481,10 @@ nav li.sign-out {
 .editable-field {
 	border: 2px solid #ffd1a6!important;
 	border-radius: 5px;
+}
+
+.posts-profile-page.div-posts {
+  margin: 0px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -595,13 +597,17 @@ nav li.sign-out {
 
 	.div-infos .info-user-div textarea, select{
 		font-size: 16px;
-}
+  }
+
+  .posts-page-container.container {
+    padding: 0 0 0 30px;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
 	.container {
 		padding: 0;
-	}
+  }
 
 	.main {
 		width: 50%;
