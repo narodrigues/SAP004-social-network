@@ -19,7 +19,7 @@ export const userProfilePageWithPosts = () => {
     <div class='profile-container container'>
       <aside class='profile-infos div-infos'>
         <figure>
-          <img src='' alt='Foto de perfil'>
+          <img src='${localStorage.getItem('photo')}' alt='Foto de perfil' class='profile-picture'>
         </figure>
         <span>${firebase.auth().currentUser.displayName}</span>
         <nav>

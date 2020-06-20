@@ -29,6 +29,11 @@ li {
 	list-style: none;
 }
 
+.profile-picture {
+	border-radius: 6%;
+	width: 270px;
+}
+
 input:focus, button:focus, select:focus {
 	box-shadow: 0 0 0 0;
 	border: 0 none;
@@ -37,6 +42,16 @@ input:focus, button:focus, select:focus {
 
 textarea:focus {
 	outline-color: #fcaf6a;
+}
+
+.profile-picture {
+	border-radius: 6%;
+	width: 270px;
+}
+
+.feed-profile-picture {
+	border-radius: 25px;
+	width: 100px;
 }
 
 .container {
@@ -269,6 +284,11 @@ nav li.sign-out {
 	height: 80px;
 	width: 80px;
 	margin: 0 30px
+}
+
+.page-feed .profile-data {
+	display: flex;
+	flex-direction: column;
 }
 
 .page-feed span#userName {
