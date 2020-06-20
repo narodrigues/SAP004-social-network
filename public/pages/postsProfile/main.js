@@ -42,12 +42,10 @@ export const userProfilePageWithPosts = () => {
     commentPostUser.classList.add('comments-container');
     commentBy.classList.add('commented-by');
     commentText.classList.add('textareaComments');
-
     commentText.setAttribute('disabled', 'disabled');
 
     commentBy.innerHTML = `${comment.name} em ${comment.date}`;
     commentText.innerHTML = `${comment.comment}`;
-
     commentPostUser.append(commentBy, commentText)
 
     return commentPostUser;

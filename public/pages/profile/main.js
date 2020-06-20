@@ -210,6 +210,8 @@ export const userProfilePage = () => {
     profilePage.querySelector('#signOut').addEventListener('click', signOut)
 }, 1000)
 
+
+
   })
 })
 
