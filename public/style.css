@@ -50,8 +50,9 @@ textarea:focus {
 }
 
 .feed-profile-picture {
-	border-radius: 25px;
-	width: 100px;
+	border-radius: 10px;
+	margin: 0 30px;
+	width: 115px;
 }
 
 .container {
@@ -269,26 +270,28 @@ nav li.sign-out {
 
 .page-feed .user-profile {
 	align-items: center;
-	background: none;
+	background: #ffffffd6;
+	border-radius: 10px;
 	display: flex;
 	font-size: 18px;
-	height: 100px;
+	height: 120px;
 	justify-self: end;
 	margin: 15px auto;
 	max-width: 450px;
 }
 
-.page-feed .user-profile figure {
+/* .page-feed .user-profile figure {
 	background: #ff710066;
 	border-radius: 50%;
 	height: 80px;
 	width: 80px;
 	margin: 0 30px
-}
+} */
 
 .page-feed .profile-data {
 	display: flex;
 	flex-direction: column;
+	margin: 0 30px;
 }
 
 .page-feed span#userName {

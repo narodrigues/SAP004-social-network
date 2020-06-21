@@ -15,7 +15,7 @@ export const feed = () => {
     </nav>
     <img src="./assets/feed-logo.png">
   </header>
-    <main class="main-feed">
+    <main class="main-feed container">
       <section class="user-profile">
         <figure id="user-img">
           <img src='${localStorage.getItem('photo')}' alt='Foto de perfil' class='feed-profile-picture'>
@@ -25,7 +25,7 @@ export const feed = () => {
           <span id="bio">${localStorage.getItem('bio')}</span>
         </div>
       </section>
-      <div class="container">
+      <div>
         <section class="feed-write-post">
           <form class="form-feed">
             <textarea id="post-field" class="post-field" placeholder="O que deseja compartilhar?"></textarea>

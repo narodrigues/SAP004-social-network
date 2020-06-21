@@ -8,10 +8,6 @@ export const userProfilePage = () => {
   getUserInfos().then((users) => {
     users.forEach((doc) => {
       const infos = doc.data();
-
-      localStorage.setItem('photo', infos.img);
-      localStorage.setItem('bio', infos.bio);
-
       const calcAge = (date) => { 
         const dataAtual = new Date();
         const currentDate = dataAtual.getFullYear();
@@ -32,7 +28,10 @@ export const userProfilePage = () => {
         return age; 
       }
 
-    profilePage.innerHTML = `
+      localStorage.setItem('photo', infos.img);
+      localStorage.setItem('bio', infos.bio);
+
+      profilePage.innerHTML = `
       <header class="header-catarse">
         <button class="btn-icon" id="openMenu"><i class="fas fa-bars icon menu"></i></button>
         <nav class="nav-main">
@@ -131,126 +130,103 @@ export const userProfilePage = () => {
           </section>
         </main>
       </div>
-    `
+      `
 
-    const menu = profilePage.querySelector('.nav-main');
-    const divToClose = profilePage.querySelector('.divToClose');
+      const menu = profilePage.querySelector('.nav-main');
+      const divToClose = profilePage.querySelector('.divToClose');
 
-    profilePage.querySelector('#openMenu').addEventListener('click', () => {
-      menu.classList.toggle('display-block');
-    });
-
-    divToClose.addEventListener('click', () => {
-      menu.classList.remove('display-block');
-    });
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth >= 768) {
-        menu.classList.add('display-block');
-      } else {
+      profilePage.querySelector('#openMenu').addEventListener('click', () => {
         menu.classList.toggle('display-block');
-      }
-    });
-    
-    const gender = profilePage.querySelector('#gender');
-    const status = profilePage.querySelector('#change-status');
-    const about = profilePage.querySelector('#about-user');
-    const selectFile = profilePage.querySelector('#my-file');
-    const statusRelationship = profilePage.querySelector('#relationship-state');
-    const editPersonalProfile = profilePage.querySelector('#edit-personal-info');
-    const savePersonalProfile = profilePage.querySelector('#save-personal-info');
-    const editAdditionalProfile = profilePage.querySelector('#edit-additional-infos');
-    const saveAdditionalProfile = profilePage.querySelector('#save-additional-infos');
-
-    profilePage.querySelector('#edit-personal-info').addEventListener('click', () => {
-      gender.removeAttribute('disabled');
-      selectFile.removeAttribute('disabled');
-
-      gender.classList.toggle('editable-field');
-      editPersonalProfile.classList.toggle('i-none');
-      savePersonalProfile.classList.toggle('i-none');
-
-      
-      selectFile.addEventListener('change', (e) => {
-        let myFile = e.target.files[0];
-
-        getUserImg(myFile)
-        .then((url) => {
-          profilePage.querySelector('#myImg').innerHTML = `<img src=${url} id=${myFile.name}>`
-        });        
       });
-    });
 
-    profilePage.querySelector('#save-personal-info').addEventListener('click', () => {
-      gender.setAttribute('disabled', 'disabled');
-      selectFile.setAttribute('disabled', 'disabled');
-
-      gender.classList.toggle('editable-field');
-      selectFile.classList.toggle('editable-field');
-      editPersonalProfile.classList.toggle('i-none');
-      savePersonalProfile.classList.toggle('i-none');
-
-      let myFile = profilePage.querySelector('#myImg').children[0].src;
-
-      editedPersonalInfos(doc.id, gender.value, myFile)
-      .then(() => {
-        location.reload();
+      divToClose.addEventListener('click', () => {
+        menu.classList.remove('display-block');
       });
-    });
 
-    profilePage.querySelector('#edit-additional-infos').addEventListener('click', () => {
-      status.removeAttribute('disabled');
-      about.removeAttribute('disabled');
-      statusRelationship.removeAttribute('disabled');
-
-      status.focus();
-
-      status.classList.toggle('editable-field');
-      about.classList.toggle('editable-field');
-      statusRelationship.classList.toggle('editable-field');
-      editAdditionalProfile.classList.toggle('i-none');
-      saveAdditionalProfile.classList.toggle('i-none');
-    });
-
-
-    profilePage.querySelector('#save-additional-infos').addEventListener('click', () => {
-      status.setAttribute('disabled', 'disabled');
-      about.setAttribute('disabled', 'disabled');
-      statusRelationship.setAttribute('disabled', 'disabled');
-
-      status.classList.toggle('editable-field');
-      about.classList.toggle('editable-field');
-      statusRelationship.classList.toggle('editable-field');
-      editAdditionalProfile.classList.toggle('i-none');
-      saveAdditionalProfile.classList.toggle('i-none');
-
-      editedAdditionalInfos(doc.id, status.value, statusRelationship.value, about.value)
-    });
-
-    // const getImg = (e, func, divImg) => {
-    //   let file = e.target.files[0];
-    //   let refFile = firebase
-    //   .storage()
-    //   .ref('imgs')
-    //   .child('imgs' + file.name)
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+          menu.classList.add('display-block');
+        } else {
+          menu.classList.toggle('display-block');
+        }
+      });
     
-    //   refFile
-    //   .put(file)
-    //   .then(() => {
-    //     refFile
-    //     .getDownloadURL()
-    //     .then((url) => {
-    //       func(divImg, url)
-    //     });
-    //   })
-    // }
+      const gender = profilePage.querySelector('#gender');
+      const status = profilePage.querySelector('#change-status');
+      const about = profilePage.querySelector('#about-user');
+      const selectFile = profilePage.querySelector('#my-file');
+      const statusRelationship = profilePage.querySelector('#relationship-state');
+      const editPersonalProfile = profilePage.querySelector('#edit-personal-info');
+      const savePersonalProfile = profilePage.querySelector('#save-personal-info');
+      const editAdditionalProfile = profilePage.querySelector('#edit-additional-infos');
+      const saveAdditionalProfile = profilePage.querySelector('#save-additional-infos');
 
-    // profilePage.querySelector('#myfile').addEventListener('change', () => {
-    //   let myFile = profilePage.querySelector('#myfile').value
-    //   console.log(myFile)
-    // })
+      profilePage.querySelector('#edit-personal-info').addEventListener('click', () => {
+        gender.removeAttribute('disabled');
+        selectFile.removeAttribute('disabled');
 
-    profilePage.querySelector('#signOut').addEventListener('click', signOut);
+        gender.classList.toggle('editable-field');
+        editPersonalProfile.classList.toggle('i-none');
+        savePersonalProfile.classList.toggle('i-none');
+
+        
+        selectFile.addEventListener('change', (e) => {
+          let myFile = e.target.files[0];
+
+          getUserImg(myFile)
+          .then((url) => {
+            profilePage.querySelector('#myImg').innerHTML = `<img src=${url} id=${myFile.name}>`
+          });        
+        });
+      });
+
+      profilePage.querySelector('#save-personal-info').addEventListener('click', () => {
+        gender.setAttribute('disabled', 'disabled');
+        selectFile.setAttribute('disabled', 'disabled');
+
+        gender.classList.toggle('editable-field');
+        selectFile.classList.toggle('editable-field');
+        editPersonalProfile.classList.toggle('i-none');
+        savePersonalProfile.classList.toggle('i-none');
+
+        let myFile = profilePage.querySelector('#myImg').children[0].src;
+
+        editedPersonalInfos(doc.id, gender.value, myFile)
+        .then(() => {
+          location.reload();
+        });
+      });
+
+      profilePage.querySelector('#edit-additional-infos').addEventListener('click', () => {
+        status.removeAttribute('disabled');
+        about.removeAttribute('disabled');
+        statusRelationship.removeAttribute('disabled');
+
+        status.focus();
+
+        status.classList.toggle('editable-field');
+        about.classList.toggle('editable-field');
+        statusRelationship.classList.toggle('editable-field');
+        editAdditionalProfile.classList.toggle('i-none');
+        saveAdditionalProfile.classList.toggle('i-none');
+      });
+
+
+      profilePage.querySelector('#save-additional-infos').addEventListener('click', () => {
+        status.setAttribute('disabled', 'disabled');
+        about.setAttribute('disabled', 'disabled');
+        statusRelationship.setAttribute('disabled', 'disabled');
+
+        status.classList.toggle('editable-field');
+        about.classList.toggle('editable-field');
+        statusRelationship.classList.toggle('editable-field');
+        editAdditionalProfile.classList.toggle('i-none');
+        saveAdditionalProfile.classList.toggle('i-none');
+
+        editedAdditionalInfos(doc.id, status.value, statusRelationship.value, about.value)
+      });
+
+      profilePage.querySelector('#signOut').addEventListener('click', signOut);
 
     });
   });
