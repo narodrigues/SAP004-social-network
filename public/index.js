@@ -24,8 +24,8 @@ const init = () => {
         case '#profile':
           root.appendChild(userProfilePage());
           break;
-          case '#profile-posts':
-            root.appendChild(userProfilePageWithPosts());
+        case '#profile-posts':
+          root.appendChild(userProfilePageWithPosts());
           break;
         default:
           root.appendChild(feed());

@@ -50,13 +50,14 @@ textarea:focus {
 }
 
 .feed-profile-picture {
-	border-radius: 25px;
-	width: 100px;
+	border-radius: 10px;
+	margin: 0 30px;
+	width: 115px;
 }
 
 .container {
 	margin: auto;
-	padding: 0 30px;
+	padding: 0 15px;
 	width: 100%;
 }
 
@@ -209,7 +210,7 @@ textarea:focus {
 }
 
 nav.display-block {
-	display: block;
+  display: block;
 }
 
 .nav-main {
@@ -269,26 +270,19 @@ nav li.sign-out {
 
 .page-feed .user-profile {
 	align-items: center;
-	background: none;
+	border-radius: 10px;
 	display: flex;
 	font-size: 18px;
-	height: 100px;
+  max-height: 130px;
 	justify-self: end;
 	margin: 15px auto;
 	max-width: 450px;
 }
 
-.page-feed .user-profile figure {
-	background: #ff710066;
-	border-radius: 50%;
-	height: 80px;
-	width: 80px;
-	margin: 0 30px
-}
-
 .page-feed .profile-data {
 	display: flex;
 	flex-direction: column;
+	margin: 0 30px;
 }
 
 .page-feed span#userName {
@@ -331,7 +325,7 @@ nav li.sign-out {
 	border: none;
 	border-radius: 10px;
 	box-shadow: 0 0 1em #b8b8b8bd;
-	margin: 25px 20px;
+	margin: 25px 0;
 }
 
 .page-feed .div-posts .posted-box-text {
@@ -442,10 +436,31 @@ nav li.sign-out {
 	display: inline-block;
 }
 
+.profile-btns {
+  background-image: -webkit-linear-gradient(45deg, #ff9c51 50%, transparent 50%);
+  background-image: linear-gradient(45deg, #ff9c51 50%, transparent 50%);
+  background-position: 100%;
+	background-size: 400%;
+	border: 2px solid #ff9c51;  
+	border-radius: 50px;
+	margin: 10px auto;
+	padding: 16px;
+	transition: all 300ms ease-in-out;
+	width: 210px;
+}
+
+.profile-btns:hover {
+	background-position: 0;
+	color: #ffffff;
+}
+
+
 .div-infos {
 	background: rgba(255, 255, 255, 0.795);
 	border-radius: 10px;
 	box-shadow: 19px 25px 21px 0px #e1b29499;
+	color: #7b3b13;
+	font-weight: bold;
 	margin-bottom: 20px;
 	padding: 20px 10px;
 	width: 100%;
@@ -478,16 +493,6 @@ nav li.sign-out {
 	text-align: center;
 }
 
-.profile-infos.div-infos span::after {
-	content: '';
-	display: block;
-	width: 40px;
-	height: 2px;
-	background: black;
-	margin: 10px auto;
-	text-align: center;
-}
-
 .div-infos .info-user-div textarea{
 	border: none;
 	width: 100%;
@@ -505,6 +510,11 @@ nav li.sign-out {
 
 .posts-profile-page.div-posts {
   margin: 0px;
+}
+
+.personal-infos img {
+	max-height: 240px;
+	max-width: 240px;
 }
 
 @media only screen and (min-width: 768px) {
