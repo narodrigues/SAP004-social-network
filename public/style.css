@@ -229,7 +229,6 @@ nav.display-block {
 	font-variant: all-petite-caps;
 	font-weight: bold;
 	letter-spacing: 2px;
-	/* padding: 20px; */
 	position: relative;
 	transition: all .5s;
 }
@@ -454,7 +453,6 @@ nav li.sign-out {
 	color: #ffffff;
 }
 
-
 .div-infos {
 	background: rgba(255, 255, 255, 0.795);
 	border-radius: 10px;
@@ -515,6 +513,63 @@ nav li.sign-out {
 .personal-infos img {
 	max-height: 240px;
 	max-width: 240px;
+}
+
+.modal {
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  margin: 35px;
+  max-width: 600px;
+  max-height: 900px;
+  padding: 20px;
+  position: fixed;
+  top: 0; bottom: 0; left: 0; right: 0;
+  opacity: 1;
+  overflow-y: scroll;
+  z-index: 200;
+}
+
+.modal .content-section {
+  height: auto;
+}
+
+.modal div, p {
+  margin-top: 25px;
+}
+
+.modal .title {
+  text-align: center;
+}
+
+.modal .btn-close {
+  margin: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.overlay {
+  background-color: #333;
+  height: 100%;
+  left: 0;
+  opacity: 0.5;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+@media only screen and (min-width: 630px) {
+  .modal {
+    margin: auto;
+    max-height: 650px;
+    overflow-y: hidden;
+  }
 }
 
 @media only screen and (min-width: 768px) {
