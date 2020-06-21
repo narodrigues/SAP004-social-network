@@ -5,48 +5,48 @@ export const feed = () => {
   feedTemplate.classList.add('page-feed', 'pages');
   window.location.href = '#feed';
   feedTemplate.innerHTML = `
-    <header class="header-catarse">
-    <button class="btn-icon" id="openMenu"><i class="fas fa-bars icon menu"></i></button>
-    <nav class="nav-main">
+    <header class='header-catarse'>
+    <button class='btn-icon' id='openMenu'><i class='fas fa-bars icon menu'></i></button>
+    <nav class='nav-main'>
       <ul>
-        <li id="profile"><a href="#profile">Perfil</a></li>
-        <li class='sign-out' id="signOut">Sair</li>
+        <li id='profile'><a href='#profile'>Perfil</a></li>
+        <li class='sign-out' id='signOut'>Sair</li>
       </ul>
     </nav>
-    <img src="./assets/feed-logo.png">
+    <img src='./assets/feed-logo.png'>
   </header>
-    <main class="main-feed container">
-      <section class="user-profile">
-        <figure id="user-img">
+    <main class='main-feed container'>
+      <section class='user-profile'>
+        <figure id='user-img'>
           <img src='${localStorage.getItem('photo')}' alt='Foto de perfil' class='feed-profile-picture'>
         </figure>
         <div class='profile-data'>
-          <span id="userName">${firebase.auth().currentUser.displayName}</span>
-          <span id="bio">${localStorage.getItem('bio')}</span>
+          <span id='userName'>${firebase.auth().currentUser.displayName}</span>
+          <span id='bio'>${localStorage.getItem('bio')}</span>
         </div>
       </section>
-      <div>
-        <section class="feed-write-post">
-          <form class="form-feed">
-            <textarea id="post-field" class="post-field" placeholder="O que deseja compartilhar?"></textarea>
-            <div class="post-field-options">
+      <div class='container'>
+        <section class='feed-write-post'>
+          <form class='form-feed'>
+            <textarea id='post-field' class='post-field' placeholder='O que deseja compartilhar?'></textarea>
+            <div class='post-field-options'>
               <form>
-                <div id="form-privacy-options">
-                  <label for="option-public"> 
-                    <i class="fas fa-unlock icon privacity-icon"></i>
-                    <input type="radio" name="privacy" id="option-public" class="btn-icon privacy-options" value="public" checked>
+                <div id='form-privacy-options'>
+                  <label for='option-public'> 
+                    <i class='fas fa-unlock icon privacity-icon'></i>
+                    <input type='radio' name='privacy' id='option-public' class='btn-icon privacy-options' value='public' checked>
                   </label>
-                  <label for="option-private">
-                    <i class="fas fa-lock icon"></i>
-                    <input type="radio" name="privacy" id="option-private" class="btn-icon privacy-options" value="private">
+                  <label for='option-private'>
+                    <i class='fas fa-lock icon'></i>
+                    <input type='radio' name='privacy' id='option-private' class='btn-icon privacy-options' value='private'>
                   </label>
                 </div>
               </form>
-              <button id="share-post" class="btn">Postar</button>
+              <button id='share-post' class='btn'>Postar</button>
             </div>
           </form>
         </section>
-        <article class="feed-posts-container" id="posts-container"></article>
+        <article class='feed-posts-container' id='posts-container'></article>
       </div>
     </main>
   `

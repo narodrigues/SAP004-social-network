@@ -1,4 +1,4 @@
-import { getUserInfos, editedPersonalInfos, editedAdditionalInfos, signOut, getUserImg } from "./data.js";
+import { getUserInfos, editedPersonalInfos, editedAdditionalInfos, signOut, getUserImg } from './data.js';
 
 export const userProfilePage = () => {
   const profilePage = document.createElement('div');
@@ -32,15 +32,15 @@ export const userProfilePage = () => {
       localStorage.setItem('bio', infos.bio);
 
       profilePage.innerHTML = `
-      <header class="header-catarse">
-        <button class="btn-icon" id="openMenu"><i class="fas fa-bars icon menu"></i></button>
-        <nav class="nav-main">
+      <header class='header-catarse'>
+        <button class='btn-icon' id='openMenu'><i class='fas fa-bars icon menu'></i></button>
+        <nav class='nav-main'>
           <ul>
-            <li><a href="#feed">Feed</a></li>
-            <li class='sign-out' id="signOut">Sair</li>
+            <li><a href='#feed'>Feed</a></li>
+            <li class='sign-out' id='signOut'>Sair</li>
           </ul>
         </nav>
-        <img src="./assets/feed-logo.png">
+        <img src='./assets/feed-logo.png'>
       </header>
       <div class='divToClose wrap-desk'>
         <div class='profile-container container'>
@@ -51,8 +51,8 @@ export const userProfilePage = () => {
             <span>${firebase.auth().currentUser.displayName}</span>
             <nav>
               <ul>
-                <li><a href='#profile'>Perfil</a></li>
-                <li><a href='#profile-posts'>Meus Posts</a></li>
+                <li><a href='#profile' class='profile-btns'>Perfil</a></li>
+                <li><a href='#profile-posts' class='profile-btns'>Meus Posts</a></li>
               </ul>
             </nav>
           </aside>
@@ -67,8 +67,8 @@ export const userProfilePage = () => {
             <div class='info-profile-option'>
               <h1>Informações pessoais</h1>
               <div id='edit-basic-info'>            
-                  <button class='btn-icon' id='edit-personal-info'><i class="fas fa-user-edit icon"></i></button>
-                  <button class='btn-icon i-none' id='save-personal-info'><i class="fas fa-user-check icon"></i></button>
+                  <button class='btn-icon' id='edit-personal-info'><i class='fas fa-user-edit icon'></i></button>
+                  <button class='btn-icon i-none' id='save-personal-info'><i class='fas fa-user-check icon'></i></button>
               </div>
             </div>
             <div class='info-user-div'>
@@ -95,8 +95,8 @@ export const userProfilePage = () => {
             </div>
             <div class='info-user-div'>
               <form>
-                <label for="my-file">Select a file:</label>
-                <input type="file" id="my-file" name="my-file" disabled>
+                <label for='my-file'>Select a file:</label>
+                <input type='file' id='my-file' name='my-file' disabled>
               </form>
             </div>
             <div id='myImg'></div>
@@ -105,8 +105,8 @@ export const userProfilePage = () => {
             <div class='info-profile-option'>
               <h1>Informações adicionais</h1>
               <div id='edit-additional-info'>            
-                  <button class='btn-icon' id='edit-additional-infos'><i class="fas fa-user-edit icon"></i></button>
-                  <button class='btn-icon i-none' id='save-additional-infos'><i class="fas fa-user-check icon"></i></button>
+                  <button class='btn-icon' id='edit-additional-infos'><i class='fas fa-user-edit icon'></i></button>
+                  <button class='btn-icon i-none' id='save-additional-infos'><i class='fas fa-user-check icon'></i></button>
               </div>
             </div>
             <form>
