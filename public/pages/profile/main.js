@@ -48,7 +48,7 @@ export const userProfilePage = () => {
             <figure>
               <img src=${infos.img} alt='Foto de perfil' class='profile-picture'>
             </figure>
-            <span>${firebase.auth().currentUser.displayName}</span>
+            <span class='user-name'>${firebase.auth().currentUser.displayName}</span>
             <nav>
               <ul>
                 <li><a href='#profile' class='profile-btns'>Perfil</a></li>

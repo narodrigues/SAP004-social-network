@@ -687,6 +687,10 @@ nav li.sign-out {
   .posts-page-container.container {
     padding: 0 0 0 30px;
   }
+
+  .profile-infos .user-name {
+    font-size: 20px;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
