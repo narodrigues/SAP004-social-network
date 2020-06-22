@@ -117,7 +117,7 @@ export const feed = () => {
           const editBtn = document.createElement('button');
           const saveBtn = document.createElement('button');
           const deleteBtn = document.createElement('button');
-          const confirmOption = document.createElement('div');
+          const confirmDeletePost = document.createElement('div');
           const message = document.createElement('span');
           const optionYes = document.createElement('button');
           const optionNo = document.createElement('button');
@@ -135,17 +135,17 @@ export const feed = () => {
           saveBtn.classList.add('i-none', 'btn-icon', 'edit-icon');
           selectPrivacy.classList.add('i-none', 'edit-icon');
           deleteBtn.classList.add('btn-icon', 'delete-post');
-          confirmOption.classList.add('container-option');
-          confirmOption.classList.add('i-none');
+          confirmDeletePost.classList.add('container-option');
+          confirmDeletePost.classList.add('i-none');
 
           selectPrivacy.id = 'select-privacy';
           optionPublic.setAttribute('value', 'public');
           optionPrivate.setAttribute('value', 'private');
 
-          buttonsWrap.append(buttonsPost, confirmOption);
+          buttonsWrap.append(buttonsPost, confirmDeletePost);
           buttonsPost.append(buttonsWrapEdit, deleteBtn)
           buttonsWrapEdit.append(editBtn, saveBtn, selectPrivacy);
-          confirmOption.append(message, optionYes, optionNo)
+          confirmDeletePost.append(message, optionYes, optionNo)
           postsOnFeed.append(buttonsWrap);
           selectPrivacy.append(optionPublic, optionPrivate)
 
@@ -178,7 +178,7 @@ export const feed = () => {
             optionYes.classList.add('btn-icon');
             optionNo.classList.add('btn-icon');
 
-            confirmOption.classList.toggle('i-none');
+            confirmDeletePost.classList.toggle('i-none');
 
             message.innerText = `ATENÇÃO!
             Deseja mesmo excluir essa publicação?`;
@@ -187,7 +187,7 @@ export const feed = () => {
 
             optionNo.addEventListener('click', (e) => {
               e.preventDefault();
-              confirmOption.classList.toggle('i-none')
+              confirmDeletePost.classList.toggle('i-none')
             })
 
             optionYes.addEventListener('click', (e) => {
@@ -293,7 +293,7 @@ export const feed = () => {
                 const editComment = document.createElement('button');
                 const saveEditedComment = document.createElement('button');
                 const deleteComment = document.createElement('button');
-                const confirmOption = document.createElement('div');
+                const confirmDeleteComment = document.createElement('div');
                 const message = document.createElement('span');
                 const optionYes = document.createElement('button');
                 const optionNo = document.createElement('button');
@@ -305,8 +305,8 @@ export const feed = () => {
                 deleteComment.classList.add('btn-icon', 'delete');
                 optionYes.classList.add('btn-icon');
                 optionNo.classList.add('btn-icon');
-                confirmOption.classList.add('container-option');
-                confirmOption.classList.toggle('i-none');
+                confirmDeleteComment.classList.add('container-option');
+                confirmDeleteComment.classList.toggle('i-none');
 
                 editComment.innerHTML = `<i class='fas fa-edit icon'></i>`;
                 saveEditedComment.innerHTML = `<i class='far fa-save icon'></i>`;
@@ -334,10 +334,10 @@ export const feed = () => {
                 const deleteCommenttBtn = () => {
                   const postId = doc.id;
 
-                  confirmOption.classList.toggle('i-none');
+                  confirmDeleteComment.classList.toggle('i-none');
                   optionNo.addEventListener('click', (e) => {
                     e.preventDefault();
-                    confirmOption.classList.toggle('i-none')
+                    confirmDeleteComment.classList.toggle('i-none')
                   })
 
                   optionYes.addEventListener('click', (e) => {
@@ -354,9 +354,9 @@ export const feed = () => {
                 deleteComment.addEventListener('click', deleteCommenttBtn);
 
                 commentsContainer.append(btnCommentsContainer);
-                confirmOption.append(message, optionYes, optionNo);
+                confirmDeleteComment.append(message, optionYes, optionNo);
                 btnCommentsOption.append(editComment, saveEditedComment, deleteComment)
-                btnCommentsContainer.append(btnCommentsOption, confirmOption);
+                btnCommentsContainer.append(btnCommentsOption, confirmDeleteComment);
               }
 
               postsOnFeed.append(postsComment);
