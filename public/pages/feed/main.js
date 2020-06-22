@@ -90,7 +90,7 @@ export const feed = () => {
         const postedBy = document.createElement('span');
         const msgPost = document.createElement('textarea');
         const buttonsWrap = document.createElement('div');
-        const buttonsPost = document.createElement('div');
+        const buttonsPostEditAndDelete = document.createElement('div');
         const buttonsWrapEdit = document.createElement('div');
         const postsComment = document.createElement('section');
         const postsContainer = feedTemplate.querySelector('#posts-container');
@@ -102,7 +102,7 @@ export const feed = () => {
         postsBox.classList.add('posted-box-by', 'box');
         postedBy.classList.add('name-user-published');
         msgPost.classList.add('content-post', 'posted-box-text', 'box');
-        buttonsPost.classList.add('btns-default');
+        buttonsPostEditAndDelete.classList.add('btns-default');
         buttonsWrap.classList.add('posted-box-options', 'box');
         buttonsWrapEdit.classList.add('div-edit');
         postsComment.classList.add('post-comment');
@@ -142,8 +142,8 @@ export const feed = () => {
           optionPublic.setAttribute('value', 'public');
           optionPrivate.setAttribute('value', 'private');
 
-          buttonsWrap.append(buttonsPost, confirmDeletePost);
-          buttonsPost.append(buttonsWrapEdit, deleteBtn)
+          buttonsWrap.append(buttonsPostEditAndDelete, confirmDeletePost);
+          buttonsPostEditAndDelete.append(buttonsWrapEdit, deleteBtn)
           buttonsWrapEdit.append(editBtn, saveBtn, selectPrivacy);
           confirmDeletePost.append(message, optionYes, optionNo)
           postsOnFeed.append(buttonsWrap);
@@ -185,13 +185,11 @@ export const feed = () => {
             optionYes.innerHTML = `<i class="far fa-check-circle icon"></i>`;
             optionNo.innerHTML = `<i class="far fa-times-circle icon"></i>`;
 
-            optionNo.addEventListener('click', (e) => {
-              e.preventDefault();
+            optionNo.addEventListener('click', () => {
               confirmDeletePost.classList.toggle('i-none')
             })
 
-            optionYes.addEventListener('click', (e) => {
-              e.preventDefault();
+            optionYes.addEventListener('click', () => {
               feedTemplate.querySelector(`[data-postid='${dataId}']`).remove();
               deletePost(dataId);
             })
@@ -224,8 +222,8 @@ export const feed = () => {
           commentsCancelBtn.classList.add('btn-icon');
           commentsPostBtn.classList.add('btn-icon', 'sendPost');
 
-          buttonsWrap.append(buttonsPost);
-          buttonsPost.append(likeBtn, numberLikes, commentBtn)
+          buttonsWrap.append(buttonsPostEditAndDelete);
+          buttonsPostEditAndDelete.append(likeBtn, numberLikes, commentBtn)
           postsOnFeed.append(buttonsWrap, commentsOptions);
           commentsOptions.append(commentsText, commentsPostBtn, commentsCancelBtn);
 
@@ -312,7 +310,7 @@ export const feed = () => {
                 saveEditedComment.innerHTML = `<i class='far fa-save icon'></i>`;
                 deleteComment.innerHTML = `<i class='fas fa-trash-alt icon'></i>`;
                 message.innerText = `ATENÇÃO!
-                Deseja mesmo excluir essa publicação?`;
+                Deseja mesmo excluir esse comentário?`;
                 optionYes.innerHTML = `<i class="far fa-check-circle icon"></i>`;
                 optionNo.innerHTML = `<i class="far fa-times-circle icon"></i>`;
 
@@ -335,16 +333,17 @@ export const feed = () => {
                   const postId = doc.id;
 
                   confirmDeleteComment.classList.toggle('i-none');
-                  optionNo.addEventListener('click', (e) => {
-                    e.preventDefault();
+
+                  optionNo.addEventListener('click', () => {
                     confirmDeleteComment.classList.toggle('i-none')
                   })
 
-                  optionYes.addEventListener('click', (e) => {
-                    e.preventDefault();
+                  optionYes.addEventListener('click', () => {
                     const comments = doc.data().comments[x];
                     const idComment = doc.data().comments[x].id;
                     feedTemplate.querySelector(`[data-commentid='${idComment}']`).remove();
+
+                    
                     deleteOnlyComment(postId, comments);
                   });
                 }
@@ -352,13 +351,12 @@ export const feed = () => {
                 editComment.addEventListener('click', editBtnFunctions);
                 saveEditedComment.addEventListener('click', saveBtnOptions);
                 deleteComment.addEventListener('click', deleteCommenttBtn);
-
-                commentsContainer.append(btnCommentsContainer);
+                
                 confirmDeleteComment.append(message, optionYes, optionNo);
                 btnCommentsOption.append(editComment, saveEditedComment, deleteComment)
                 btnCommentsContainer.append(btnCommentsOption, confirmDeleteComment);
+                commentsContainer.append(btnCommentsContainer);
               }
-
               postsOnFeed.append(postsComment);
               postsComment.prepend(commentsContainer)
             }
