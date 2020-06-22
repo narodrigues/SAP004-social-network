@@ -532,10 +532,18 @@ nav li.sign-out {
   opacity: 1;
   overflow-y: scroll;
   z-index: 200;
+  animation: showModal .5s forwards;
 }
 
-.modal .content-section {
-  height: auto;
+@keyframes showModal {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px;
+  }
 }
 
 .modal div, p {
@@ -569,6 +577,18 @@ nav li.sign-out {
     margin: auto;
     max-height: 650px;
     overflow-y: hidden;
+    animation: showModal .5s forwards;
+  }
+
+  @keyframes showModal {
+    from {
+      opacity: 0;
+      max-height: 0;
+    }
+    to {
+      opacity: 1;
+      max-height: 650px;
+    }
   }
 }
 
