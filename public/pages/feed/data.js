@@ -79,7 +79,7 @@ export const addLike = (id) => {
       likes: firebase.firestore.FieldValue.arrayUnion({
         userId: firebase.auth().currentUser.uid
       })
-    })
+    });
 }
 
 export const deleteLike = (id, user) => {
@@ -92,7 +92,7 @@ export const deleteLike = (id, user) => {
       likes: firebase.firestore.FieldValue.arrayRemove({
         ...user
       })
-    })
+    });
 }
 
 export const addComments = (id, comment) => {
@@ -109,7 +109,7 @@ export const addComments = (id, comment) => {
         comment: comment,
         id: new Date().getTime()
       })
-    })
+    });
 }
 
 export const saveEditComments = (text, id, commentTarget) => {
@@ -119,7 +119,7 @@ export const saveEditComments = (text, id, commentTarget) => {
     .doc(id)
     .get()
     .then((doc) => {
-       const mapComment = doc.data().comments.map((myComment) => {
+      const mapComment = doc.data().comments.map((myComment) => {
         if(myComment.id === commentTarget.id){
           const newComment = {...commentTarget, comment: text}
           // console.log(text)
@@ -136,8 +136,8 @@ export const saveEditComments = (text, id, commentTarget) => {
       .doc(id)
       .update({      
         comments: mapComment
-    })
-  })
+      })
+    });
 }
 
 export const deleteOnlyComment = (id, comments) => {
@@ -150,7 +150,7 @@ export const deleteOnlyComment = (id, comments) => {
       comments: firebase.firestore.FieldValue.arrayRemove({
         ...comments
       })
-    })
+    });
 }
 
 export const signOut = () => {

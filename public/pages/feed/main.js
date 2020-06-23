@@ -76,13 +76,16 @@ export const feed = () => {
         }
       });
 
-      loadingPost()
-      .then((arrayPosts) => {
-        feedTemplate.querySelector('#posts-container').innerHTML = "";
-        arrayPosts.forEach((doc) => {
-          createPosts(doc);
+      const loadAllPosts = () => {
+        loadingPost()
+        .then((arrayPosts) => {
+          feedTemplate.querySelector('#posts-container').innerHTML = "";
+          arrayPosts.forEach((doc) => {
+            createPosts(doc);
+          });
         });
-      });
+      }
+      loadAllPosts();
 
       const createPosts = (doc, prepend) => {
         const postInfos = doc.data();
@@ -234,34 +237,30 @@ export const feed = () => {
             const myPosts = postInfos.likes
             if(myPosts == 0){
               addLike(postId)
-            } else {
+              .then(() => {
+                loadAllPosts();
+              });
+            } else {  
               for(let x in myPosts){
                 if (myPosts[x].userId === currentUser) {
                   deleteLike(postId, myPosts[x])
+                  .then(() => {
+                    loadAllPosts();
+                  });
                 } else {
                   addLike(postId)
+                  .then(() => {
+                    loadAllPosts();
+                  });
                 }
               }
             }
-            loadingPost()
-            .then((arrayPosts) => {
-              feedTemplate.querySelector('#posts-container').innerHTML = "";
-              arrayPosts.forEach((doc) => {
-                createPosts(doc);
-              });
-            });
           }
 
           const addComment = () => {
             const textComment = commentsText.value;
             addComments(postId, textComment);
-            loadingPost()
-            .then((arrayPosts) => {
-              feedTemplate.querySelector('#posts-container').innerHTML = "";
-              arrayPosts.forEach((doc) => {
-                createPosts(doc);
-              })
-            })
+            loadAllPosts();
           }
 
           commentsPostBtn.addEventListener('click', addComment);
@@ -344,19 +343,16 @@ export const feed = () => {
                 }
 
                 const deleteCommentBtn = () => {
-                  const postId = doc.id;
-
                   confirmDeleteComment.classList.toggle('i-none');
 
                   optionNo.addEventListener('click', () => {
                     confirmDeleteComment.classList.toggle('i-none')
-                  })
+                  });
 
                   optionYes.addEventListener('click', () => {
                     const comments = doc.data().comments[x];
                     const idComment = doc.data().comments[x].id;
                     feedTemplate.querySelector(`[data-commentid='${idComment}']`).remove();
-
                     
                     deleteOnlyComment(postId, comments);
                   });
