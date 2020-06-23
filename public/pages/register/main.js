@@ -7,29 +7,29 @@ export const inscribePage = () => {
   inscribePage.innerHTML = `
     <form class="form-inscribe">
       <label for="inscribe-name">Nome:
-        <input type="text" class="btn" requerid id="inscribe-name">
+        <input type="text" class="input" requerid id="inscribe-name">
       </label>
       <label for="inscribe-last-name">Sobrenome:
-        <input type="text" class="btn" required id="inscribe-last-name">
+        <input type="text" class="input" required id="inscribe-last-name">
       </label>
       <label for="bio">Status:
-        <input type="text" class="btn" required id="bio">
+        <input type="text" class="input" required id="bio">
       </label>
       <label for="age-inscribe">Idade:
-        <input type="date" class="btn" required id="age-inscribe">
+        <input type="date" class="input" required id="age-inscribe">
       </label>
       <label for="inscribe-email">Email: 
-        <input type="email" class="btn" required id="inscribe-email">
+        <input type="email" class="input" required id="inscribe-email">
       </label>
       <label for="password-inscribe">Senha:
-        <input type="password" class="btn" required id="password-inscribe">
+        <input type="password" class="input" required id="password-inscribe">
       </label>
       <label for="confirm-password-inscribe">Confirme sua senha:
-        <input type="password" class="btn" required id="confirm-password-inscribe">
+        <input type="password" class="input" required id="confirm-password-inscribe">
       </label>
       <div class="btn-inscribe-container">
-        <input type="submit" class="btn btn-send" id="inscribe-btn">
-        <input type="button" class="btn btn-send" id="return-btn" value="Voltar">
+        <input type="submit" class="btn profile-btns" id="inscribe-btn">
+        <input type="button" class="btn profile-btns" id="return-btn" value="Voltar">
       </div>
     </form>
     <section class='modal close-modal-info'>

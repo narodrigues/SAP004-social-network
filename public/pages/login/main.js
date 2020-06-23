@@ -15,7 +15,7 @@ export const signInPage = () => {
         <form action="" id="form-login" class="form-login">
           <input type="email" id="email" class="form-input" placeholder="Email">
           <input type="password" id="password" class="form-input" placeholder="Password">
-          <input type="submit" id="btn-login" class="btn btn-send" "Enviar>
+          <input type="submit" id="btn-login" class="btn profile-btns" "Enviar>
         </form>
         <div class="register-info">
           <button id="login-google" class="btn-login-google"></button>
