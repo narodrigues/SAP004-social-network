@@ -213,7 +213,13 @@ export const feed = () => {
           const commentsCancelBtn = document.createElement('button');
           const commentsPostBtn = document.createElement('button');    
           
-          likeBtn.innerHTML = `<i class='fas fa-heart icon'></i>`;
+          for(let x in postInfos.likes){
+            if(firebaseAuth.uid === postInfos.likes[x].userId){
+              likeBtn.innerHTML = `<i class="fas fa-heart icon"></i>`;
+            } else {
+              likeBtn.innerHTML = `<i class="far fa-heart icon"></i>`;
+            }
+          }
           numberLikes.innerHTML = `${postInfos.likes.length}`;
           commentBtn.innerHTML = `<i class='fas fa-comments icon'></i>`;
           commentsCancelBtn.innerHTML = `<i class="far fa-times-circle icon"></i>`
@@ -238,6 +244,7 @@ export const feed = () => {
             if(myPosts == 0){
               addLike(postId)
               .then(() => {
+                console.log('clicou1')
                 loadAllPosts();
               });
             } else {  
@@ -245,11 +252,13 @@ export const feed = () => {
                 if (myPosts[x].userId === currentUser) {
                   deleteLike(postId, myPosts[x])
                   .then(() => {
+                    console.log('clicou2')
                     loadAllPosts();
                   });
                 } else {
                   addLike(postId)
                   .then(() => {
+                    console.log('clicou3')
                     loadAllPosts();
                   });
                 }
