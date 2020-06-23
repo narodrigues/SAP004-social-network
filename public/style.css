@@ -370,8 +370,38 @@ nav li.sign-out {
 	align-items: center;
 }
 
+.page-feed .btn-option-post {
+  display: flex;
+  
+}
+
 .page-feed .div-posts .div-edit .edit-icon {
 	margin-left: 20px;
+}
+
+.posted-box-options {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.container-option {
+  align-items: center;
+  box-shadow: 1px rgba(253, 57, 57, 0.733);
+  display: flex;
+}
+
+.container-option span {
+  color: rgba(236, 30, 30, 0.836);
+  font-weight: bold;
+  text-align: center;
+}
+
+.btns-default {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .page-feed .i-none {

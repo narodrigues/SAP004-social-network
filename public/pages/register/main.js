@@ -52,6 +52,7 @@ export const inscribePage = () => {
       </section>
     </section>
     <div class='overlay close-overlay'></div>
+    <div id='div-modal'></div>
   `;
 
   inscribePage.querySelector('#close-modal').addEventListener('click', () => {
@@ -67,7 +68,7 @@ export const inscribePage = () => {
   });
 
   inscribePage.querySelector('#inscribe-btn').addEventListener('click', (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const firstName = inscribePage.querySelector('#inscribe-name').value;
     const lastName = inscribePage.querySelector('#inscribe-last-name').value;
     const bio = inscribePage.querySelector('#bio').value;
@@ -97,17 +98,53 @@ export const inscribePage = () => {
       return age;
     }
 
+    const divModal = inscribePage.querySelector('#div-modal')
+    const modalErrorRegister = document.createElement('div');
+    const divShowErrors = document.createElement('div');
+    const msgErrorInput = document.createElement('div');
+    const divBtnModal = document.createElement('div');
+    const btnCloseModalError = document.createElement('button');
+
+    btnCloseModalError.classList.add('btn-icon');
+    btnCloseModalError.id = ('close-modal-error');
+    divBtnModal.classList.add('btn-close');
+    divShowErrors.classList.add('modal', 'close-modal-info');
+    modalErrorRegister.id = 'modal-of-errors'
+
+    btnCloseModalError.innerHTML = `<i class="far fa-times-circle icon"></i>`;
+
+    divBtnModal.append(btnCloseModalError)
+    divShowErrors.append(divBtnModal, msgErrorInput);
+    modalErrorRegister.append(divShowErrors);
+    divModal.append(modalErrorRegister)
+
+    btnCloseModalError.addEventListener('click', () => {
+      modalErrorRegister.remove()
+    })
+
+    let showWrongInputInformation = [];
+
     if (firstName === '' || lastName === '' || userAge === '' || bio === '' || email === '' || password === '') {
-      alert('Preencha o(os) campo(s) vazio(s)');
-    } else if (!re.exec(firstName) || !re.exec(lastName)) {
-      alert('Digite apenas letras');
-    } else if (password !== confirmPassword) {
-      alert('a senha não confere');
-    } else if (calcAge(userAge) < "18") {
-      alert('Site para maiores de 18 anos');
+      showWrongInputInformation.push('Preencha o(os) campo(s) vazio(s)')
+    }
+    if (!re.exec(firstName) || !re.exec(lastName)) {
+      showWrongInputInformation.push('Digite apenas letras nos campos de nome e sobrenome')
+    }
+    if (password !== confirmPassword) {
+      showWrongInputInformation.push('As senhas não conferem')
+    }
+    if((email.length >= 1) && (email.search("@") === -1) && (email.search(" ") === -1)){
+      showWrongInputInformation.push('E-mail inválido')
+    }
+    if (calcAge(userAge) < "18") {
+      showWrongInputInformation.push('Você precisa ter mais de 18 anos para se cadastrar')
     } else {
       register(email, password, firstName, lastName, userAge, bio);
+      window.location.href = '#login';
     }
+    showWrongInputInformation.forEach(erro => {
+      msgErrorInput.innerHTML += `<p>${erro}</p>`
+    })
   });
   return inscribePage;
 }
