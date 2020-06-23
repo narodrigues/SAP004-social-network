@@ -18,7 +18,8 @@ export const signInGoogle = () => {
 			firstName: result.additionalUserInfo.profile.given_name,
 			lastName: result.additionalUserInfo.profile.family_name,
 			email: result.user.email,
-			photo: result.additionalUserInfo.profile.picture
+			photo: result.additionalUserInfo.profile.picture,
+			userUid: firebase.auth().currentUser.uid
 		}
 		firebase
 		.firestore()
