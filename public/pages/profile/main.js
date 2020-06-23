@@ -8,24 +8,24 @@ export const userProfilePage = () => {
   getUserInfos().then((users) => {
     users.forEach((doc) => {
       const infos = doc.data();
-      const calcAge = (date) => { 
+      const calcAge = (date) => {
         const dataAtual = new Date();
         const currentDate = dataAtual.getFullYear();
-        const splitDate = date.split('-'); 
+        const splitDate = date.split('-');
         const day = splitDate[2];
         const month = splitDate[1];
         const year = splitDate[0];
-        const currentMonth = dataAtual.getMonth() + 1; 
-        let age = currentDate - year; 
-      
-        if(currentMonth < month){
-          age--; 
-        } else if(currentMonth == month){ 
-          if(new Date().getDate() < day ){ 
-            age--; 
+        const currentMonth = dataAtual.getMonth() + 1;
+        let age = currentDate - year;
+
+        if (currentMonth < month) {
+          age--;
+        } else if (currentMonth == month) {
+          if (new Date().getDate() < day) {
+            age--;
           }
         }
-        return age; 
+        return age;
       }
 
       localStorage.setItem('photo', infos.img);
@@ -150,7 +150,7 @@ export const userProfilePage = () => {
           menu.classList.toggle('display-block');
         }
       });
-    
+
       const gender = profilePage.querySelector('#gender');
       const status = profilePage.querySelector('#change-status');
       const about = profilePage.querySelector('#about-user');
@@ -169,14 +169,14 @@ export const userProfilePage = () => {
         editPersonalProfile.classList.toggle('i-none');
         savePersonalProfile.classList.toggle('i-none');
 
-        
+
         selectFile.addEventListener('change', (e) => {
           let myFile = e.target.files[0];
 
           getUserImg(myFile)
-          .then((url) => {
-            profilePage.querySelector('#myImg').innerHTML = `<img src=${url} id=${myFile.name}>`
-          });        
+            .then((url) => {
+              profilePage.querySelector('#myImg').innerHTML = `<img src=${url} id=${myFile.name}>`
+            });
         });
       });
 
@@ -192,9 +192,9 @@ export const userProfilePage = () => {
         let myFile = profilePage.querySelector('#myImg').children[0].src;
 
         editedPersonalInfos(doc.id, gender.value, myFile)
-        .then(() => {
-          location.reload();
-        });
+          .then(() => {
+            location.reload();
+          });
       });
 
       profilePage.querySelector('#edit-additional-infos').addEventListener('click', () => {

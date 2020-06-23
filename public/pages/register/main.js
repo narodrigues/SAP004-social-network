@@ -133,7 +133,7 @@ export const inscribePage = () => {
     if (password !== confirmPassword) {
       showWrongInputInformation.push('As senhas não conferem')
     }
-    if((email.length >= 1) && (email.search("@") === -1) && (email.search(" ") === -1)){
+    if ((email.length >= 1) && (email.search("@") === -1) && (email.search(" ") === -1)) {
       showWrongInputInformation.push('E-mail inválido')
     }
     if (calcAge(userAge) < "18") {

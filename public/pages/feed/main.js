@@ -10,7 +10,7 @@ export const feed = () => {
       const userInfos = doc.data();
       const firebaseAuth = firebase.auth().currentUser;
 
-      feedTemplate.innerHTML += `
+      feedTemplate.innerHTML = `
         <header class='header-catarse'>
         <button class='btn-icon' id='openMenu'><i class='fas fa-bars icon menu'></i></button>
         <nav class='nav-main'>
@@ -24,11 +24,11 @@ export const feed = () => {
         <main class='main-feed container'>
           <section class='user-profile'>
             <figure id='user-img'>
-              <img src='${userInfos.img}' alt='Foto de perfil' class='feed-profile-picture'>
+              <img src='${userInfos.img}' alt='Foto de perfil' id='img-profile' class='feed-profile-picture'>
             </figure>
             <div class='profile-data'>
               <span id='userName'>${firebaseAuth.displayName}</span>
-              <span id='bio'>${userInfos.bio}</span>
+              <span id='bio'>${userInfos.bio || 'Seu status'}</span>
             </div>
           </section>
           <div class='container'>
@@ -57,6 +57,12 @@ export const feed = () => {
         </main>
       `
 
+      const imageUserNotFound = feedTemplate.querySelector('#img-profile');
+      imageUserNotFound.onerror = function (image) {
+        image = './assets/user-profile-default.png'
+        imageUserNotFound.src = image;
+      }
+
       const menu = feedTemplate.querySelector('.nav-main');
       const mainToClose = feedTemplate.querySelector('.main-feed');
 
@@ -78,12 +84,12 @@ export const feed = () => {
 
       const loadAllPosts = () => {
         loadingPost()
-        .then((arrayPosts) => {
-          feedTemplate.querySelector('#posts-container').innerHTML = "";
-          arrayPosts.forEach((doc) => {
-            createPosts(doc);
+          .then((arrayPosts) => {
+            feedTemplate.querySelector('#posts-container').innerHTML = "";
+            arrayPosts.forEach((doc) => {
+              createPosts(doc);
+            });
           });
-        });
       }
       loadAllPosts();
 
@@ -170,12 +176,12 @@ export const feed = () => {
             const optionPrivacy = feedTemplate.querySelector('#select-privacy')
             const privacyValue = () => {
               return optionPrivacy.value;
-            } 
-      
+            }
+
             optionPrivacy.addEventListener('change', privacyValue);
 
             const changePostPrivacy = privacyValue();
-            
+
             saveEditPost(msgPost.value, postId, changePostPrivacy);
           }
 
@@ -211,16 +217,16 @@ export const feed = () => {
           const commentsOptions = document.createElement('div');
           const commentsText = document.createElement('textarea');
           const commentsCancelBtn = document.createElement('button');
-          const commentsPostBtn = document.createElement('button');    
-          
-          if(postInfos.likes != 0){
-            for(let x in postInfos.likes){
-              if(firebaseAuth.uid === postInfos.likes[x].userId){
+          const commentsPostBtn = document.createElement('button');
+
+          if (postInfos.likes != 0) {
+            for (let x in postInfos.likes) {
+              if (firebaseAuth.uid === postInfos.likes[x].userId) {
                 likeBtn.innerHTML = `<i class="fas fa-heart icon"></i>`;
               } else {
                 likeBtn.innerHTML = `<i class="far fa-heart icon"></i>`;
               }
-            } 
+            }
           } else {
             likeBtn.innerHTML = `<i class="far fa-heart icon"></i>`;
           }
@@ -236,8 +242,8 @@ export const feed = () => {
           commentsOptions.classList.add('i-none');
           commentsText.classList.add('textarea-post-comment');
           commentsCancelBtn.classList.add('btn-icon');
-          commentsPostBtn.classList.add('btn-icon', 'sendPost'); 
-          
+          commentsPostBtn.classList.add('btn-icon', 'sendPost');
+
           buttonsWrap.append(buttonsPostEditAndDelete);
           buttonsPostEditAndDelete.append(likeBtn, numberLikes, commentBtn)
           postsOnFeed.append(buttonsWrap, commentsOptions);
@@ -246,23 +252,23 @@ export const feed = () => {
           function addLikes() {
             const currentUser = firebaseAuth.uid;
             const myPosts = postInfos.likes
-            if(myPosts == 0){
+            if (myPosts == 0) {
               addLike(postId)
-              .then(() => {
-                loadAllPosts();
-              });
-            } else {  
-              for(let x in myPosts){
+                .then(() => {
+                  loadAllPosts();
+                });
+            } else {
+              for (let x in myPosts) {
                 if (myPosts[x].userId === currentUser) {
                   deleteLike(postId, myPosts[x])
-                  .then(() => {
-                    loadAllPosts();
-                  });
+                    .then(() => {
+                      loadAllPosts();
+                    });
                 } else {
                   addLike(postId)
-                  .then(() => {
-                    loadAllPosts();
-                  });
+                    .then(() => {
+                      loadAllPosts();
+                    });
                 }
               }
             }
@@ -275,28 +281,28 @@ export const feed = () => {
           }
 
           commentsPostBtn.addEventListener('click', addComment);
-          
+
           const showOptionsComments = () => {
             commentsOptions.classList.remove('i-none');
             commentsText.focus();
           }
-            
+
           likeBtn.addEventListener('click', addLikes);
           commentBtn.addEventListener('click', showOptionsComments);
-          }
+        }
 
-          if (!prepend) {
-            postsContainer.appendChild(postsOnFeed);
-          } else {
-            postsContainer.prepend(postsOnFeed);
-          }
-        
-        function loadComments(){
-          if(postInfos.comments){
-            for(let x = 0; x < postInfos.comments.length; x++){
+        if (!prepend) {
+          postsContainer.appendChild(postsOnFeed);
+        } else {
+          postsContainer.prepend(postsOnFeed);
+        }
+
+        function loadComments() {
+          if (postInfos.comments) {
+            for (let x = 0; x < postInfos.comments.length; x++) {
               const commentsContainer = document.createElement('div');
-              const commentedBy= document.createElement('span'); 
-              const commentTextarea= document.createElement('textarea');
+              const commentedBy = document.createElement('span');
+              const commentTextarea = document.createElement('textarea');
 
               commentedBy.innerHTML = `${postInfos.comments[x].name} em ${postInfos.comments[x].date}`;
               commentTextarea.innerHTML = `${postInfos.comments[x].comment}`;
@@ -310,7 +316,7 @@ export const feed = () => {
 
               commentsContainer.append(commentedBy, commentTextarea);
 
-              if(postInfos.comments[x].userUid === firebaseAuth.uid){
+              if (postInfos.comments[x].userUid === firebaseAuth.uid) {
                 const btnCommentsContainer = document.createElement('div');
                 const btnCommentsOption = document.createElement('div');
                 const editComment = document.createElement('button');
@@ -344,7 +350,7 @@ export const feed = () => {
                   commentTextarea.removeAttribute('disabled');
                   commentTextarea.focus();
                 }
-          
+
                 const saveBtnOptions = () => {
                   saveEditedComment.classList.add('i-none');
                   commentTextarea.setAttribute('disabled', 'disabled');
@@ -364,11 +370,11 @@ export const feed = () => {
                     const comments = doc.data().comments[x];
                     const idComment = doc.data().comments[x].id;
                     feedTemplate.querySelector(`[data-commentid='${idComment}']`).remove();
-                    
+
                     deleteOnlyComment(postId, comments);
                   });
                 }
-              
+
                 editComment.addEventListener('click', editBtnFunctions);
                 saveEditedComment.addEventListener('click', saveBtnOptions);
                 deleteComment.addEventListener('click', deleteCommentBtn);
@@ -378,15 +384,15 @@ export const feed = () => {
                 btnCommentsContainer.append(btnCommentsOption, confirmDeleteComment);
                 commentsContainer.append(btnCommentsContainer);
               }
-              
+
               postsOnFeed.append(postsComment);
               postsComment.prepend(commentsContainer)
             }
-          } 
+          }
         }
         loadComments();
       }
-        
+
       feedTemplate.querySelector('#share-post').addEventListener('click', (e) => {
         e.preventDefault()
         const postText = feedTemplate.querySelector('#post-field').value;
@@ -399,7 +405,7 @@ export const feed = () => {
 
         feedTemplate.querySelector('#post-field').value = '';
       });
-      
+
       feedTemplate.querySelector('#signOut').addEventListener('click', signOut);
     });
   });
