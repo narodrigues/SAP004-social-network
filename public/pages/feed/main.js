@@ -48,7 +48,7 @@ export const feed = () => {
                       </label>
                     </div>
                   </form>
-                  <button id='share-post' class='btn'>Postar</button>
+                  <button id='share-post' class='btn profile-btns'>Postar</button>
                 </div>
               </form>
             </section>

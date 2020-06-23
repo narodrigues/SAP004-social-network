@@ -8,25 +8,9 @@ export const userProfilePage = () => {
   getUserInfos().then((users) => {
     users.forEach((doc) => {
       const infos = doc.data();
-      const calcAge = (date) => {
-        const dataAtual = new Date();
-        const currentDate = dataAtual.getFullYear();
-        const splitDate = date.split('-');
-        const day = splitDate[2];
-        const month = splitDate[1];
-        const year = splitDate[0];
-        const currentMonth = dataAtual.getMonth() + 1;
-        let age = currentDate - year;
-
-        if (currentMonth < month) {
-          age--;
-        } else if (currentMonth == month) {
-          if (new Date().getDate() < day) {
-            age--;
-          }
-        }
-        return age;
-      }
+      const ageUser = infos.age || '';
+      const arrayData = ageUser.split('-');
+      const birthday = arrayData.reverse().join('-');
 
       localStorage.setItem('photo', infos.img);
       localStorage.setItem('bio', infos.bio);
@@ -46,7 +30,7 @@ export const userProfilePage = () => {
         <div class='profile-container container'>
           <aside class='profile-infos div-infos'>
             <figure>
-              <img src=${infos.img} alt='Foto de perfil' class='profile-picture'>
+              <img src=${infos.img} id='img-profile' alt='Foto de perfil' class='profile-picture'>
             </figure>
             <span class='user-name'>${firebase.auth().currentUser.displayName}</span>
             <nav>
@@ -76,8 +60,8 @@ export const userProfilePage = () => {
               <textarea disabled>${infos.firstName} ${infos.lastName}</textarea>
             </div>
             <div class='info-user-div'>
-              <span>Idade:</span>
-              <textarea disabled>${calcAge(infos.age)}</textarea>
+              <span>Data de aniversário:</span>
+              <textarea disabled>${birthday || 'informação não encontrada'}</textarea>
             </div>
             <div class='info-user-div'>
               <span>Sexo:</span>

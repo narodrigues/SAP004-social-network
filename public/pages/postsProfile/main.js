@@ -21,11 +21,11 @@ export const userProfilePageWithPosts = () => {
         <figure>
           <img src='${localStorage.getItem('photo')}' alt='Foto de perfil' class='profile-picture'>
         </figure>
-        <span>${firebase.auth().currentUser.displayName}</span>
+        <span class='user-name'>${firebase.auth().currentUser.displayName}</span>
         <nav>
           <ul>
-            <li><a href='#profile'>Perfil</a></li>
-            <li><a href='#profile-posts'>Meus Posts</a></li>
+            <li><a href='#profile' class='profile-btns'>Perfil</a></li>
+            <li><a href='#profile-posts' class='profile-btns'>Meus Posts</a></li>
           </ul>
         </nav>
       </aside>
@@ -58,7 +58,7 @@ export const userProfilePageWithPosts = () => {
     const postedBy = document.createElement('span');
     const postText = document.createElement('textarea');
     const buttonsWrap = document.createElement('div');
-    const likes = document.createElement('div');
+    const divButtonsPostProfile = document.createElement('div');
     const likeBtn = document.createElement('button');
     const numberLikesInMyPosts = document.createElement('span');
     const optionPrivacyPost = document.createElement('span');
@@ -71,6 +71,7 @@ export const userProfilePageWithPosts = () => {
     buttonsWrap.classList.add('posted-box-options', 'box');
     likeBtn.classList.add('btn-icon', 'like');
     numberLikesInMyPosts.classList.add('numberLikes');
+    divButtonsPostProfile.classList.add('div-btns');
 
     postText.setAttribute('disabled', 'disabled');
     post.setAttribute('data-postid', doc.id);
@@ -82,8 +83,8 @@ export const userProfilePageWithPosts = () => {
     optionPrivacyPost.innerText = `${data.privacy}`
 
     postedByBox.append(postedBy)
-    likes.append(likeBtn, numberLikesInMyPosts)
-    buttonsWrap.append(likes, optionPrivacyPost)
+    divButtonsPostProfile.append(likeBtn, numberLikesInMyPosts, optionPrivacyPost)
+    buttonsWrap.append(divButtonsPostProfile)
     post.append(postedByBox, postText, buttonsWrap)
 
     if (data.comments) {
@@ -105,17 +106,6 @@ export const userProfilePageWithPosts = () => {
       })
     })
 
-  // FUNÇÃO COMENTADA PARA MUDAR A PRIVACIDADE DO POST 
-  // const optionPrivacy = document.querySelector('#option-privacy');
-  // const changePrivacy = () => {
-  //   editPrivacyPost(doc.id, optionPrivacy.value);
-  //   // return optionPrivacy.value;
-  //   console.log(optionPrivacy.value)
-  // } 
-
-  // optionPrivacy.addEventListener('change', changePrivacy);
-
-  setTimeout(() => {
     const menu = profilePagePosts.querySelector('.nav-main');
     const divToClose = profilePagePosts.querySelector('.divToClose');
 
@@ -136,7 +126,6 @@ export const userProfilePageWithPosts = () => {
     });
 
     profilePagePosts.querySelector('#signOut').addEventListener('click', signOut)
-  }, 1000)
 
   return profilePagePosts;
 }
