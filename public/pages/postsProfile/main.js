@@ -85,8 +85,8 @@ export const userProfilePageWithPosts = () => {
     likes.append(likeBtn, numberLikesInMyPosts)
     buttonsWrap.append(likes, optionPrivacyPost)
     post.append(postedByBox, postText, buttonsWrap)
-    
-    if(data.comments) {
+
+    if (data.comments) {
       data.comments.forEach(comment => {
         comments.append(commentComponent(comment));
       })
@@ -98,12 +98,12 @@ export const userProfilePageWithPosts = () => {
   }
 
   loadedAllMyPosts()
-  .then((arrayPosts) => {
-    const postsContainer = profilePagePosts.querySelector('#posts-container');
-    arrayPosts.forEach((doc) => {
-      postsContainer.append(postComponent(doc))
+    .then((arrayPosts) => {
+      const postsContainer = profilePagePosts.querySelector('#posts-container');
+      arrayPosts.forEach((doc) => {
+        postsContainer.append(postComponent(doc))
+      })
     })
-  })
 
   // FUNÇÃO COMENTADA PARA MUDAR A PRIVACIDADE DO POST 
   // const optionPrivacy = document.querySelector('#option-privacy');
@@ -114,7 +114,7 @@ export const userProfilePageWithPosts = () => {
   // } 
 
   // optionPrivacy.addEventListener('change', changePrivacy);
- 
+
   setTimeout(() => {
     const menu = profilePagePosts.querySelector('.nav-main');
     const divToClose = profilePagePosts.querySelector('.divToClose');
