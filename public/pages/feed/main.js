@@ -10,7 +10,7 @@ export const feed = () => {
       const userInfos = doc.data();
       const firebaseAuth = firebase.auth().currentUser;
 
-      feedTemplate.innerHTML += `
+      feedTemplate.innerHTML = `
         <header class='header-catarse'>
         <button class='btn-icon' id='openMenu'><i class='fas fa-bars icon menu'></i></button>
         <nav class='nav-main'>
@@ -24,11 +24,11 @@ export const feed = () => {
         <main class='main-feed container'>
           <section class='user-profile'>
             <figure id='user-img'>
-              <img src='${userInfos.img}' alt='Foto de perfil' class='feed-profile-picture'>
+              <img src='${userInfos.img}' alt='Foto de perfil' id='img-profile' class='feed-profile-picture'>
             </figure>
             <div class='profile-data'>
               <span id='userName'>${firebaseAuth.displayName}</span>
-              <span id='bio'>${userInfos.bio}</span>
+              <span id='bio'>${userInfos.bio || 'Seu status'}</span>
             </div>
           </section>
           <div class='container'>
@@ -56,6 +56,12 @@ export const feed = () => {
           </div>
         </main>
       `
+
+      const imageUserNotFound = feedTemplate.querySelector('#img-profile');
+      imageUserNotFound.onerror = function (image) {
+        image = './assets/user-profile-default.png'
+        imageUserNotFound.src = image;
+      }
 
       const menu = feedTemplate.querySelector('.nav-main');
       const mainToClose = feedTemplate.querySelector('.main-feed');
