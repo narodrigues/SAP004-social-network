@@ -7,7 +7,8 @@ export const feed = () => {
 
   getUserInfos().then((users) => {
     users.forEach((doc) => {
-      const infos = doc.data();
+      const userInfos = doc.data();
+      const firebaseAuth = firebase.auth().currentUser;
 
       feedTemplate.innerHTML += `
         <header class='header-catarse'>
@@ -23,11 +24,11 @@ export const feed = () => {
         <main class='main-feed container'>
           <section class='user-profile'>
             <figure id='user-img'>
-              <img src='${infos.img}' alt='Foto de perfil' class='feed-profile-picture'>
+              <img src='${userInfos.img}' alt='Foto de perfil' class='feed-profile-picture'>
             </figure>
             <div class='profile-data'>
-              <span id='userName'>${firebase.auth().currentUser.displayName}</span>
-              <span id='bio'>${infos.bio}</span>
+              <span id='userName'>${firebaseAuth.displayName}</span>
+              <span id='bio'>${userInfos.bio}</span>
             </div>
           </section>
           <div class='container'>
@@ -84,7 +85,8 @@ export const feed = () => {
       });
 
       const createPosts = (doc, prepend) => {
-        const post = doc.data();
+        const postInfos = doc.data();
+        const postId = doc.id;
         const postsOnFeed = document.createElement('section');
         const postsBox = document.createElement('div');
         const postedBy = document.createElement('span');
@@ -94,8 +96,8 @@ export const feed = () => {
         const postsComment = document.createElement('section');
         const postsContainer = feedTemplate.querySelector('#posts-container');
 
-        postedBy.innerHTML = `Publicado por ${post.name} em ${post.timestamps}`;
-        msgPost.innerHTML = `${post.post}`;
+        postedBy.innerHTML = `Publicado por ${postInfos.name} em ${postInfos.timestamps}`;
+        msgPost.innerHTML = `${postInfos.post}`;
 
         postsOnFeed.classList.add('div-posts');
         postsBox.classList.add('posted-box-by', 'box');
@@ -106,12 +108,12 @@ export const feed = () => {
         postsComment.classList.add('post-comment');
 
         msgPost.setAttribute('disabled', 'disabled');
-        postsOnFeed.setAttribute('data-postid', doc.id);
+        postsOnFeed.setAttribute('data-postid', postId);
 
         postsOnFeed.append(postsBox, msgPost, postsComment);
         postsBox.append(postedBy);
 
-        if (post.userUid === firebase.auth().currentUser.uid) {
+        if (postInfos.userUid === firebaseAuth.uid) {
           const editBtn = document.createElement('button');
           const saveBtn = document.createElement('button');
           const deleteBtn = document.createElement('button');
@@ -132,7 +134,6 @@ export const feed = () => {
 
           selectPrivacy.id = 'select-privacy';
 
-          // deleteBtn.setAttribute('data-postid', doc.id)
           optionPublic.setAttribute('value', 'public');
           optionPrivate.setAttribute('value', 'private');
 
@@ -162,13 +163,12 @@ export const feed = () => {
 
             const changePostPrivacy = privacyValue();
             
-            saveEditPost(msgPost.value, doc.id, changePostPrivacy);
+            saveEditPost(msgPost.value, postId, changePostPrivacy);
           }
 
           const deletePostBtn = () => {
-            const dataId = doc.id;
-            feedTemplate.querySelector(`[data-postid='${dataId}']`).remove();
-            deletePost(dataId);
+            feedTemplate.querySelector(`[data-postid='${postId}']`).remove();
+            deletePost(postId);
           }
 
           editBtn.addEventListener('click', editBtnFunctions);
@@ -185,7 +185,7 @@ export const feed = () => {
           const commentsPostBtn = document.createElement('button');    
           
           likeBtn.innerHTML = `<i class='fas fa-heart icon'></i>`;
-          numberLikes.innerHTML = `${doc.data().likesCount}`;
+          numberLikes.innerHTML = `${postInfos.likes.length}`;
           commentBtn.innerHTML = `<i class='fas fa-comments icon'></i>`;
           commentsCancelBtn.innerHTML = `<i class="far fa-times-circle icon"></i>`
           commentsPostBtn.innerHTML = `<i class="far fa-check-circle icon"></i>`
@@ -203,59 +203,32 @@ export const feed = () => {
           postsOnFeed.append(buttonsWrap, commentsOptions);
           commentsOptions.append(commentsText, commentsPostBtn, commentsCancelBtn);
 
-
-
-
-
-
           function addLikes() {
-            const idPost = doc.id;
-            const currentUser = firebase.auth().currentUser.uid;
-            const myPosts = doc.data().likes
-            // const likesCount = doc.data().likesCount
-        
+            const currentUser = firebaseAuth.uid;
+            const myPosts = postInfos.likes
             if(myPosts == 0){
-              addLike(idPost).then((doc) => {
-                console.log(doc);
-              });
-              
-      
-              // .then((like) => {
-              //   numberLikes.innerHTML = `${like.data().likesCount}`;
-              // })
+              addLike(postId)
             } else {
               for(let x in myPosts){
                 if (myPosts[x].userId === currentUser) {
-                  deleteLike(idPost, myPosts[x])
-                  .then(() => {
-                    console.log("APAGOU")
-                  });
-          
-                  // .then((like) => {
-                  //   numberLikes.innerHTML = `${like.data().likesCount}`;
-                  // })
+                  deleteLike(postId, myPosts[x])
                 } else {
-                  addLike(idPost)
+                  addLike(postId)
                 }
               }
             }
+            loadingPost()
+            .then((arrayPosts) => {
+              feedTemplate.querySelector('#posts-container').innerHTML = "";
+              arrayPosts.forEach((doc) => {
+                createPosts(doc);
+              });
+            });
           }
-
-
-
-          // const addLikes = () => {
-          //   const likeId = doc.id;
-          //   let likes = (doc.data().likes) +1;
-          //   editLikes(likes, likeId);
-
-          //   numberLikes.setAttribute('data', 'number')
-          //   document.querySelector(`.numberLikes`) + 1;
-          //   numberLikes.innerHTML = doc.data().likes =+ likes;
-          // }
 
           const addComment = () => {
             const textComment = commentsText.value;
-            addComments(doc.id, textComment);
+            addComments(postId, textComment);
             loadingPost()
             .then((arrayPosts) => {
               feedTemplate.querySelector('#posts-container').innerHTML = "";
@@ -283,25 +256,25 @@ export const feed = () => {
           }
         
         function loadComments(){
-          if(doc.data().comments){
-            for(let x = 0; x < doc.data().comments.length; x++){
+          if(postInfos.comments){
+            for(let x = 0; x < postInfos.comments.length; x++){
               const commentsContainer = document.createElement('div');
               const commentedBy= document.createElement('span'); 
               const commentTextarea= document.createElement('textarea');
 
-              commentedBy.innerHTML = `${doc.data().comments[x].name} em ${doc.data().comments[x].date}`;
-              commentTextarea.innerHTML = `${doc.data().comments[x].comment}`;
+              commentedBy.innerHTML = `${postInfos.comments[x].name} em ${postInfos.comments[x].date}`;
+              commentTextarea.innerHTML = `${postInfos.comments[x].comment}`;
 
               commentsContainer.classList.add('comments-container');
               commentedBy.classList.add('commented-by');
               commentTextarea.classList.add('textareaComments');
 
-              commentsContainer.setAttribute('data-commentid', doc.data().comments[x].id);
+              commentsContainer.setAttribute('data-commentid', postInfos.comments[x].id);
               commentTextarea.setAttribute('disabled', 'disabled');
 
               commentsContainer.append(commentedBy, commentTextarea);
 
-              if(post.comments[x].userUid === firebase.auth().currentUser.uid){
+              if(postInfos.comments[x].userUid === firebaseAuth.uid){
                 const btnCommentsContainer = document.createElement('div');
                 const editComment = document.createElement('button');
                 const saveEditedComment = document.createElement('button');
@@ -328,14 +301,12 @@ export const feed = () => {
                   commentTextarea.setAttribute('disabled', 'disabled');
 
                   const newComment = commentTextarea.value;
-                  const postId = doc.id;
-                  saveEditComments(newComment, postId, doc.data().comments[x])
+                  saveEditComments(newComment, postId, postInfos.comments[x])
                 }
                 
                 const deleteCommenttBtn = () => {
-                  const postId = doc.id;
-                  const comments = doc.data().comments[x];
-                  const idComment = doc.data().comments[x].id;
+                  const comments = postInfos.comments[x];
+                  const idComment = postInfos.comments[x].id;
                   feedTemplate.querySelector(`[data-commentid='${idComment}']`).remove();
                   deleteOnlyComment(postId, comments);
                 }
@@ -370,8 +341,7 @@ export const feed = () => {
       });
       
       feedTemplate.querySelector('#signOut').addEventListener('click', signOut);
-
-    })
-  })
+    });
+  });
   return feedTemplate;
 }

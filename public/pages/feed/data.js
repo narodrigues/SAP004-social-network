@@ -61,6 +61,14 @@ export const saveEditPost = (text, id, privacy) => {
     })
 }
 
+export const deletePost = (id) => {
+  return firebase
+    .firestore()
+    .collection('posts')
+    .doc(id)
+    .delete()
+}
+
 export const addLike = (id) => {
   return firebase
     .firestore()
@@ -71,8 +79,6 @@ export const addLike = (id) => {
       likes: firebase.firestore.FieldValue.arrayUnion({
         userId: firebase.auth().currentUser.uid
       })
-    }).then(() => {
-      return firebase.firestore().collection('posts').doc(id).get();
     })
 }
 
@@ -132,14 +138,6 @@ export const saveEditComments = (text, id, commentTarget) => {
         comments: mapComment
     })
   })
-}
-
-export const deletePost = (id) => {
-  return firebase
-    .firestore()
-    .collection('posts')
-    .doc(id)
-    .delete()
 }
 
 export const deleteOnlyComment = (id, comments) => {
