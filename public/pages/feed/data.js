@@ -122,10 +122,6 @@ export const saveEditComments = (text, id, commentTarget) => {
       const mapComment = doc.data().comments.map((myComment) => {
         if(myComment.id === commentTarget.id){
           const newComment = {...commentTarget, comment: text}
-          // console.log(text)
-          // console.log(myComment.id, commentTarget.id)
-          // console.log(newComment)
-          // console.log(myComment)
           return newComment
         }
         return myComment
