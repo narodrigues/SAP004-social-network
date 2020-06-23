@@ -17,7 +17,8 @@ export const posts = (text, value) => {
   const Posts = {
     post: text,
     name: firebase.auth().currentUser.displayName,
-    likes: 0,
+    likesCount: 0,
+    likes: [],
     userUid: firebase.auth().currentUser.uid,
     timestamps: firebase.firestore.Timestamp.fromDate(new Date()).toDate().toLocaleString('pt-BR'),
     privacy: value,
@@ -60,14 +61,38 @@ export const saveEditPost = (text, id, privacy) => {
     })
 }
 
-export const editLikes = (like, id) => {
+export const deletePost = (id) => {
+  return firebase
+    .firestore()
+    .collection('posts')
+    .doc(id)
+    .delete()
+}
+
+export const addLike = (id) => {
   return firebase
     .firestore()
     .collection('posts')
     .doc(id)
     .update({
-      "likes": like
-    })
+      likesCount: firebase.firestore.FieldValue.increment(1),
+      likes: firebase.firestore.FieldValue.arrayUnion({
+        userId: firebase.auth().currentUser.uid
+      })
+    });
+}
+
+export const deleteLike = (id, user) => {
+  return firebase
+    .firestore()
+    .collection('posts')
+    .doc(id)
+    .update({
+      likesCount: firebase.firestore.FieldValue.increment(-1),
+      likes: firebase.firestore.FieldValue.arrayRemove({
+        ...user
+      })
+    });
 }
 
 export const addComments = (id, comment) => {
@@ -84,7 +109,7 @@ export const addComments = (id, comment) => {
         comment: comment,
         id: new Date().getTime()
       })
-    })
+    });
 }
 
 export const saveEditComments = (text, id, commentTarget) => {
@@ -94,13 +119,13 @@ export const saveEditComments = (text, id, commentTarget) => {
     .doc(id)
     .get()
     .then((doc) => {
-       const mapComment = doc.data().comments.map((myComment) => {
+      const mapComment = doc.data().comments.map((myComment) => {
         if(myComment.id === commentTarget.id){
           const newComment = {...commentTarget, comment: text}
-          console.log(text)
-          console.log(myComment.id, commentTarget.id)
-          console.log(newComment)
-          console.log(myComment)
+          // console.log(text)
+          // console.log(myComment.id, commentTarget.id)
+          // console.log(newComment)
+          // console.log(myComment)
           return newComment
         }
         return myComment
@@ -111,16 +136,8 @@ export const saveEditComments = (text, id, commentTarget) => {
       .doc(id)
       .update({      
         comments: mapComment
-    })
-  })
-}
-
-export const deletePost = (id) => {
-  return firebase
-    .firestore()
-    .collection('posts')
-    .doc(id)
-    .delete()
+      })
+    });
 }
 
 export const deleteOnlyComment = (id, comments) => {
@@ -133,7 +150,7 @@ export const deleteOnlyComment = (id, comments) => {
       comments: firebase.firestore.FieldValue.arrayRemove({
         ...comments
       })
-    })
+    });
 }
 
 export const signOut = () => {
