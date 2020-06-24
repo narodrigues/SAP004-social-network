@@ -1,9 +1,15 @@
-import { getUserInfos, editedPersonalInfos, editedAdditionalInfos, signOut, getUserImg } from './data.js';
+import {
+  getUserInfos,
+  editedPersonalInfos,
+  editedAdditionalInfos,
+  signOut,
+  getUserImg,
+} from './data.js';
 
 export const userProfilePage = () => {
   const profilePage = document.createElement('div');
   profilePage.classList.add('page-feed', 'pages');
-  window.location.href = '#profile'
+  window.location.href = '#profile';
 
   getUserInfos().then((users) => {
     users.forEach((doc) => {
@@ -52,7 +58,7 @@ export const userProfilePage = () => {
               <h1>Informações pessoais</h1>
               <div id='edit-basic-info'>            
                   <button class='btn-icon' id='edit-personal-info'><i class='fas fa-user-edit icon'></i></button>
-                  <button class='btn-icon i-none' id='save-personal-info'><i class='fas fa-user-check icon'></i></button>
+                  <button class='btn-icon icon-none' id='save-personal-info'><i class='fas fa-user-check icon'></i></button>
               </div>
             </div>
             <div class='info-user-div'>
@@ -90,7 +96,7 @@ export const userProfilePage = () => {
               <h1>Informações adicionais</h1>
               <div id='edit-additional-info'>            
                   <button class='btn-icon' id='edit-additional-infos'><i class='fas fa-user-edit icon'></i></button>
-                  <button class='btn-icon i-none' id='save-additional-infos'><i class='fas fa-user-check icon'></i></button>
+                  <button class='btn-icon icon-none' id='save-additional-infos'><i class='fas fa-user-check icon'></i></button>
               </div>
             </div>
             <form>
@@ -114,7 +120,7 @@ export const userProfilePage = () => {
           </section>
         </main>
       </div>
-      `
+      `;
 
       const menu = profilePage.querySelector('.nav-main');
       const divToClose = profilePage.querySelector('.divToClose');
@@ -150,16 +156,16 @@ export const userProfilePage = () => {
         selectFile.removeAttribute('disabled');
 
         gender.classList.toggle('editable-field');
-        editPersonalProfile.classList.toggle('i-none');
-        savePersonalProfile.classList.toggle('i-none');
+        editPersonalProfile.classList.toggle('icon-none');
+        savePersonalProfile.classList.toggle('icon-none');
 
 
         selectFile.addEventListener('change', (e) => {
-          let myFile = e.target.files[0];
+          const myFile = e.target.files[0];
 
           getUserImg(myFile)
             .then((url) => {
-              profilePage.querySelector('#myImg').innerHTML = `<img src=${url} id=${myFile.name}>`
+              profilePage.querySelector('#myImg').innerHTML = `<img src=${url} id=${myFile.name}>`;
             });
         });
       });
@@ -170,14 +176,14 @@ export const userProfilePage = () => {
 
         gender.classList.toggle('editable-field');
         selectFile.classList.toggle('editable-field');
-        editPersonalProfile.classList.toggle('i-none');
-        savePersonalProfile.classList.toggle('i-none');
+        editPersonalProfile.classList.toggle('icon-none');
+        savePersonalProfile.classList.toggle('icon-none');
 
-        let myFile = profilePage.querySelector('#myImg').children[0].src;
+        const myFile = profilePage.querySelector('#myImg').children[0].src;
 
         editedPersonalInfos(doc.id, gender.value, myFile)
           .then(() => {
-            location.reload();
+            window.location.reload();
           });
       });
 
@@ -191,8 +197,8 @@ export const userProfilePage = () => {
         status.classList.toggle('editable-field');
         about.classList.toggle('editable-field');
         statusRelationship.classList.toggle('editable-field');
-        editAdditionalProfile.classList.toggle('i-none');
-        saveAdditionalProfile.classList.toggle('i-none');
+        editAdditionalProfile.classList.toggle('icon-none');
+        saveAdditionalProfile.classList.toggle('icon-none');
       });
 
 
@@ -204,16 +210,15 @@ export const userProfilePage = () => {
         status.classList.toggle('editable-field');
         about.classList.toggle('editable-field');
         statusRelationship.classList.toggle('editable-field');
-        editAdditionalProfile.classList.toggle('i-none');
-        saveAdditionalProfile.classList.toggle('i-none');
+        editAdditionalProfile.classList.toggle('icon-none');
+        saveAdditionalProfile.classList.toggle('icon-none');
 
-        editedAdditionalInfos(doc.id, status.value, statusRelationship.value, about.value)
+        editedAdditionalInfos(doc.id, status.value, statusRelationship.value, about.value);
       });
 
       profilePage.querySelector('#signOut').addEventListener('click', signOut);
-
     });
   });
 
   return profilePage;
-}
+};

@@ -55,6 +55,7 @@ textarea:focus {
 
 .feed-profile-picture {
 	border-radius: 10px;
+	box-shadow: 19px 25px 21px 0px #e1b29499;
 	margin: 0 30px;
 	width: 115px;
 }
@@ -65,7 +66,7 @@ textarea:focus {
 	width: 100%;
 }
 
-.i-none {
+.icon-none {
 	display: none;
 }
 
@@ -287,7 +288,7 @@ nav li.sign-out {
 	font-size: 18px;
   max-height: 130px;
 	justify-self: end;
-	margin: 15px auto;
+	margin: 30px auto;
 	max-width: 450px;
 }
 
@@ -362,7 +363,7 @@ nav li.sign-out {
 .page-feed .div-posts .box:nth-child(2) {
 	background: white;
 	color: black;
-	padding: 20px 15px;
+	padding: 20px 15px 0 15px;
 }
 
 .page-feed .posted-box-options.box {
@@ -417,7 +418,7 @@ nav li.sign-out {
   width: 100%;
 }
 
-.page-feed .i-none {
+.page-feed .icon-none {
 	display: none;
 }
 
@@ -459,7 +460,7 @@ nav li.sign-out {
 
 .page-feed .comments-container textarea {
 	font-size: 16px;
-	padding: 10px 15px;
+	padding: 10px 15px 0px 15px;
 }
 
 .btn-icon {
@@ -763,7 +764,7 @@ nav li.sign-out {
 	}
 
 	.profile-container.container {
-		margin: 25px auto;
+		margin: 0px auto;
 		padding: 0;
 		width: 50%;
 	}

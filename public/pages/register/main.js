@@ -1,35 +1,35 @@
-import { register } from "./data.js";
+import { register } from './data.js';
 
 export const inscribePage = () => {
-  const inscribePage = document.createElement('section');
-  inscribePage.classList.add('page-inscribe')
-  window.location.href = '#register'
-  inscribePage.innerHTML = `
-    <form class="form-inscribe">
-      <label for="inscribe-name">Nome:
-        <input type="text" class="input" requerid id="inscribe-name">
+  const inscribePageTemplate = document.createElement('section');
+  inscribePageTemplate.classList.add('page-inscribe');
+  window.location.href = '#register';
+  inscribePageTemplate.innerHTML = `
+    <form class='form-inscribe'>
+      <label for='inscribe-name'>Nome:
+        <input type='text' class='input' requerid id='inscribe-name'>
       </label>
-      <label for="inscribe-last-name">Sobrenome:
-        <input type="text" class="input" required id="inscribe-last-name">
+      <label for='inscribe-last-name'>Sobrenome:
+        <input type='text' class='input' required id='inscribe-last-name'>
       </label>
-      <label for="bio">Status:
-        <input type="text" class="input" required id="bio">
+      <label for='bio'>Status:
+        <input type='text' class='input' required id='bio'>
       </label>
-      <label for="age-inscribe">Idade:
-        <input type="date" class="input" required id="age-inscribe">
+      <label for='age-inscribe'>Idade:
+        <input type='date' class='input' required id='age-inscribe'>
       </label>
-      <label for="inscribe-email">Email: 
-        <input type="email" class="input" required id="inscribe-email">
+      <label for='inscribe-email'>Email: 
+        <input type='email' class='input' required id='inscribe-email'>
       </label>
       <label for="password-inscribe">Senha:
-        <input type="password" class="input" required id="password-inscribe">
+        <input type='password' class='input' required id='password-inscribe'>
       </label>
-      <label for="confirm-password-inscribe">Confirme sua senha:
-        <input type="password" class="input" required id="confirm-password-inscribe">
+      <label for='confirm-password-inscribe'>Confirme sua senha:
+        <input type='password' class='input' required id='confirm-password-inscribe'>
       </label>
-      <div class="btn-inscribe-container">
-        <input type="submit" class="btn profile-btns" id="inscribe-btn">
-        <input type="button" class="btn profile-btns" id="return-btn" value="Voltar">
+      <div class='btn-inscribe-container'>
+        <input type='submit' class='btn profile-btns' id='inscribe-btn'>
+        <input type='button' class='btn profile-btns' id='return-btn' value='Voltar'>
       </div>
     </form>
     <section class='modal close-modal-info'>
@@ -42,7 +42,7 @@ export const inscribePage = () => {
         </div>
         <div class="content-modal">
           <p>A palavra <strong>Catarse</strong> é usada para definir o processo de cura emocional através da Psicanálise, que consiste na cura através da libertação de pensamentos, sentimentos, e experiências traumáticas vividas até então.</p>
-          <p>Esta rede social tem como objetivo tratar de maneira segura e confortável uma questão que faz parte da rotina de muitas mulheres, visto que durante essa quarentena o número de casos de violência contra mulher dentro de sua própria casa tem aumentado drasticamente.</p>
+          <p>Esta rede social tem como objetivo tratar de maneira segura e confortável uma questão que faz parte da rotina de muitas mulheres que é a violência doméstica, visto que durante essa quarentena o número de casos tem aumentado drasticamente.</p>
           <p>Este é um canal seguro onde você poderá compartilhar suas experiências e ajudar outras mulheres a superarem esta situação através de suas interações.</p>
           <p>Aqui prezamos pelo respeito e empatia umas pelas outras. Assim, pedimos sua colaboração para que superemos esse desafio</p>
         </div>
@@ -55,27 +55,27 @@ export const inscribePage = () => {
     <div id='div-modal'></div>
   `;
 
-  inscribePage.querySelector('#close-modal').addEventListener('click', () => {
-    const closeOverlay = inscribePage.querySelector('.close-overlay');
-    const closeModal = inscribePage.querySelector('.close-modal-info');
+  inscribePageTemplate.querySelector('#close-modal').addEventListener('click', () => {
+    const closeOverlay = inscribePageTemplate.querySelector('.close-overlay');
+    const closeModal = inscribePageTemplate.querySelector('.close-modal-info');
 
-    closeModal.remove()
-    closeOverlay.remove()
+    closeModal.remove();
+    closeOverlay.remove();
   });
 
-  inscribePage.querySelector('#return-btn').addEventListener('click', () => {
+  inscribePageTemplate.querySelector('#return-btn').addEventListener('click', () => {
     window.location.href = '#login';
   });
 
-  inscribePage.querySelector('#inscribe-btn').addEventListener('click', (e) => {
-    e.preventDefault()
-    const firstName = inscribePage.querySelector('#inscribe-name').value;
-    const lastName = inscribePage.querySelector('#inscribe-last-name').value;
-    const bio = inscribePage.querySelector('#bio').value;
-    const email = inscribePage.querySelector('#inscribe-email').value;
-    const userAge = inscribePage.querySelector('#age-inscribe').value;
-    const password = inscribePage.querySelector('#password-inscribe').value;
-    const confirmPassword = inscribePage.querySelector('#confirm-password-inscribe').value;
+  inscribePageTemplate.querySelector('#inscribe-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    const firstName = inscribePageTemplate.querySelector('#inscribe-name').value;
+    const lastName = inscribePageTemplate.querySelector('#inscribe-last-name').value;
+    const bio = inscribePageTemplate.querySelector('#bio').value;
+    const email = inscribePageTemplate.querySelector('#inscribe-email').value;
+    const userAge = inscribePageTemplate.querySelector('#age-inscribe').value;
+    const password = inscribePageTemplate.querySelector('#password-inscribe').value;
+    const confirmPassword = inscribePageTemplate.querySelector('#confirm-password-inscribe').value;
     const re = /^[a-z À-ú]*$/i;
 
     const calcAge = (date) => {
@@ -89,16 +89,16 @@ export const inscribePage = () => {
       let age = currentDate - year;
 
       if (currentMonth < month) {
-        age--;
-      } else if (currentMonth == month) {
+        age -= 1;
+      } else if (currentMonth === month) {
         if (new Date().getDate() < day) {
-          age--;
+          age -= 1;
         }
       }
       return age;
-    }
+    };
 
-    const divModal = inscribePage.querySelector('#div-modal')
+    const divModal = inscribePageTemplate.querySelector('#div-modal');
     const modalErrorRegister = document.createElement('div');
     const divShowErrors = document.createElement('div');
     const msgErrorInput = document.createElement('div');
@@ -109,42 +109,60 @@ export const inscribePage = () => {
     btnCloseModalError.id = ('close-modal-error');
     divBtnModal.classList.add('btn-close');
     divShowErrors.classList.add('modal', 'close-modal-info');
-    modalErrorRegister.id = 'modal-of-errors'
+    modalErrorRegister.id = 'modal-of-errors';
 
-    btnCloseModalError.innerHTML = `<i class="far fa-times-circle icon"></i>`;
+    btnCloseModalError.innerHTML = '<i class="far fa-times-circle icon"></i>';
 
-    divBtnModal.append(btnCloseModalError)
+    divBtnModal.append(btnCloseModalError);
     divShowErrors.append(divBtnModal, msgErrorInput);
     modalErrorRegister.append(divShowErrors);
-    divModal.append(modalErrorRegister)
+    divModal.append(modalErrorRegister);
 
     btnCloseModalError.addEventListener('click', () => {
-      modalErrorRegister.remove()
-    })
+      modalErrorRegister.remove();
+    });
 
-    let showWrongInputInformation = [];
+    const showWrongInputInformation = [];
 
+    let withError = false;
+    const errorCode = firebase.auth().Error;
     if (firstName === '' || lastName === '' || userAge === '' || bio === '' || email === '' || password === '') {
-      showWrongInputInformation.push('Preencha o(os) campo(s) vazio(s)')
+      withError = true;
+      showWrongInputInformation.push('Preencha o(os) campo(s) vazio(s)');
     }
     if (!re.exec(firstName) || !re.exec(lastName)) {
-      showWrongInputInformation.push('Digite apenas letras nos campos de nome e sobrenome')
+      withError = true;
+      showWrongInputInformation.push('Digite apenas letras nos campos de nome e sobrenome');
     }
     if (password !== confirmPassword) {
-      showWrongInputInformation.push('As senhas não conferem')
+      withError = true;
+      showWrongInputInformation.push('As senhas não conferem');
     }
-    if ((email.length >= 1) && (email.search("@") === -1) && (email.search(" ") === -1)) {
-      showWrongInputInformation.push('E-mail inválido')
+    if (errorCode === 'auth/weak-password') {
+      withError = true;
+      showWrongInputInformation.push('Sua senha é muito fraca');
     }
-    if (calcAge(userAge) < "18") {
-      showWrongInputInformation.push('Você precisa ter mais de 18 anos para se cadastrar')
-    } else {
+    if ((email.length <= 1) || (email.search('@') === -1)) {
+      withError = true;
+      showWrongInputInformation.push('E-mail inválido');
+    }
+    if (errorCode === 'auth/email-already-in-use') {
+      withError = true;
+      showWrongInputInformation.push('Este e-mail já está sendo usado');
+    }
+    if (calcAge(userAge) < '18') {
+      withError = true;
+      showWrongInputInformation.push('Você precisa ter mais de 18 anos para se cadastrar');
+    }
+
+    if (!withError) {
       register(email, password, firstName, lastName, userAge, bio);
       window.location.href = '#login';
+    } else {
+      showWrongInputInformation.forEach((erro) => {
+        msgErrorInput.innerHTML += `<p>${erro}</p>`;
+      });
     }
-    showWrongInputInformation.forEach(erro => {
-      msgErrorInput.innerHTML += `<p>${erro}</p>`
-    })
   });
-  return inscribePage;
-}
+  return inscribePageTemplate;
+};

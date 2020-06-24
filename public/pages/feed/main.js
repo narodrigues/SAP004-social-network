@@ -1,4 +1,16 @@
-import { getUserInfos, signOut, posts, loadingPost, saveEditPost, deletePost, addLike, deleteLike, addComments, deleteOnlyComment, saveEditComments } from "./data.js";
+import {
+  getUserInfos,
+  signOut,
+  posts,
+  loadingPost,
+  saveEditPost,
+  deletePost,
+  addLike,
+  deleteLike,
+  addComments,
+  deleteOnlyComment,
+  saveEditComments,
+} from './data.js';
 
 export const feed = () => {
   const feedTemplate = document.createElement('div');
@@ -54,48 +66,210 @@ export const feed = () => {
             </section>
             <article class='feed-posts-container' id='posts-container'></article>
           </div>
-        </main>
-      `
+        </main>;
+      `;
 
       const imageUserNotFound = feedTemplate.querySelector('#img-profile');
-      imageUserNotFound.onerror = function (image) {
-        image = './assets/user-profile-default.png'
-        imageUserNotFound.src = image;
-      }
+      imageUserNotFound.onerror = () => {
+        imageUserNotFound.src = './assets/user-profile-default.png';
+      };
 
-      const menu = feedTemplate.querySelector('.nav-main');
-      const mainToClose = feedTemplate.querySelector('.main-feed');
+      const hamburgerMenu = () => {
+        const menu = feedTemplate.querySelector('.nav-main');
+        const mainToClose = feedTemplate.querySelector('.main-feed');
 
-      feedTemplate.querySelector('#openMenu').addEventListener('click', () => {
-        menu.classList.toggle('display-block');
-      });
-
-      mainToClose.addEventListener('click', () => {
-        menu.classList.remove('display-block');
-      });
-
-      window.addEventListener('resize', () => {
-        if (window.innerWidth >= 768) {
-          menu.classList.add('display-block');
-        } else {
+        feedTemplate.querySelector('#openMenu').addEventListener('click', () => {
           menu.classList.toggle('display-block');
-        }
-      });
+        });
+
+        mainToClose.addEventListener('click', () => {
+          menu.classList.remove('display-block');
+        });
+
+        window.addEventListener('resize', () => {
+          if (window.innerWidth >= 768) {
+            menu.classList.add('display-block');
+          } else {
+            menu.classList.toggle('display-block');
+          }
+        });
+      };
+      hamburgerMenu();
 
       const loadAllPosts = () => {
         loadingPost()
           .then((arrayPosts) => {
-            feedTemplate.querySelector('#posts-container').innerHTML = "";
-            arrayPosts.forEach((doc) => {
-              createPosts(doc);
+            feedTemplate.querySelector('#posts-container').innerHTML = '';
+            arrayPosts.forEach((docPosts) => {
+              createPosts(docPosts);
             });
           });
-      }
+      };
       loadAllPosts();
 
-      const createPosts = (doc, prepend) => {
-        const postInfos = doc.data();
-        const postId = doc.id;
+      const editBtnFunctions = (saveBtn, selectPrivacy, msgPost) => {
+        saveBtn.classList.remove('icon-none');
+        selectPrivacy.classList.remove('icon-none');
+        msgPost.removeAttribute('disabled');
+        msgPost.focus();
+      };
+
+      const saveBtnOptions = (postId, saveBtn, selectPrivacy, msgPost) => {
+        saveBtn.classList.add('icon-none');
+        selectPrivacy.classList.add('icon-none');
+        msgPost.setAttribute('disabled', 'disabled');
+
+        const privacyValue = () => selectPrivacy.value;
+
+        selectPrivacy.addEventListener('change', privacyValue);
+
+        saveEditPost(msgPost.value, postId, privacyValue());
+      };
+
+      const deletePostBtn = (postId, optionYes, optionNo, confirmDeletePost) => {
+        confirmDeletePost.classList.toggle('icon-none');
+
+        optionNo.addEventListener('click', () => {
+          confirmDeletePost.classList.toggle('icon-none');
+        });
+
+        optionYes.addEventListener('click', () => {
+          feedTemplate.querySelector(`[data-postid='${postId}']`).remove();
+          deletePost(postId);
+        });
+      };
+
+      const addLikes = (postInfo, postId) => {
+        const currentUser = firebaseAuth.uid;
+        const likesInPosts = postInfo.likes;
+        if (likesInPosts.length === 0) {
+          addLike(postId)
+            .then(() => {
+              loadAllPosts();
+            });
+        } else {
+          for (let i = 0; i < likesInPosts.length; i += 1) {
+            if (likesInPosts[i].userId === currentUser) {
+              deleteLike(postId, likesInPosts[i])
+                .then(() => {
+                  loadAllPosts();
+                });
+            } else {
+              addLike(postId)
+                .then(() => {
+                  loadAllPosts();
+                });
+            }
+          }
+        }
+      };
+
+      const addComment = (postId, commentsText) => {
+        addComments(postId, commentsText.value);
+        loadAllPosts();
+      };
+
+      const showOptionsComments = (commentsOptions, commentsText) => {
+        commentsOptions.classList.remove('icon-none');
+        commentsText.focus();
+      };
+
+      const editBtnFunctionsComment = (saveEditedComment, commentTextarea) => {
+        saveEditedComment.classList.remove('icon-none');
+        commentTextarea.removeAttribute('disabled');
+        commentTextarea.focus();
+      };
+
+      const saveBtnOptionsComments = (postId, postInfo, saveEditedComment, commentTextarea, x) => {
+        saveEditedComment.classList.add('icon-none');
+        commentTextarea.setAttribute('disabled', 'disabled');
+
+        const newComment = commentTextarea.value;
+        saveEditComments(newComment, postId, postInfo.comments[x])
+          .then(() => { loadAllPosts(); });
+      };
+
+      const deleteCommentBtn = (postId, postInfo, confirmDeleteComment, optionNo, optionYes, x) => {
+        confirmDeleteComment.classList.toggle('icon-none');
+
+        optionNo.addEventListener('click', () => {
+          confirmDeleteComment.classList.toggle('icon-none');
+        });
+
+        optionYes.addEventListener('click', () => {
+          feedTemplate.querySelector(`[data-commentid='${postInfo.comments[x].id}']`).remove();
+
+          deleteOnlyComment(postId, postInfo.comments[x]);
+        });
+      };
+
+      const loadComments = (postId, postInfo, postsOnFeed, postsComment) => {
+        if (postInfo.comments) {
+          for (let x = 0; x < postInfo.comments.length; x += 1) {
+            const commentsContainer = document.createElement('div');
+            const commentedBy = document.createElement('span');
+            const commentTextarea = document.createElement('textarea');
+
+            commentedBy.innerHTML = `${postInfo.comments[x].name} em ${postInfo.comments[x].date}`;
+            commentTextarea.innerHTML = `${postInfo.comments[x].comment}`;
+
+            commentsContainer.classList.add('comments-container');
+            commentedBy.classList.add('commented-by');
+            commentTextarea.classList.add('textareaComments');
+
+            commentsContainer.setAttribute('data-commentid', postInfo.comments[x].id);
+            commentTextarea.setAttribute('disabled', 'disabled');
+            commentTextarea.setAttribute('rows', '7');
+
+            commentsContainer.append(commentedBy, commentTextarea);
+
+            if (postInfo.comments[x].userUid === firebaseAuth.uid) {
+              const btnCommentsContainer = document.createElement('div');
+              const btnCommentsOption = document.createElement('div');
+              const editComment = document.createElement('button');
+              const saveEditedComment = document.createElement('button');
+              const deleteComment = document.createElement('button');
+              const confirmDeleteComment = document.createElement('div');
+              const message = document.createElement('span');
+              const optionYes = document.createElement('button');
+              const optionNo = document.createElement('button');
+
+              btnCommentsContainer.classList.add('btn-comments-container', 'posted-box-options');
+              btnCommentsOption.classList.add('btns-default');
+              editComment.classList.add('btn-icon', 'edit-comment');
+              saveEditedComment.classList.add('btn-icon', 'icon-none', 'save-edited-comment');
+              deleteComment.classList.add('btn-icon', 'delete');
+              optionYes.classList.add('btn-icon');
+              optionNo.classList.add('btn-icon');
+              confirmDeleteComment.classList.add('container-option');
+              confirmDeleteComment.classList.toggle('icon-none');
+
+              editComment.innerHTML = '<i class="fas fa-edit icon"></i>';
+              saveEditedComment.innerHTML = '<i class="far fa-save icon"></i>';
+              deleteComment.innerHTML = '<i class="fas fa-trash-alt icon"></i>';
+              message.innerText = `ATENÇÃO!
+              Deseja mesmo excluir esse comentário?`;
+              optionYes.innerHTML = '<i class="far fa-check-circle icon"></i>';
+              optionNo.innerHTML = '<i class="far fa-times-circle icon"></i>';
+
+              editComment.addEventListener('click', () => { editBtnFunctionsComment(saveEditedComment, commentTextarea); });
+              saveEditedComment.addEventListener('click', () => { saveBtnOptionsComments(postId, postInfo, saveEditedComment, commentTextarea, x); });
+              deleteComment.addEventListener('click', () => { deleteCommentBtn(postId, postInfo, confirmDeleteComment, optionNo, optionYes, x); });
+
+              confirmDeleteComment.append(message, optionYes, optionNo);
+              btnCommentsOption.append(editComment, saveEditedComment, deleteComment);
+              btnCommentsContainer.append(btnCommentsOption, confirmDeleteComment);
+              commentsContainer.append(btnCommentsContainer);
+            }
+            postsOnFeed.append(postsComment);
+            postsComment.prepend(commentsContainer);
+          }
+        }
+      };
+
+      const createPosts = (docAllPosts, prepend) => {
+        const postInfo = docAllPosts.data();
+        const postId = docAllPosts.id;
         const postsOnFeed = document.createElement('section');
         const postsBox = document.createElement('div');
         const postedBy = document.createElement('span');
@@ -106,8 +280,8 @@ export const feed = () => {
         const postsComment = document.createElement('section');
         const postsContainer = feedTemplate.querySelector('#posts-container');
 
-        postedBy.innerHTML = `Publicado por ${postInfos.name} em ${postInfos.timestamps}`;
-        msgPost.innerHTML = `${postInfos.post}`;
+        postedBy.innerHTML = `Publicado por ${postInfo.name} em ${postInfo.timestamps}`;
+        msgPost.innerHTML = `${postInfo.post}`;
 
         postsOnFeed.classList.add('div-posts');
         postsBox.classList.add('posted-box-by', 'box');
@@ -119,12 +293,13 @@ export const feed = () => {
         postsComment.classList.add('post-comment');
 
         msgPost.setAttribute('disabled', 'disabled');
+        msgPost.setAttribute('rows', '7');
         postsOnFeed.setAttribute('data-postid', postId);
 
         postsOnFeed.append(postsBox, msgPost, postsComment);
         postsBox.append(postedBy);
 
-        if (postInfos.userUid === firebaseAuth.uid) {
+        if (postInfo.userUid === firebaseAuth.uid) {
           const editBtn = document.createElement('button');
           const saveBtn = document.createElement('button');
           const deleteBtn = document.createElement('button');
@@ -136,18 +311,24 @@ export const feed = () => {
           const optionPublic = document.createElement('option');
           const optionPrivate = document.createElement('option');
 
-          optionPrivate.innerHTML = `Privado`;
-          optionPublic.innerHTML = `Público`;
-          editBtn.innerHTML = `<i class='fas fa-edit icon'></i>`;
-          saveBtn.innerHTML = `<i class='far fa-save icon'></i>`;
-          deleteBtn.innerHTML = `<i class='fas fa-trash-alt icon'></i>`;
+          optionPrivate.innerHTML = 'Privado';
+          optionPublic.innerHTML = 'Público';
+          editBtn.innerHTML = '<i class="fas fa-edit icon"></i>';
+          saveBtn.innerHTML = '<i class="far fa-save icon"></i>';
+          deleteBtn.innerHTML = '<i class="fas fa-trash-alt icon"></i>';
+          optionYes.innerHTML = '<i class="far fa-check-circle icon"></i>';
+          optionNo.innerHTML = '<i class="far fa-times-circle icon"></i>';
+          message.innerText = `ATENÇÃO!
+          Deseja mesmo excluir essa publicação?`;
 
           editBtn.classList.add('btn-icon');
-          saveBtn.classList.add('i-none', 'btn-icon', 'edit-icon');
-          selectPrivacy.classList.add('i-none', 'edit-icon');
+          saveBtn.classList.add('icon-none', 'btn-icon', 'edit-icon');
+          selectPrivacy.classList.add('icon-none', 'edit-icon');
           deleteBtn.classList.add('btn-icon', 'delete-post');
           confirmDeletePost.classList.add('container-option');
-          confirmDeletePost.classList.add('i-none');
+          confirmDeletePost.classList.add('icon-none');
+          optionYes.classList.add('btn-icon');
+          optionNo.classList.add('btn-icon');
 
           selectPrivacy.id = 'select-privacy';
 
@@ -155,61 +336,15 @@ export const feed = () => {
           optionPrivate.setAttribute('value', 'private');
 
           buttonsWrap.append(buttonsPostEditAndDelete, confirmDeletePost);
-          buttonsPostEditAndDelete.append(buttonsWrapEdit, deleteBtn)
+          buttonsPostEditAndDelete.append(buttonsWrapEdit, deleteBtn);
           buttonsWrapEdit.append(editBtn, saveBtn, selectPrivacy);
-          confirmDeletePost.append(message, optionYes, optionNo)
+          confirmDeletePost.append(message, optionYes, optionNo);
           postsOnFeed.append(buttonsWrap);
-          selectPrivacy.append(optionPublic, optionPrivate)
+          selectPrivacy.append(optionPublic, optionPrivate);
 
-          const editBtnFunctions = () => {
-            saveBtn.classList.remove('i-none');
-            selectPrivacy.classList.remove('i-none');
-            msgPost.removeAttribute('disabled');
-            msgPost.focus();
-          }
-
-          const saveBtnOptions = () => {
-            saveBtn.classList.add('i-none');
-            selectPrivacy.classList.add('i-none');
-            msgPost.setAttribute('disabled', 'disabled');
-
-            const optionPrivacy = feedTemplate.querySelector('#select-privacy')
-            const privacyValue = () => {
-              return optionPrivacy.value;
-            }
-
-            optionPrivacy.addEventListener('change', privacyValue);
-
-            const changePostPrivacy = privacyValue();
-
-            saveEditPost(msgPost.value, postId, changePostPrivacy);
-          }
-
-          const deletePostBtn = () => {
-            optionYes.classList.add('btn-icon');
-            optionNo.classList.add('btn-icon');
-
-            confirmDeletePost.classList.toggle('i-none');
-
-            message.innerText = `ATENÇÃO!
-            Deseja mesmo excluir essa publicação?`;
-            optionYes.innerHTML = `<i class="far fa-check-circle icon"></i>`;
-            optionNo.innerHTML = `<i class="far fa-times-circle icon"></i>`;
-
-            optionNo.addEventListener('click', () => {
-              confirmDeletePost.classList.toggle('i-none')
-            });
-
-            optionYes.addEventListener('click', () => {
-              feedTemplate.querySelector(`[data-postid='${postId}']`).remove();
-              deletePost(postId);
-            });
-          }
-
-          editBtn.addEventListener('click', editBtnFunctions);
-          saveBtn.addEventListener('click', saveBtnOptions);
-          deleteBtn.addEventListener('click', deletePostBtn);
-
+          editBtn.addEventListener('click', () => { editBtnFunctions(saveBtn, selectPrivacy, msgPost); });
+          saveBtn.addEventListener('click', () => { saveBtnOptions(postId, saveBtn, selectPrivacy, msgPost); });
+          deleteBtn.addEventListener('click', () => { deletePostBtn(postId, optionYes, optionNo, confirmDeletePost); });
         } else {
           const likeBtn = document.createElement('button');
           const numberLikes = document.createElement('div');
@@ -219,76 +354,39 @@ export const feed = () => {
           const commentsCancelBtn = document.createElement('button');
           const commentsPostBtn = document.createElement('button');
 
-          if (postInfos.likes != 0) {
-            for (let x in postInfos.likes) {
-              if (firebaseAuth.uid === postInfos.likes[x].userId) {
-                likeBtn.innerHTML = `<i class="fas fa-heart icon"></i>`;
+          if (postInfo.likes.length >= 1) {
+            for (let x = 0; x < postInfo.likes.length; x += 1) {
+              if (firebaseAuth.uid === postInfo.likes[x].userId) {
+                likeBtn.innerHTML = '<i class="fas fa-heart icon"></i>';
               } else {
-                likeBtn.innerHTML = `<i class="far fa-heart icon"></i>`;
+                likeBtn.innerHTML = '<i class="far fa-heart icon"></i>';
               }
             }
           } else {
-            likeBtn.innerHTML = `<i class="far fa-heart icon"></i>`;
+            likeBtn.innerHTML = '<i class="far fa-heart icon"></i>';
           }
 
-          numberLikes.innerHTML = `${postInfos.likes.length}`;
-          commentBtn.innerHTML = `<i class='fas fa-comments icon'></i>`;
-          commentsCancelBtn.innerHTML = `<i class="far fa-times-circle icon"></i>`
-          commentsPostBtn.innerHTML = `<i class="far fa-check-circle icon"></i>`
+          numberLikes.innerHTML = `${postInfo.likes.length}`;
+          commentBtn.innerHTML = '<i class="fas fa-comments icon"></i>';
+          commentsCancelBtn.innerHTML = '<i class="far fa-times-circle icon"></i>';
+          commentsPostBtn.innerHTML = '<i class="far fa-check-circle icon"></i>';
 
           likeBtn.classList.add('btn-icon', 'like');
           numberLikes.classList.add('numberLikes');
           commentBtn.classList.add('btn-icon');
-          commentsOptions.classList.add('i-none');
+          commentsOptions.classList.add('icon-none');
           commentsText.classList.add('textarea-post-comment');
           commentsCancelBtn.classList.add('btn-icon');
           commentsPostBtn.classList.add('btn-icon', 'sendPost');
 
           buttonsWrap.append(buttonsPostEditAndDelete);
-          buttonsPostEditAndDelete.append(likeBtn, numberLikes, commentBtn)
+          buttonsPostEditAndDelete.append(likeBtn, numberLikes, commentBtn);
           postsOnFeed.append(buttonsWrap, commentsOptions);
           commentsOptions.append(commentsText, commentsPostBtn, commentsCancelBtn);
 
-          function addLikes() {
-            const currentUser = firebaseAuth.uid;
-            const myPosts = postInfos.likes
-            if (myPosts == 0) {
-              addLike(postId)
-                .then(() => {
-                  loadAllPosts();
-                });
-            } else {
-              for (let x in myPosts) {
-                if (myPosts[x].userId === currentUser) {
-                  deleteLike(postId, myPosts[x])
-                    .then(() => {
-                      loadAllPosts();
-                    });
-                } else {
-                  addLike(postId)
-                    .then(() => {
-                      loadAllPosts();
-                    });
-                }
-              }
-            }
-          }
-
-          const addComment = () => {
-            const textComment = commentsText.value;
-            addComments(postId, textComment);
-            loadAllPosts();
-          }
-
-          commentsPostBtn.addEventListener('click', addComment);
-
-          const showOptionsComments = () => {
-            commentsOptions.classList.remove('i-none');
-            commentsText.focus();
-          }
-
-          likeBtn.addEventListener('click', addLikes);
-          commentBtn.addEventListener('click', showOptionsComments);
+          commentsPostBtn.addEventListener('click', () => { addComment(postId, commentsText); });
+          likeBtn.addEventListener('click', () => { addLikes(postInfo, postId); });
+          commentBtn.addEventListener('click', () => { showOptionsComments(commentsOptions, commentsText); });
         }
 
         if (!prepend) {
@@ -296,118 +394,22 @@ export const feed = () => {
         } else {
           postsContainer.prepend(postsOnFeed);
         }
-
-        function loadComments() {
-          if (postInfos.comments) {
-            for (let x = 0; x < postInfos.comments.length; x++) {
-              const commentsContainer = document.createElement('div');
-              const commentedBy = document.createElement('span');
-              const commentTextarea = document.createElement('textarea');
-
-              commentedBy.innerHTML = `${postInfos.comments[x].name} em ${postInfos.comments[x].date}`;
-              commentTextarea.innerHTML = `${postInfos.comments[x].comment}`;
-
-              commentsContainer.classList.add('comments-container');
-              commentedBy.classList.add('commented-by');
-              commentTextarea.classList.add('textareaComments');
-
-              commentsContainer.setAttribute('data-commentid', postInfos.comments[x].id);
-              commentTextarea.setAttribute('disabled', 'disabled');
-
-              commentsContainer.append(commentedBy, commentTextarea);
-
-              if (postInfos.comments[x].userUid === firebaseAuth.uid) {
-                const btnCommentsContainer = document.createElement('div');
-                const btnCommentsOption = document.createElement('div');
-                const editComment = document.createElement('button');
-                const saveEditedComment = document.createElement('button');
-                const deleteComment = document.createElement('button');
-                const confirmDeleteComment = document.createElement('div');
-                const message = document.createElement('span');
-                const optionYes = document.createElement('button');
-                const optionNo = document.createElement('button');
-
-                btnCommentsContainer.classList.add('btn-comments-container', 'posted-box-options');
-                btnCommentsOption.classList.add('btns-default')
-                editComment.classList.add('btn-icon', 'edit-comment');
-                saveEditedComment.classList.add('btn-icon', 'i-none', 'save-edited-comment');
-                deleteComment.classList.add('btn-icon', 'delete');
-                optionYes.classList.add('btn-icon');
-                optionNo.classList.add('btn-icon');
-                confirmDeleteComment.classList.add('container-option');
-                confirmDeleteComment.classList.toggle('i-none');
-
-                editComment.innerHTML = `<i class='fas fa-edit icon'></i>`;
-                saveEditedComment.innerHTML = `<i class='far fa-save icon'></i>`;
-                deleteComment.innerHTML = `<i class='fas fa-trash-alt icon'></i>`;
-                message.innerText = `ATENÇÃO!
-                Deseja mesmo excluir esse comentário?`;
-                optionYes.innerHTML = `<i class="far fa-check-circle icon"></i>`;
-                optionNo.innerHTML = `<i class="far fa-times-circle icon"></i>`;
-
-                const editBtnFunctions = () => {
-                  saveEditedComment.classList.remove('i-none');
-                  commentTextarea.removeAttribute('disabled');
-                  commentTextarea.focus();
-                }
-
-                const saveBtnOptions = () => {
-                  saveEditedComment.classList.add('i-none');
-                  commentTextarea.setAttribute('disabled', 'disabled');
-
-                  const newComment = commentTextarea.value;
-                  saveEditComments(newComment, postId, postInfos.comments[x])
-                }
-
-                const deleteCommentBtn = () => {
-                  confirmDeleteComment.classList.toggle('i-none');
-
-                  optionNo.addEventListener('click', () => {
-                    confirmDeleteComment.classList.toggle('i-none')
-                  });
-
-                  optionYes.addEventListener('click', () => {
-                    const comments = doc.data().comments[x];
-                    const idComment = doc.data().comments[x].id;
-                    feedTemplate.querySelector(`[data-commentid='${idComment}']`).remove();
-
-                    deleteOnlyComment(postId, comments);
-                  });
-                }
-
-                editComment.addEventListener('click', editBtnFunctions);
-                saveEditedComment.addEventListener('click', saveBtnOptions);
-                deleteComment.addEventListener('click', deleteCommentBtn);
-
-                confirmDeleteComment.append(message, optionYes, optionNo);
-                btnCommentsOption.append(editComment, saveEditedComment, deleteComment)
-                btnCommentsContainer.append(btnCommentsOption, confirmDeleteComment);
-                commentsContainer.append(btnCommentsContainer);
-              }
-
-              postsOnFeed.append(postsComment);
-              postsComment.prepend(commentsContainer)
-            }
-          }
-        }
-        loadComments();
-      }
+        loadComments(postId, postInfo, postsOnFeed, postsComment);
+      };
 
       feedTemplate.querySelector('#share-post').addEventListener('click', (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const postText = feedTemplate.querySelector('#post-field').value;
         const privacyOptions = feedTemplate.querySelector('input[name="privacy"]:checked').value;
 
         posts(postText, privacyOptions)
-          .then((doc) => {
-            createPosts(doc, true)
+          .then((docPosts) => {
+            createPosts(docPosts, true);
           });
-
         feedTemplate.querySelector('#post-field').value = '';
       });
-
       feedTemplate.querySelector('#signOut').addEventListener('click', signOut);
     });
   });
   return feedTemplate;
-}
+};

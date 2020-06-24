@@ -1,9 +1,12 @@
-import { loadedAllMyPosts, signOut } from './data.js';
+import {
+  loadedAllMyPosts,
+  signOut,
+} from './data.js';
 
 export const userProfilePageWithPosts = () => {
   const profilePagePosts = document.createElement('div');
   profilePagePosts.classList.add('page-feed', 'pages');
-  window.location.href = '#profile-posts'
+  window.location.href = '#profile-posts';
   profilePagePosts.innerHTML = `
   <header class='header-catarse'>
     <button class='btn-icon' id='openMenu'><i class='fas fa-bars icon menu'></i></button>
@@ -32,10 +35,10 @@ export const userProfilePageWithPosts = () => {
     </div>
     <section class='container posts-page-container' id='posts-container'></section>
   </section>
-  `
+  `;
 
   const commentComponent = (comment) => {
-    const commentPostUser = document.createElement('div')
+    const commentPostUser = document.createElement('div');
     const commentBy = document.createElement('div');
     const commentText = document.createElement('textarea');
 
@@ -46,10 +49,10 @@ export const userProfilePageWithPosts = () => {
 
     commentBy.innerHTML = `${comment.name} em ${comment.date}`;
     commentText.innerHTML = `${comment.comment}`;
-    commentPostUser.append(commentBy, commentText)
+    commentPostUser.append(commentBy, commentText);
 
     return commentPostUser;
-  }
+  };
 
   const postComponent = (doc) => {
     const data = doc.data();
@@ -78,54 +81,54 @@ export const userProfilePageWithPosts = () => {
 
     postedBy.innerHTML = `Publicado por ${data.name} em ${data.timestamps}`;
     postText.innerHTML = `${data.post}`;
-    likeBtn.innerHTML = `<i class='fas fa-heart icon'></i>`;
+    likeBtn.innerHTML = '<i class="fas fa-heart icon"></i>';
     numberLikesInMyPosts.innerText = `${data.likes}`;
-    optionPrivacyPost.innerText = `${data.privacy}`
+    optionPrivacyPost.innerText = `${data.privacy}`;
 
-    postedByBox.append(postedBy)
-    divButtonsPostProfile.append(likeBtn, numberLikesInMyPosts, optionPrivacyPost)
-    buttonsWrap.append(divButtonsPostProfile)
-    post.append(postedByBox, postText, buttonsWrap)
+    postedByBox.append(postedBy);
+    divButtonsPostProfile.append(likeBtn, numberLikesInMyPosts, optionPrivacyPost);
+    buttonsWrap.append(divButtonsPostProfile);
+    post.append(postedByBox, postText, buttonsWrap);
 
     if (data.comments) {
-      data.comments.forEach(comment => {
+      data.comments.forEach((comment) => {
         comments.append(commentComponent(comment));
-      })
+      });
     }
 
     post.append(comments);
 
-    return post
-  }
+    return post;
+  };
 
   loadedAllMyPosts()
     .then((arrayPosts) => {
       const postsContainer = profilePagePosts.querySelector('#posts-container');
       arrayPosts.forEach((doc) => {
-        postsContainer.append(postComponent(doc))
-      })
-    })
+        postsContainer.append(postComponent(doc));
+      });
+    });
 
-    const menu = profilePagePosts.querySelector('.nav-main');
-    const divToClose = profilePagePosts.querySelector('.divToClose');
+  const menu = profilePagePosts.querySelector('.nav-main');
+  const divToClose = profilePagePosts.querySelector('.divToClose');
 
-    profilePagePosts.querySelector('#openMenu').addEventListener('click', () => {
+  profilePagePosts.querySelector('#openMenu').addEventListener('click', () => {
+    menu.classList.toggle('display-block');
+  });
+
+  divToClose.addEventListener('click', () => {
+    menu.classList.remove('display-block');
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) {
+      menu.classList.add('display-block');
+    } else {
       menu.classList.toggle('display-block');
-    });
+    }
+  });
 
-    divToClose.addEventListener('click', () => {
-      menu.classList.remove('display-block');
-    });
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth >= 768) {
-        menu.classList.add('display-block');
-      } else {
-        menu.classList.toggle('display-block');
-      }
-    });
-
-    profilePagePosts.querySelector('#signOut').addEventListener('click', signOut)
+  profilePagePosts.querySelector('#signOut').addEventListener('click', signOut);
 
   return profilePagePosts;
-}
+};
