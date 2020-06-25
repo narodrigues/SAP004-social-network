@@ -1,0 +1,13 @@
+const firebaseConfig = {
+  apiKey: "",
+  authDomain: "your-project.firebaseapp.com",
+  databaseURL: "https://your-project.firebaseio.com",
+  projectId: "your ID",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "",
+  appId: "",
+  measurementId: ""
+};
+
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
