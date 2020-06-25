@@ -45,5 +45,5 @@ const init = () => {
 window.addEventListener('load', init);
 
 window.addEventListener('hashchange', () => {
-  init()
+  init();
 }, false);

@@ -2,11 +2,13 @@ export const signIn = (email, password) => {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(() => window.location = '#feed')
+    .then(() => {
+      window.location = '#feed';
+    })
     .catch((error) => {
       alert(error.code);
     });
-}
+};
 
 export const signInGoogle = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
@@ -20,7 +22,7 @@ export const signInGoogle = () => {
         email: result.user.email,
         photo: result.additionalUserInfo.profile.picture,
         userUid: firebase.auth().currentUser.uid,
-      }
+      };
       firebase
         .firestore()
         .collection('users')
@@ -30,4 +32,4 @@ export const signInGoogle = () => {
     .catch(() => {
       alert('login não realizado, tente novamente');
     });
-}
+};
