@@ -47,6 +47,8 @@ export const userProfilePageWithPosts = () => {
     commentText.classList.add('textareaComments');
     commentText.setAttribute('disabled', 'disabled');
 
+    commentText.setAttribute('rows', '5');
+
     commentBy.innerHTML = `${comment.name} em ${comment.date}`;
     commentText.innerHTML = `${comment.comment}`;
     commentPostUser.append(commentBy, commentText);
@@ -75,14 +77,16 @@ export const userProfilePageWithPosts = () => {
     likeBtn.classList.add('btn-icon', 'like');
     numberLikesInMyPosts.classList.add('numberLikes');
     divButtonsPostProfile.classList.add('div-btns');
+    comments.classList.add('comments-post-profile');
 
     postText.setAttribute('disabled', 'disabled');
+    postText.setAttribute('rows', '7');
     post.setAttribute('data-postid', doc.id);
 
     postedBy.innerHTML = `Publicado por ${data.name} em ${data.timestamps}`;
     postText.innerHTML = `${data.post}`;
     likeBtn.innerHTML = '<i class="fas fa-heart icon"></i>';
-    numberLikesInMyPosts.innerText = `${data.likes}`;
+    numberLikesInMyPosts.innerText = `${data.likes.length}`;
     optionPrivacyPost.innerText = `${data.privacy}`;
 
     postedByBox.append(postedBy);

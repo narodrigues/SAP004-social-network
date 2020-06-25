@@ -17,7 +17,7 @@
 
 Neste projeto realizamos a construção de uma rede social através da manipulação e persistência de dados através de um banco de dados não relacional e em tempo real. 
 
-Contruimos o layout respeitando o protótipo passado.
+Construímos o layout respeitando o protótipo passado.
 
 * Protótipo desktop
 
@@ -33,31 +33,28 @@ Contruimos o layout respeitando o protótipo passado.
 
 Protótipo final Feed
 
-<img src='https://user-images.githubusercontent.com/32286663/56174616-ec9f6100-5fb8-11e9-9edb-d5ef7c251d9c.png' style='width: 300px'>
+<img src='public/assets/feed-mobile.jpeg' style='width: 300px; height: 550px'> <img src='public/assets/feed-desktop.jpeg' style='width: 300px'>
+
 
 Protótipo final Login
 
-
-<img src='https://user-images.githubusercontent.com/32286663/56174616-ec9f6100-5fb8-11e9-9edb-d5ef7c251d9c.png' style='width: 300px'>
+<img src='public/assets/login-desktop.jpeg' style='width: 300px'> <img src='public/assets/login-mobile.jpeg' style='width: 300px; height: 550px'>
 
 ----------------------
 
 
-## 1.2 Catarse
-Esta rede social tem como objetivo tratar de maneira segura e confortável uma questão que faz parte da rotina de muitas mulheres que é a violência doméstica, visto que durante essa quarentena o número de casos tem aumentado drasticamente.
+## 1.2 Definição do tema 
+Esta rede social tem como objetivo tratar de maneira segura e confortável uma questão que faz parte da rotina de muitas mulheres, que é a violência doméstica, visto que durante essa quarentena o número de casos tem aumentado drasticamente.
 Neste canal, o usuário poderá compartilhar suas experiências, pedir por ajuda e também ajudar outras mulheres a superarem esse obstáculo.
 
-### Definição do tema
-Ambos foram pensados através do tema escolhido.
+* Logo: A borboleta é considerada por muitos povos como um símbolo de tranformação e renovação, 
 
-* logo: a borboleta é considerada por muitos povos como um símbolo de tranformação e renovação, 
-
-* nome: A palavra Catarse é usada para definir o processo de cura emocional através da Psicanálise, que consiste na cura através da libertação de pensamentos, sentimentos, e experiências traumáticas vividas até então.
+* Nome: A palavra Catarse é usada para definir o processo de cura emocional através da Psicanálise, que consiste na cura através da libertação de pensamentos, sentimentos, e experiências traumáticas vividas até então.
 
 ----------------------
 
 ## 2. Desenvolvimento
-  O desenvolvimento do projeto se deu a partir da divisão de histórias de usuário que foram sendo completadas uma a uma ao decorrer das sprints.
+  O desenvolvimento do projeto se deu a partir da divisão de histórias de usuário, as quais já foram entregues definidas, que foram sendo completadas uma a uma ao decorrer das sprints.
   Nelas priorizamos o término de casa HU para poder dar seguimento as funcionalidades descritas no próximo tópico.
 
   ----------------------
@@ -84,7 +81,7 @@ Ambos foram pensados através do tema escolhido.
 ----------------------
 
 ## 4. Considerações Técnicas 
-Esta aplicação foi criada a partir do mobile first, o que a torna responsiva e é uma Single-Page Application(*SPA*).
+Esta aplicação é uma Single-Page Application(*SPA*) e foi criada a partir do mobile first, o que a torna responsiva.
 
 Os arquivos nomeados como *data.js* dentro de cada uma das pastas contém as funções do Firebase e aqueles nomeados como *main.js* possuem a manipulação do DOM e a criação de template strings.
 
@@ -113,8 +110,8 @@ Para que o você consiga rodar o projeto em sua máquina, terá que:
 ----------------------
 
 ## 5. Autoras
-Marjorie Santos https://github.com/MarjorieSantos
+:cherry_blossom: Marjorie Santos https://github.com/MarjorieSantos
 
-Natasha Rodrigues https://github.com/narodrigues
+:cherry_blossom: Natasha Rodrigues https://github.com/narodrigues
 
 ----------------------

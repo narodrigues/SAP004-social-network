@@ -40,7 +40,7 @@ export const feed = () => {
             </figure>
             <div class='profile-data'>
               <span id='userName'>${firebaseAuth.displayName}</span>
-              <span id='bio'>${userInfos.bio || 'Seu status'}</span>
+              <span id='bio' class='user-bio'>${userInfos.bio || 'Seu status'}</span>
             </div>
           </section>
           <div class='container'>

@@ -133,9 +133,9 @@ textarea:focus {
 }
 
 .aside .img-logo {
-	width: 100%;
 	margin: 0 auto;
 	max-width: 390px;
+	width: 100%;
 }
 
 .page-login.pages {
@@ -184,6 +184,11 @@ textarea:focus {
 	color: #ea570a;
 	font-weight: bold;
 	text-decoration: none;
+	transition: all 0.3s;
+}
+
+.page-login .register-info a:hover {
+	color: #822a05;
 }
 
 .page-inscribe {
@@ -301,6 +306,13 @@ nav li.sign-out {
 .page-feed span#userName {
 	color: #976339;
 	font-size: 20px;
+	font-weight: bold;
+}
+
+.page-feed .user-bio {
+	color: #ba895a;
+	font-weight: bold;
+	font-size: 17px;
 }
 
 .page-feed .feed-write-post {
@@ -449,7 +461,7 @@ nav li.sign-out {
 }
 
 .page-feed .commented-by {
-	background: #ffeacd;
+	background: #fff1cd;
 	border-radius: 7px 7px 0 0;
 	color: #976324;
 	font-size: 17px;
@@ -473,6 +485,11 @@ nav li.sign-out {
 
 .icon {  
 	font-size: 25px;
+	transition: all 0.3s;
+}
+
+.icon:hover {
+	color: #c15021;
 }
 
 .profile-infos {
@@ -575,14 +592,18 @@ nav li.sign-out {
 	border-radius: 5px;
 }
 
-/* .posts-profile-page.div-posts {
-  margin: 0px;
-} */
+.posts-profile-page.div-posts {
+	margin: 0px 0px 25px 0px;
+  }
 
 .personal-infos img {
 	max-height: 240px;
 	max-width: 240px;
 }
+
+.comments-post-profile {
+	padding-bottom: 5px;
+  }
 
 .modal {
   align-items: center;
