@@ -171,16 +171,28 @@ export const feed = () => {
 
       const showOptionsComments = (commentsOptions, commentsText) => {
         commentsOptions.classList.remove('icon-none');
+        commentsOptions.classList.add('comments-box');
         commentsText.focus();
       };
 
-      const editBtnFunctionsComment = (saveEditedComment, commentTextarea) => {
+      const cancelComment = (commentsOptions) => {
+        commentsOptions.classList.add('icon-none');
+        commentsOptions.classList.remove('comments-box');
+      };
+
+      const editBtnFunctionsComment = () => {
+        const saveEditedComment = feedTemplate.querySelector('.save-edited-comment');
+        const commentTextarea = feedTemplate.querySelector('.textareaComments');
+
         saveEditedComment.classList.remove('icon-none');
         commentTextarea.removeAttribute('disabled');
         commentTextarea.focus();
       };
 
-      const saveBtnOptionsComments = (postId, postInfo, saveEditedComment, commentTextarea, x) => {
+      const saveBtnOptionsComments = (postId, postInfo, x) => {
+        const saveEditedComment = feedTemplate.querySelector('.save-edited-comment');
+        const commentTextarea = feedTemplate.querySelector('.textareaComments');
+
         saveEditedComment.classList.add('icon-none');
         commentTextarea.setAttribute('disabled', 'disabled');
 
@@ -189,7 +201,11 @@ export const feed = () => {
           .then(() => { loadAllPosts(); });
       };
 
-      const deleteCommentBtn = (postId, postInfo, confirmDeleteComment, optionNo, optionYes, x) => {
+      const deleteCommentBtn = (postId, postInfo, x) => {
+        const confirmDeleteComment = feedTemplate.querySelector('.container-option');
+        const optionYes = feedTemplate.querySelector('.option-yes');
+        const optionNo = feedTemplate.querySelector('.option-no');
+
         confirmDeleteComment.classList.toggle('icon-none');
 
         optionNo.addEventListener('click', () => {
@@ -207,59 +223,37 @@ export const feed = () => {
         if (postInfo.comments) {
           for (let x = 0; x < postInfo.comments.length; x += 1) {
             const commentsContainer = document.createElement('div');
-            const commentedBy = document.createElement('span');
-            const commentTextarea = document.createElement('textarea');
-
-            commentedBy.innerHTML = `${postInfo.comments[x].name} em ${postInfo.comments[x].date}`;
-            commentTextarea.innerHTML = `${postInfo.comments[x].comment}`;
-
             commentsContainer.classList.add('comments-container');
-            commentedBy.classList.add('commented-by');
-            commentTextarea.classList.add('textareaComments');
-
             commentsContainer.setAttribute('data-commentid', postInfo.comments[x].id);
-            commentTextarea.setAttribute('disabled', 'disabled');
-            commentTextarea.setAttribute('rows', '7');
 
-            commentsContainer.append(commentedBy, commentTextarea);
+            commentsContainer.innerHTML = `
+              <span class='commented-by'>${postInfo.comments[x].name} em ${postInfo.comments[x].date}</span>
+              <textarea class='textareaComments' rows='7' disabled>${postInfo.comments[x].comment}</textarea>
+            `;
 
             if (postInfo.comments[x].userUid === firebaseAuth.uid) {
               const btnCommentsContainer = document.createElement('div');
-              const btnCommentsOption = document.createElement('div');
-              const editComment = document.createElement('button');
-              const saveEditedComment = document.createElement('button');
-              const deleteComment = document.createElement('button');
-              const confirmDeleteComment = document.createElement('div');
-              const message = document.createElement('span');
-              const optionYes = document.createElement('button');
-              const optionNo = document.createElement('button');
-
               btnCommentsContainer.classList.add('btn-comments-container', 'posted-box-options');
-              btnCommentsOption.classList.add('btns-default');
-              editComment.classList.add('btn-icon', 'edit-comment');
-              saveEditedComment.classList.add('btn-icon', 'icon-none', 'save-edited-comment');
-              deleteComment.classList.add('btn-icon', 'delete');
-              optionYes.classList.add('btn-icon');
-              optionNo.classList.add('btn-icon');
-              confirmDeleteComment.classList.add('container-option');
-              confirmDeleteComment.classList.toggle('icon-none');
 
-              editComment.innerHTML = '<i class="fas fa-edit icon"></i>';
-              saveEditedComment.innerHTML = '<i class="far fa-save icon"></i>';
-              deleteComment.innerHTML = '<i class="fas fa-trash-alt icon"></i>';
-              message.innerText = `ATENÇÃO!
-              Deseja mesmo excluir esse comentário?`;
-              optionYes.innerHTML = '<i class="far fa-check-circle icon"></i>';
-              optionNo.innerHTML = '<i class="far fa-times-circle icon"></i>';
+              btnCommentsContainer.innerHTML = `
+                <div class='btns-default'>
+                  <button class='btn-icon edit-comment'><i class="fas fa-edit icon"></i></button>
+                  <button class='btn-icon icon-none save-edited-comment'><i class="far fa-save icon"></i></button>
+                  <button class='btn-icon delete'><i class="fas fa-trash-alt icon"></i></button>
+                </div>
+                <div class='container-option icon-none'>
+                  <span>ATENÇÃO!
+                  Deseja mesmo excluir esse comentário?</span>
+                  <button class='btn-icon option-yes'><i class="far fa-check-circle icon"></i></button>
+                  <button class='btn-icon option-no'><i class="far fa-times-circle icon"></i></button>
+                </div>
+              `;
 
-              editComment.addEventListener('click', () => { editBtnFunctionsComment(saveEditedComment, commentTextarea); });
-              saveEditedComment.addEventListener('click', () => { saveBtnOptionsComments(postId, postInfo, saveEditedComment, commentTextarea, x); });
-              deleteComment.addEventListener('click', () => { deleteCommentBtn(postId, postInfo, confirmDeleteComment, optionNo, optionYes, x); });
-
-              confirmDeleteComment.append(message, optionYes, optionNo);
-              btnCommentsOption.append(editComment, saveEditedComment, deleteComment);
-              btnCommentsContainer.append(btnCommentsOption, confirmDeleteComment);
               commentsContainer.append(btnCommentsContainer);
+
+              btnCommentsContainer.querySelector('.edit-comment').addEventListener('click', editBtnFunctionsComment);
+              btnCommentsContainer.querySelector('.save-edited-comment').addEventListener('click', () => { saveBtnOptionsComments(postId, postInfo, x); });
+              btnCommentsContainer.querySelector('.delete').addEventListener('click', () => { deleteCommentBtn(postId, postInfo, x); });
             }
             postsOnFeed.append(postsComment);
             postsComment.prepend(commentsContainer);
@@ -351,6 +345,7 @@ export const feed = () => {
           const commentBtn = document.createElement('button');
           const commentsOptions = document.createElement('div');
           const commentsText = document.createElement('textarea');
+          const commentsBtns = document.createElement('div');
           const commentsCancelBtn = document.createElement('button');
           const commentsPostBtn = document.createElement('button');
 
@@ -376,15 +371,18 @@ export const feed = () => {
           commentBtn.classList.add('btn-icon');
           commentsOptions.classList.add('icon-none');
           commentsText.classList.add('textarea-post-comment');
-          commentsCancelBtn.classList.add('btn-icon');
-          commentsPostBtn.classList.add('btn-icon', 'sendPost');
+          commentsBtns.classList.add('comments-btns');
+          commentsCancelBtn.classList.add('btn-icon', 'btn-cancel');
+          commentsPostBtn.classList.add('btn-icon', 'sendPost', 'btn-send');
 
           buttonsWrap.append(buttonsPostEditAndDelete);
           buttonsPostEditAndDelete.append(likeBtn, numberLikes, commentBtn);
           postsOnFeed.append(buttonsWrap, commentsOptions);
-          commentsOptions.append(commentsText, commentsPostBtn, commentsCancelBtn);
+          commentsOptions.append(commentsText, commentsBtns);
+          commentsBtns.append(commentsPostBtn, commentsCancelBtn);
 
           commentsPostBtn.addEventListener('click', () => { addComment(postId, commentsText); });
+          commentsCancelBtn.addEventListener('click', () => { cancelComment(commentsOptions); });
           likeBtn.addEventListener('click', () => { addLikes(postInfo, postId); });
           commentBtn.addEventListener('click', () => { showOptionsComments(commentsOptions, commentsText); });
         }
