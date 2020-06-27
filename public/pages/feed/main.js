@@ -180,19 +180,13 @@ export const feed = () => {
         commentsOptions.classList.remove('comments-box');
       };
 
-      const editBtnFunctionsComment = () => {
-        const saveEditedComment = feedTemplate.querySelector('.save-edited-comment');
-        const commentTextarea = feedTemplate.querySelector('.textareaComments');
-
+      const editBtnFunctionsComment = (saveEditedComment, commentTextarea) => {
         saveEditedComment.classList.remove('icon-none');
         commentTextarea.removeAttribute('disabled');
         commentTextarea.focus();
       };
 
-      const saveBtnOptionsComments = (postId, postInfo, x) => {
-        const saveEditedComment = feedTemplate.querySelector('.save-edited-comment');
-        const commentTextarea = feedTemplate.querySelector('.textareaComments');
-
+      const saveBtnOptionsComments = (postId, postInfo, saveEditedComment, commentTextarea, x) => {
         saveEditedComment.classList.add('icon-none');
         commentTextarea.setAttribute('disabled', 'disabled');
 
@@ -201,11 +195,7 @@ export const feed = () => {
           .then(() => { loadAllPosts(); });
       };
 
-      const deleteCommentBtn = (postId, postInfo, x) => {
-        const confirmDeleteComment = feedTemplate.querySelector('.container-option');
-        const optionYes = feedTemplate.querySelector('.option-yes');
-        const optionNo = feedTemplate.querySelector('.option-no');
-
+      const deleteCommentBtn = (postId, postInfo, confirmDeleteComment, optionYes, optionNo, x) => {
         confirmDeleteComment.classList.toggle('icon-none');
 
         optionNo.addEventListener('click', () => {
@@ -249,11 +239,17 @@ export const feed = () => {
                 </div>
               `;
 
-              commentsContainer.append(btnCommentsContainer);
+              const optionYes = btnCommentsContainer.querySelector('.option-yes');
+              const optionNo = btnCommentsContainer.querySelector('.option-no');
+              const confirmDeleteComment = btnCommentsContainer.querySelector('.container-option');
+              const saveEditedComment = btnCommentsContainer.querySelector('.save-edited-comment');
+              const commentTextarea = btnCommentsContainer.querySelector('.textareaComments');
 
-              btnCommentsContainer.querySelector('.edit-comment').addEventListener('click', editBtnFunctionsComment);
-              btnCommentsContainer.querySelector('.save-edited-comment').addEventListener('click', () => { saveBtnOptionsComments(postId, postInfo, x); });
-              btnCommentsContainer.querySelector('.delete').addEventListener('click', () => { deleteCommentBtn(postId, postInfo, x); });
+              btnCommentsContainer.querySelector('.edit-comment').addEventListener('click', () => { editBtnFunctionsComment(saveEditedComment, commentTextarea); });
+              btnCommentsContainer.querySelector('.save-edited-comment').addEventListener('click', () => { saveBtnOptionsComments(postId, postInfo, saveEditedComment, commentTextarea, x); });
+              btnCommentsContainer.querySelector('.delete').addEventListener('click', () => { deleteCommentBtn(postId, postInfo, confirmDeleteComment, optionYes, optionNo, x); });
+
+              commentsContainer.append(btnCommentsContainer);
             }
             postsOnFeed.append(postsComment);
             postsComment.prepend(commentsContainer);
