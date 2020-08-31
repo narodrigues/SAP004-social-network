@@ -32,5 +32,18 @@
     "serve": "^11.0.2",
     "stylelint": "^13.5.0",
     "stylelint-config-recommended": "^2.2.0"
-  }
+  },
+  "dependencies": {},
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/narodrigues/SAP004-social-network.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/narodrigues/SAP004-social-network/issues"
+  },
+  "homepage": "https://github.com/narodrigues/SAP004-social-network#readme"
 }

@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "catarse",
     "public": "public",
     "ignore": [
       "firebase.json",
