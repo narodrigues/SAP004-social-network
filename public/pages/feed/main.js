@@ -210,8 +210,8 @@ export const feed = () => {
 
       const loadComments = (postId, postInfo, postsOnFeed, commentsBox) => {
         if (postInfo.comments && postInfo.comments.length > 0) {
-          postsOnFeed.querySelector('#comments-section').classList.add('post-comment');
-          postsOnFeed.querySelector('#post-options').classList.add('radius-none');
+          postsOnFeed.querySelector('.comments-section').classList.add('post-comment');
+          postsOnFeed.querySelector('.post-options').classList.add('radius-none');
 
 
           for (let x = 0; x < postInfo.comments.length; x += 1) {
@@ -272,16 +272,16 @@ export const feed = () => {
           <div class='posted-box-by box'>
             <span class='name-user-published'>Publicado por ${postInfo.name} em ${postInfo.timestamps}</span>
           </div>
-          <textarea class='content-post posted-box-text box' id='post-textarea' disabled rows='7'>${postInfo.post}</textarea>
-          <div class='posted-box-options box' id='post-options'>
+          <textarea class='content-post posted-box-text box post-textarea' disabled rows='7'>${postInfo.post}</textarea>
+          <div class='posted-box-options box post-options'>
             <div class='btns-default'></div>
           </div>
-          <section id='comments-section'></section>
+          <section class='comments-section'></section>
         `;
 
 
         if (postInfo.userUid === firebaseAuth.uid) {
-          const postOptions = postsOnFeed.querySelector('#post-options');
+          const postOptions = postsOnFeed.querySelector('.post-options');
           const btnsdeledit = postsOnFeed.querySelector('.btns-default');
           const confirmDeletePost = document.createElement('div');
           confirmDeletePost.classList.add('container-option', 'icon-none');
@@ -289,8 +289,8 @@ export const feed = () => {
           btnsdeledit.innerHTML = `
             <div class='div-edit'>
               <button class='btn-icon' id='edit-icon'><i class="fas fa-edit icon"></i></button>   
-              <button class='btn-icon edit-icon icon-none' id='save-icon'><i class="far fa-save icon"></i></button>
-              <select class='icon-none edit-icon' id='select-privacy'>
+              <button class='btn-icon edit-icon icon-none save-icon'><i class="far fa-save icon"></i></button>
+              <select class='icon-none edit-icon select-privacy'>
                 <option value='public'>Público</option>
                 <option value='private'>Privado</option>                
               </select>
@@ -300,17 +300,17 @@ export const feed = () => {
 
           confirmDeletePost.innerHTML = `
             <span>ATENÇÃO! Deseja mesmo excluir essa publicação?</span>
-            <button class='btn-icon' id='option-yes'><i class="far fa-check-circle icon"></i></button>
-            <button class='btn-icon' id='option-no'><i class="far fa-times-circle icon"></i></button>
+            <button class='btn-icon option-yes'><i class="far fa-check-circle icon"></i></button>
+            <button class='btn-icon option-no'><i class="far fa-times-circle icon"></i></button>
           `;
 
           postOptions.append(confirmDeletePost);
 
-          const saveBtn = btnsdeledit.querySelector('#save-icon');
-          const msgPost = postsOnFeed.querySelector('#post-textarea');
-          const selectPrivacy = btnsdeledit.querySelector('#select-privacy');
-          const optionYes = confirmDeletePost.querySelector('#option-yes');
-          const optionNo = confirmDeletePost.querySelector('#option-no');
+          const saveBtn = btnsdeledit.querySelector('.save-icon');
+          const msgPost = postsOnFeed.querySelector('.post-textarea');
+          const selectPrivacy = btnsdeledit.querySelector('.select-privacy');
+          const optionYes = confirmDeletePost.querySelector('.option-yes');
+          const optionNo = confirmDeletePost.querySelector('.option-no');
 
           btnsdeledit.querySelector('#edit-icon').addEventListener('click', () => { editBtnFunctions(saveBtn, selectPrivacy, msgPost); });
           saveBtn.addEventListener('click', () => { saveBtnOptions(postId, saveBtn, selectPrivacy, msgPost); });
@@ -318,15 +318,25 @@ export const feed = () => {
         } else {
           const btnsdeledit = postsOnFeed.querySelector('.btns-default');
 
+          btnsdeledit.innerHTML = `
+          <button class='btn-icon like'></button>
+          <div class='numberLikes'>${postInfo.likes.length}</div>
+          <button class='btn-icon comment-btn'><i class="fas fa-comments icon"></i></button>
+          `;
 
-          const likeBtn = document.createElement('button');
-          const numberLikes = document.createElement('div');
-          const commentBtn = document.createElement('button');
+
+          // const likeBtn = document.createElement('button');
+          // const numberLikes = document.createElement('div');
+          // const commentBtn = document.createElement('button');
           const commentsOptions = document.createElement('div');
           const commentsText = document.createElement('textarea');
           const commentsBtns = document.createElement('div');
           const commentsCancelBtn = document.createElement('button');
           const commentsPostBtn = document.createElement('button');
+
+          const likeBtn = btnsdeledit.querySelector('.like');
+          const commentBtn = btnsdeledit.querySelector('.comment-btn')
+
 
           if (postInfo.likes.length >= 1) {
             for (let x = 0; x < postInfo.likes.length; x += 1) {
@@ -340,21 +350,21 @@ export const feed = () => {
             likeBtn.innerHTML = '<i class="far fa-heart icon"></i>';
           }
 
-          numberLikes.innerHTML = `${postInfo.likes.length}`;
-          commentBtn.innerHTML = '<i class="fas fa-comments icon"></i>';
+          // numberLikes.innerHTML = `${postInfo.likes.length}`;
+          // commentBtn.innerHTML = '<i class="fas fa-comments icon"></i>';
           commentsCancelBtn.innerHTML = '<i class="far fa-times-circle icon"></i>';
           commentsPostBtn.innerHTML = '<i class="far fa-check-circle icon"></i>';
 
-          likeBtn.classList.add('btn-icon', 'like');
-          numberLikes.classList.add('numberLikes');
-          commentBtn.classList.add('btn-icon');
+          // likeBtn.classList.add('btn-icon', 'like');
+          // numberLikes.classList.add('numberLikes');
+          // commentBtn.classList.add('btn-icon');
           commentsOptions.classList.add('icon-none');
           commentsText.classList.add('textarea-post-comment');
           commentsBtns.classList.add('comments-btns');
           commentsCancelBtn.classList.add('btn-icon', 'btn-cancel');
           commentsPostBtn.classList.add('btn-icon', 'sendPost', 'btn-send');
 
-          btnsdeledit.append(likeBtn, numberLikes, commentBtn);
+          // btnsdeledit.append(likeBtn, numberLikes, commentBtn);
           postsOnFeed.append(commentsOptions);
           commentsOptions.append(commentsText, commentsBtns);
           commentsBtns.append(commentsPostBtn, commentsCancelBtn);
@@ -366,7 +376,7 @@ export const feed = () => {
         }
 
 
-        const commentsBox = postsOnFeed.querySelector('#comments-section');
+        const commentsBox = postsOnFeed.querySelector('.comments-section');
 
 
         if (!prepend) {
