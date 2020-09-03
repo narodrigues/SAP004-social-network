@@ -3,9 +3,9 @@ export const getUserInfos = () => firebase
   .collection('users')
   .where('userUid', '==', firebase.auth().currentUser.uid)
   .get()
-  .then((querySnapshot) => {
+  .then(querySnapshot => {
     const usersInfo = [];
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach(doc => {
       usersInfo.push(doc);
     });
     return usersInfo;
@@ -21,6 +21,7 @@ export const posts = (text, value) => {
     timestamps: firebase.firestore.Timestamp.fromDate(new Date()).toDate().toLocaleString('pt-BR'),
     privacy: value,
     commentsCount: 0,
+    getTime: new Date().getTime()
   };
   return firebase
     .firestore()
@@ -36,11 +37,11 @@ export const loadingPost = () => firebase
   .collection('posts')
   .where('privacy', '==', 'public')
   .limit(10)
-  .orderBy('timestamps', 'desc')
+  .orderBy('getTime', 'desc')
   .get()
-  .then((querySnapshot) => {
+  .then(querySnapshot => {
     const arrayWithPosts = [];
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach(doc => {
       arrayWithPosts.push(doc);
     });
     return arrayWithPosts;
@@ -103,8 +104,8 @@ export const saveEditComments = (text, id, commentTarget) => firebase
   .collection('posts')
   .doc(id)
   .get()
-  .then((doc) => {
-    const mapComment = doc.data().comments.map((myComment) => {
+  .then(doc => {
+    const mapComment = doc.data().comments.map(myComment => {
       if (myComment.id === commentTarget.id) {
         const newComment = { ...commentTarget, comment: text };
         return newComment;
