@@ -484,19 +484,19 @@ nav li.sign-out {
 	color: rgb(168, 1, 1);
 }
 
-.page-feed .btn-send {
+.page-feed .btn-send-comment {
 	color: rgb(60, 197, 60);
 }
 
-.page-feed .btn-send .icon:hover {
+.page-feed .btn-send-comment .icon:hover {
 	color: green;
 }
 
-.page-feed .btn-cancel {
+.page-feed .btn-cancel-comment {
 	color: rgb(255, 44, 44);
 }
 
-.page-feed .btn-cancel .icon:hover {
+.page-feed .btn-cancel-comment .icon:hover {
 	color: rgb(168, 1, 1);
 }
 

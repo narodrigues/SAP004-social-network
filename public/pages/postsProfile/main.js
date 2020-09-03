@@ -75,7 +75,7 @@ export const userProfilePageWithPosts = () => {
     postText.classList.add('content-post', 'posted-box-text', 'box');
     buttonsWrap.classList.add('posted-box-options', 'box');
     likeBtn.classList.add('btn-icon', 'like');
-    numberLikesInMyPosts.classList.add('numberLikes');
+    // numberLikesInMyPosts.classList.add('number-likes');
     divButtonsPostProfile.classList.add('div-btns');
     comments.classList.add('comments-post-profile');
 

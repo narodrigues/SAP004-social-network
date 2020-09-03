@@ -213,7 +213,6 @@ export const feed = () => {
           postsOnFeed.querySelector('.comments-section').classList.add('post-comment');
           postsOnFeed.querySelector('.post-options').classList.add('radius-none');
 
-
           for (let x = 0; x < postInfo.comments.length; x += 1) {
             const commentsContainer = document.createElement('div');
             commentsContainer.classList.add('comments-container');
@@ -276,9 +275,9 @@ export const feed = () => {
           <div class='posted-box-options box post-options'>
             <div class='btns-default'></div>
           </div>
+          <div class='icon-none write-comment'></div>
           <section class='comments-section'></section>
         `;
-
 
         if (postInfo.userUid === firebaseAuth.uid) {
           const postOptions = postsOnFeed.querySelector('.post-options');
@@ -317,57 +316,35 @@ export const feed = () => {
           btnsdeledit.querySelector('.delete-post').addEventListener('click', () => { deletePostBtn(postId, optionYes, optionNo, confirmDeletePost); });
         } else {
           const btnsdeledit = postsOnFeed.querySelector('.btns-default');
+          const commentsOptions = postsOnFeed.querySelector('.write-comment');
 
           btnsdeledit.innerHTML = `
-          <button class='btn-icon like'></button>
-          <div class='numberLikes'>${postInfo.likes.length}</div>
-          <button class='btn-icon comment-btn'><i class="fas fa-comments icon"></i></button>
+            <button class='btn-icon like'><i class="far fa-heart icon"></i></button>
+            <div>${postInfo.likes.length}</div>
+            <button class='btn-icon comment-btn'><i class="fas fa-comments icon"></i></button>
           `;
 
-
-          // const likeBtn = document.createElement('button');
-          // const numberLikes = document.createElement('div');
-          // const commentBtn = document.createElement('button');
-          const commentsOptions = document.createElement('div');
-          const commentsText = document.createElement('textarea');
-          const commentsBtns = document.createElement('div');
-          const commentsCancelBtn = document.createElement('button');
-          const commentsPostBtn = document.createElement('button');
+          commentsOptions.innerHTML = `
+            <textarea class='textarea-post-comment'></textarea>
+            <div class='comments-btns'>
+            <button class='btn-icon btn-send-comment'><i class="far fa-check-circle icon"></i></button>  
+            <button class='btn-icon btn-cancel-comment'><i class="far fa-times-circle icon"></i></button>
+            </div>
+          `;
 
           const likeBtn = btnsdeledit.querySelector('.like');
-          const commentBtn = btnsdeledit.querySelector('.comment-btn')
-
+          const commentBtn = btnsdeledit.querySelector('.comment-btn');
+          const commentsText = commentsOptions.querySelector('.textarea-post-comment');
+          const commentsPostBtn = commentsOptions.querySelector('.btn-send-comment');
+          const commentsCancelBtn = commentsOptions.querySelector('.btn-cancel-comment');
 
           if (postInfo.likes.length >= 1) {
             for (let x = 0; x < postInfo.likes.length; x += 1) {
               if (firebaseAuth.uid === postInfo.likes[x].userId) {
                 likeBtn.innerHTML = '<i class="fas fa-heart icon"></i>';
-              } else {
-                likeBtn.innerHTML = '<i class="far fa-heart icon"></i>';
               }
             }
-          } else {
-            likeBtn.innerHTML = '<i class="far fa-heart icon"></i>';
           }
-
-          // numberLikes.innerHTML = `${postInfo.likes.length}`;
-          // commentBtn.innerHTML = '<i class="fas fa-comments icon"></i>';
-          commentsCancelBtn.innerHTML = '<i class="far fa-times-circle icon"></i>';
-          commentsPostBtn.innerHTML = '<i class="far fa-check-circle icon"></i>';
-
-          // likeBtn.classList.add('btn-icon', 'like');
-          // numberLikes.classList.add('numberLikes');
-          // commentBtn.classList.add('btn-icon');
-          commentsOptions.classList.add('icon-none');
-          commentsText.classList.add('textarea-post-comment');
-          commentsBtns.classList.add('comments-btns');
-          commentsCancelBtn.classList.add('btn-icon', 'btn-cancel');
-          commentsPostBtn.classList.add('btn-icon', 'sendPost', 'btn-send');
-
-          // btnsdeledit.append(likeBtn, numberLikes, commentBtn);
-          postsOnFeed.append(commentsOptions);
-          commentsOptions.append(commentsText, commentsBtns);
-          commentsBtns.append(commentsPostBtn, commentsCancelBtn);
 
           commentsPostBtn.addEventListener('click', () => { addComment(postId, commentsText); });
           commentsCancelBtn.addEventListener('click', () => { cancelComment(commentsOptions); });
@@ -375,15 +352,14 @@ export const feed = () => {
           commentBtn.addEventListener('click', () => { showOptionsComments(commentsOptions, commentsText); });
         }
 
-
-        const commentsBox = postsOnFeed.querySelector('.comments-section');
-
-
         if (!prepend) {
           postsContainer.appendChild(postsOnFeed);
         } else {
           postsContainer.prepend(postsOnFeed);
         }
+
+        const commentsBox = postsOnFeed.querySelector('.comments-section');
+
         loadComments(postId, postInfo, postsOnFeed, commentsBox);
       };
 
