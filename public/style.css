@@ -351,7 +351,7 @@ nav li.sign-out {
 
 .page-feed .div-posts .box {
 	background: white;
-	border-radius: 5px 5px 0 0;
+	border-radius: 10px 10px 0 0;
 	color: #976324;
 	width: 100%;
 }
@@ -364,6 +364,10 @@ nav li.sign-out {
 	font-weight: 600;
 }
 
+.page-feed .radius-none {
+	border-radius: 0 !important;
+}
+
 .page-feed .div-posts .box:nth-child(2) {
 	background: white;
 	color: black;
@@ -371,8 +375,9 @@ nav li.sign-out {
 }
 
 .page-feed .posted-box-options.box {
-	border-top: solid 1px #0000001f;
 	border-bottom: solid 1px #0000001f;
+	border-radius: 0 0 10px 10px;
+	border-top: solid 1px #0000001f;
 	display: flex;
 	justify-content: space-between;
 	padding: 15px;
@@ -479,19 +484,19 @@ nav li.sign-out {
 	color: rgb(168, 1, 1);
 }
 
-.page-feed .btn-send {
+.page-feed .btn-send-comment {
 	color: rgb(60, 197, 60);
 }
 
-.page-feed .btn-send .icon:hover {
+.page-feed .btn-send-comment .icon:hover {
 	color: green;
 }
 
-.page-feed .btn-cancel {
+.page-feed .btn-cancel-comment {
 	color: rgb(255, 44, 44);
 }
 
-.page-feed .btn-cancel .icon:hover {
+.page-feed .btn-cancel-comment .icon:hover {
 	color: rgb(168, 1, 1);
 }
 
