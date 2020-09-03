@@ -360,7 +360,7 @@ export const feed = () => {
           const optionYes = confirmDeletePost.querySelector('#option-yes');
           const optionNo = confirmDeletePost.querySelector('#option-no');
 
-          btnsdeledit.querySelector('.edit-icon').addEventListener('click', () => { editBtnFunctions(saveBtn, selectPrivacy, msgPost); });
+          btnsdeledit.querySelector('#edit-icon').addEventListener('click', () => { editBtnFunctions(saveBtn, selectPrivacy, msgPost); });
           saveBtn.addEventListener('click', () => { saveBtnOptions(postId, saveBtn, selectPrivacy, msgPost); });
           btnsdeledit.querySelector('.delete-post').addEventListener('click', () => { deletePostBtn(postId, optionYes, optionNo, confirmDeletePost); });
         } else {
