@@ -15,7 +15,7 @@
 
 ## 1. Resumo do projeto
 
-**Projeto realizado em parceria com Marjorie Santos e posteriormente refatorado por Natasha Costa**
+:warning: **Projeto realizado em parceria com Marjorie Santos e posteriormente refatorado por Natasha Costa**
 
 Neste projeto realizamos a construção de uma rede social através da manipulação e persistência de dados através de um banco de dados não relacional e em tempo real. 
 
