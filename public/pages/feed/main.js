@@ -98,9 +98,9 @@ export const feed = () => {
 
       const loadAllPosts = () => {
         loadingPost()
-          .then(arrayPosts => {
+          .then((arrayPosts) => {
             feedTemplate.querySelector('#posts-container').innerHTML = '';
-            arrayPosts.forEach(docPosts => {
+            arrayPosts.forEach((docPosts) => {
               createPosts(docPosts);
             });
           });
@@ -191,7 +191,7 @@ export const feed = () => {
         commentTextarea.setAttribute('disabled', 'disabled');
 
         const newComment = commentTextarea.value;
-        saveEditComments(newComment, postId, postInfo.comments[x])
+        saveEditComments(newComment, postId, postInfo.comments[x]);
       };
 
       const deleteCommentBtn = (postId, postInfo, confirmDeleteComment, optionYes, optionNo, x) => {
@@ -248,9 +248,9 @@ export const feed = () => {
               const saveEditedComment = btnCommentsContainer.querySelector('.save-edited-comment');
               const commentTextarea = commentsContainer.querySelector('.textareaComments');
 
-              btnCommentsContainer.querySelector('.edit-comment').addEventListener('click', () => { editBtnFunctionsComment(saveEditedComment, commentTextarea)});
-              btnCommentsContainer.querySelector('.save-edited-comment').addEventListener('click', () => { saveBtnOptionsComments(postId, postInfo, saveEditedComment, commentTextarea, x)});
-              btnCommentsContainer.querySelector('.delete').addEventListener('click', () => { deleteCommentBtn(postId, postInfo, confirmDeleteComment, optionYes, optionNo, x)});
+              btnCommentsContainer.querySelector('.edit-comment').addEventListener('click', () => { editBtnFunctionsComment(saveEditedComment, commentTextarea); });
+              btnCommentsContainer.querySelector('.save-edited-comment').addEventListener('click', () => { saveBtnOptionsComments(postId, postInfo, saveEditedComment, commentTextarea, x); });
+              btnCommentsContainer.querySelector('.delete').addEventListener('click', () => { deleteCommentBtn(postId, postInfo, confirmDeleteComment, optionYes, optionNo, x); });
 
               commentsContainer.append(btnCommentsContainer);
             }
@@ -263,12 +263,11 @@ export const feed = () => {
       const createPosts = (docAllPosts, prepend) => {
         const postInfo = docAllPosts.data();
         const postId = docAllPosts.id;
-
-        const postsOnFeed = document.createElement('section');
-        postsOnFeed.classList.add('div-posts');
-
         const postsContainer = feedTemplate.querySelector('#posts-container');
+        const postsOnFeed = document.createElement('section');
 
+        postsOnFeed.classList.add('div-posts');
+        postsOnFeed.setAttribute('data-postid', postId);
         postsOnFeed.innerHTML = `
           <div class='posted-box-by box'>
             <span class='name-user-published'>Publicado por ${postInfo.name} em ${postInfo.timestamps}</span>
@@ -281,11 +280,11 @@ export const feed = () => {
         `;
 
 
-        postsOnFeed.setAttribute('data-postid', postId);
-
         if (postInfo.userUid === firebaseAuth.uid) {
           const postOptions = postsOnFeed.querySelector('#post-options');
           const btnsdeledit = postsOnFeed.querySelector('.btns-default');
+          const confirmDeletePost = document.createElement('div');
+          confirmDeletePost.classList.add('container-option', 'icon-none');
 
           btnsdeledit.innerHTML = `
             <div class='div-edit'>
@@ -299,60 +298,13 @@ export const feed = () => {
             <button class='btn-icon delete-post'><i class="fas fa-trash-alt icon"></i></button>
           `;
 
-
-
-          // const buttonsWrapEdit = document.createElement('div');
-          // const editBtn = document.createElement('button');
-          // const saveBtn = document.createElement('button');
-          // const deleteBtn = document.createElement('button');
-          const confirmDeletePost = document.createElement('div');
-
           confirmDeletePost.innerHTML = `
-            <span>
-              ATENÇÃO!
-              Deseja mesmo excluir essa publicação?
-            </span>
+            <span>ATENÇÃO! Deseja mesmo excluir essa publicação?</span>
             <button class='btn-icon' id='option-yes'><i class="far fa-check-circle icon"></i></button>
             <button class='btn-icon' id='option-no'><i class="far fa-times-circle icon"></i></button>
           `;
 
-
-          // const message = document.createElement('span');
-          // const optionYes = document.createElement('button');
-          // const optionNo = document.createElement('button');
-          // const selectPrivacy = document.createElement('select');
-          // const optionPublic = document.createElement('option');
-          // const optionPrivate = document.createElement('option');
-
-          // optionPrivate.innerHTML = 'Privado';
-          // optionPublic.innerHTML = 'Público';
-          // editBtn.innerHTML = '<i class="fas fa-edit icon"></i>';
-          // saveBtn.innerHTML = '<i class="far fa-save icon"></i>';
-          // deleteBtn.innerHTML = '<i class="fas fa-trash-alt icon"></i>';
-          // optionYes.innerHTML = '<i class="far fa-check-circle icon"></i>';
-          // optionNo.innerHTML = '<i class="far fa-times-circle icon"></i>';
-          // message.innerText = `ATENÇÃO!
-          // Deseja mesmo excluir essa publicação?`;
-
-          // buttonsWrapEdit.classList.add('div-edit');
-          // editBtn.classList.add('btn-icon');
-          // saveBtn.classList.add('icon-none', 'btn-icon', 'edit-icon');
-          // selectPrivacy.classList.add('icon-none', 'edit-icon');
-          // deleteBtn.classList.add('btn-icon', 'delete-post');
-          confirmDeletePost.classList.add('container-option', 'icon-none');
-          // optionYes.classList.add('btn-icon');
-          // optionNo.classList.add('btn-icon');
-
-          // selectPrivacy.id = 'select-privacy';
-
-          // optionPublic.setAttribute('value', 'public');
-          // optionPrivate.setAttribute('value', 'private');
-
           postOptions.append(confirmDeletePost);
-          // btnsdeledit.append(buttonsWrapEdit, deleteBtn);
-          // buttonsWrapEdit.append(editBtn, saveBtn, selectPrivacy);
-          // confirmDeletePost.append(message, optionYes, optionNo);
-          // selectPrivacy.append(optionPublic, optionPrivate);
 
           const saveBtn = btnsdeledit.querySelector('#save-icon');
           const msgPost = postsOnFeed.querySelector('#post-textarea');
@@ -364,8 +316,7 @@ export const feed = () => {
           saveBtn.addEventListener('click', () => { saveBtnOptions(postId, saveBtn, selectPrivacy, msgPost); });
           btnsdeledit.querySelector('.delete-post').addEventListener('click', () => { deletePostBtn(postId, optionYes, optionNo, confirmDeletePost); });
         } else {
-          const btnsdeledit = postsOnFeed.querySelector('.btns-default')
-
+          const btnsdeledit = postsOnFeed.querySelector('.btns-default');
 
 
           const likeBtn = document.createElement('button');
@@ -416,9 +367,6 @@ export const feed = () => {
 
 
         const commentsBox = postsOnFeed.querySelector('#comments-section');
-        // const commentsBox = querySelector('#comments-section');
-
-
 
 
         if (!prepend) {
